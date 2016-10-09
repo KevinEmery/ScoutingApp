@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,20 +33,22 @@ public class MainActivity extends AppCompatActivity {
             String content = "hello world";
 
             try {
-                File dataFileHandle = this.getDocumentStorageDir("ScoutingData");
+                File directory = this.getScoutingDataStorageDir();
+                File dataFileHandle = new File(directory, "scoutingdata.txt");
+
                 FileOutputStream outputStream = new FileOutputStream(dataFileHandle);
                 outputStream.write(content.getBytes());
                 outputStream.close();
 
-                text = getString(R.string.data_written) + dataFileHandle.getPath();
+                text = "File written: " + dataFileHandle.getPath();
             } catch (IOException e) {
                 Log.e(LOG_TAG, e.toString());
-                text = getString(R.string.unable_to_write_file);
+                text = "unable to write file because of an exception: " + e.toString();
             }
         }
         else
         {
-            text = getString(R.string.unable_to_write_file);
+            text = "External storage not writeable";
         }
 
         Toast toast = Toast.makeText(context, text, duration);
@@ -61,15 +64,13 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public File getDocumentStorageDir(String albumName) {
-        // Get the directory for the user's public pictures directory.
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOCUMENTS), albumName);
-        if(!file.exists()) {
-            if (!file.mkdirs()) {
-                Log.e(LOG_TAG, "Directory not created");
-            }
+    public File getScoutingDataStorageDir() {
+        File directoryPath = new File(getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                "ScoutingData");
+
+        if (!directoryPath.mkdirs()) {
+            Log.e(LOG_TAG, "Directory not created");
         }
-        return file;
+        return directoryPath;
     }
 }
