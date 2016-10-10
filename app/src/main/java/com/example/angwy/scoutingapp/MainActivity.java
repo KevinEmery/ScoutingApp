@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
@@ -64,13 +65,17 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    /* Gets the directory where the scouting app will store its output files */
     public File getScoutingDataStorageDir() {
-        File directoryPath = new File(getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+        File directoryPath = new File(Environment.getExternalStorageDirectory(),
                 "ScoutingData");
 
-        if (!directoryPath.mkdirs()) {
-            Log.e(LOG_TAG, "Directory not created");
+        if (!directoryPath.exists()) {
+            if (!directoryPath.mkdirs()) {
+                Log.e(LOG_TAG, "Directory not created");
+            }
         }
+
         return directoryPath;
     }
 }
