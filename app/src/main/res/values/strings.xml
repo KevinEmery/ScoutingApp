@@ -3,4 +3,8 @@
     <string name="save_button_text">Save</string>
     <string name="unable_to_write_file">Save</string>
     <string name="data_written">Data successfully written to </string>
+    <string name="high_goal_accuracy">High goal accuracy</string>
+    <string name="high_goal_speed">High goal speed</string>
+    <string name="low_goal_accuracy">Low goal accuracy</string>
+    <string name="low_goal_speed">Low goal speed</string>
 </resources>

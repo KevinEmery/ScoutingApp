@@ -20,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_shooting);
     }
 
     /** Called when the user clicks the Send button */
     public void SaveDataToFile(View view) {
         Context context = getApplicationContext();
-        CharSequence text = "null";
+        CharSequence text;
         int duration = Toast.LENGTH_SHORT;
 
         if (this.isExternalStorageWritable())
@@ -59,10 +59,7 @@ public class MainActivity extends AppCompatActivity {
     /* Checks if external storage is available for read and write */
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     /* Gets the directory where the scouting app will store its output files */
