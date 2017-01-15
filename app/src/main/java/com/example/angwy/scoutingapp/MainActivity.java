@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        Toolbar actionBar = (Toolbar) findViewById(R.id.actionbar);
+        setSupportActionBar(actionBar);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu. This adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.actionbar_menu, menu);
         return true;
     }
@@ -41,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 // User chose the shooting view so we show that.
                 Intent intent = new Intent(this, ShootingActivity.class);
                 startActivity(intent);
-
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
+                return  true;
 
             default:
                 // If we got here, the user's action was not recognized.

@@ -6,10 +6,5 @@
         android:id="@+id/action_shooting"
         android:icon="@drawable/ic_action_name"
         android:title="@string/action_shooting"
-        app:showAsAction="ifRoom"/>
-
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
         app:showAsAction="never"/>
 </menu>
