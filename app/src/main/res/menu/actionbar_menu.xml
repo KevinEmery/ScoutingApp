@@ -7,4 +7,10 @@
         android:icon="@drawable/ic_action_name"
         android:title="@string/action_shooting"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_main_screen"
+        android:icon="@drawable/ic_action_name"
+        android:title="@string/action_main_screen"
+        app:showAsAction="never"/>
 </menu>
