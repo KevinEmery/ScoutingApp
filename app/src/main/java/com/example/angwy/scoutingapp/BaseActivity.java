@@ -54,6 +54,11 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
                 return  true;
 
+            case R.id.action_teleop:
+                intent = new Intent(this, TeleopActivity.class);
+                startActivity(intent);
+                return  true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it

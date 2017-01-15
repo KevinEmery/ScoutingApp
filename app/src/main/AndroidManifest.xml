@@ -18,7 +18,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ShootingActivity" />
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".ClimbingActivity" />
+        <activity
+            android:name=".TeleopActivity"
+            android:label="@string/title_activity_teleop"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

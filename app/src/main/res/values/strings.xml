@@ -11,4 +11,11 @@
     <string name="action_shooting">Shooting</string>
     <string name="you_shouldnt_see_this">You should not see this, like, ever.</string>
     <string name="action_main_screen">Main</string>
+    <string name="climbing_header">Climbing</string>
+    <string name="action_teleop">TeleOp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_teleop">TeleopActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
