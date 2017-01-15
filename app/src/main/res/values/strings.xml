@@ -7,4 +7,6 @@
     <string name="high_goal_speed">High goal speed</string>
     <string name="low_goal_accuracy">Low goal accuracy</string>
     <string name="low_goal_speed">Low goal speed</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_shooting">Shooting</string>
 </resources>
