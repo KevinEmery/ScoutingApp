@@ -59,70 +59,48 @@ public class TeleOpActivity extends BaseActivity {
             super(fm);
         }
 
+        /**
+         * This is the class that calls the instantiators for the various tab screens.
+         * @param position The index of the screen the userr swiped to.
+         * @return
+         */
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 3) {
-                return ShootingFragment.newInstance("foo", "bar");
-            } else {
-                return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case  0:
+                    return ShootingFragment.newInstance();
+                case 1:
+                    return ClimbingFragment.newInstance();
+                default:
+                    return null;
             }
         }
 
+        /**
+         * I don't know what this does exactly but I'm gonna assume this number needs to be
+         * the same as the number of pages you want on the swipey-thing.
+         * @return
+         */
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
 
+        /**
+         * Probably returns the titles for the swipey pages (I know they're called fragments but
+         * that's not terribly n00b friendly).
+         * @param position The index of the page you want to get the title for.
+         * @return
+         */
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "@string/label_shooting";
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-                case 3:
-                    return "Shooting";
+                    return "@string/label_climbing";
             }
             return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_teleop, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
         }
     }
 }
