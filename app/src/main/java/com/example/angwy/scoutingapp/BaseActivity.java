@@ -42,12 +42,6 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent;
 
         switch (item.getItemId()) {
-            case R.id.action_shooting:
-                // User chose the shooting view so we show that.
-                intent = new Intent(this, ShootingActivity.class);
-                startActivity(intent);
-                return  true;
-
             case R.id.action_main_screen:
                 // User chose the shooting view so we show that.
                 intent = new Intent(this, MainActivity.class);
