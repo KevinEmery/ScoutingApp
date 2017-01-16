@@ -55,7 +55,7 @@ public class BaseActivity extends AppCompatActivity {
                 return  true;
 
             case R.id.action_teleop:
-                intent = new Intent(this, TeleopActivity.class);
+                intent = new Intent(this, TeleOpActivity.class);
                 startActivity(intent);
                 return  true;
 
