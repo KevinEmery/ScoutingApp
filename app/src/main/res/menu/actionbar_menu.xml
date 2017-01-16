@@ -13,4 +13,10 @@
         android:icon="@drawable/ic_action_name"
         android:title="@string/action_teleop"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_pit"
+        android:icon="@drawable/ic_action_name"
+        android:title="@string/action_pit"
+        app:showAsAction="never"/>
 </menu>

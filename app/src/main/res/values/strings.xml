@@ -8,6 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_teleop">TeleOp</string>
     <string name="action_main_screen">Main</string>
+    <string name="action_pit">Pit</string>
 
     <!-- Shooting screen values -->
     <string name="label_shooting">Shooting</string>
