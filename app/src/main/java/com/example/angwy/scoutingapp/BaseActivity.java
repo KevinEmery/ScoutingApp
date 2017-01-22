@@ -58,6 +58,11 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
+            case R.id.action_fieldmap:
+                intent = new Intent(this, FieldMapActivity.class);
+                startActivity(intent);
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it
