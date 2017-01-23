@@ -20,7 +20,8 @@
         <activity android:name=".BaseActivity" />
         <activity android:name=".TeleOpActivity" />
         <activity android:name=".PitActivity" />
-        <activity android:name=".FieldMapActivity"></activity>
+        <activity android:name=".FieldMapActivity" />
+        <activity android:name=".CircleMenuTestActivity"></activity>
     </application>
 
 </manifest>
