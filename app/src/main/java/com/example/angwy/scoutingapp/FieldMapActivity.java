@@ -21,7 +21,7 @@ public class FieldMapActivity extends BaseActivity {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            Intent intent = new Intent(FieldMapActivity.this, TeleOpActivity.class);
+            Intent intent = new Intent(FieldMapActivity.this, RecordGameEventActivity.class);
             startActivity(intent);
             return true;
         }

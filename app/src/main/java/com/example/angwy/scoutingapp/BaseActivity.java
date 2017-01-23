@@ -48,11 +48,6 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
                 return  true;
 
-            case R.id.action_teleop:
-                intent = new Intent(this, TeleOpActivity.class);
-                startActivity(intent);
-                return  true;
-
             case R.id.action_pit:
                 intent = new Intent(this, PitActivity.class);
                 startActivity(intent);
