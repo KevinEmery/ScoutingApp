@@ -17,9 +17,8 @@ public class MatchData {
     public Alliance alliance;
     public boolean deadBot;
     public boolean noShow;
-    public AutonomousMatchTask autonomousMatchTask;
-    public TeleOpMatchTask teleopMatchTask;
-    public ClimbingAttempt climbingAttempt;
-    public Iterable<Penalty> penalties;
+    public Iterable<MatchEvent> autoMatchEvents;
+    public Iterable<MatchEvent> teleOpMatchEvents;
     public DefensiveRating defensiveRating;
+    public Role role;
 }

@@ -6,8 +6,7 @@ package DataModel;
 
 public enum GearResult {
     NONE,
-    SUCCESS,
-    FAILED,
+    PLACEDGEAR,
+    DROPPEDGEAR,
     RANOUTOFTIME,
-    ABANDONED
 }
