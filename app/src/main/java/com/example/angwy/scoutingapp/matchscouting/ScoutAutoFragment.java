@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.angwy.scoutingapp.R;
+import com.example.angwy.scoutingapp.matchscouting.recordgameeventactivity.GameEventMenuFragment;
 
 public class ScoutAutoFragment extends Fragment {
     private static final String ARG_PARAM1 = "matchData";
@@ -35,7 +36,8 @@ public class ScoutAutoFragment extends Fragment {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            // We call the data collection fragment
+            FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
+            fragmentChangeListener.replaceFragment(GameEventMenuFragment.newInstance());
             return true;
         }
     };

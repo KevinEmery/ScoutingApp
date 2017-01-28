@@ -24,7 +24,7 @@ public class ScoutMatchActivity extends BaseActivity implements FragmentChangeLi
         setContentView(R.layout.activity_scout_match);
 
         // We begin by creating the metadata fragment
-        CollectMetadataFragment firstFragment = new CollectMetadataFragment();
+        CollectMetadataFragment firstFragment = CollectMetadataFragment.newInstance();
 
         firstFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction()

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.angwy.scoutingapp.R;
+import com.example.angwy.scoutingapp.matchscouting.datamodel.MatchData;
 
 /** This is the fragment that displays the screen which collects the basic match data.
  * A simple {@link Fragment} subclass.
@@ -19,6 +20,10 @@ public class CollectMetadataFragment extends Fragment {
 
     public CollectMetadataFragment() {
         // Required empty public constructor
+    }
+
+    public static CollectMetadataFragment newInstance() {
+        return new CollectMetadataFragment();
     }
 
     @Override
@@ -37,14 +42,16 @@ public class CollectMetadataFragment extends Fragment {
         buttonStartAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // First we get the scout name
-                EditText scoutNameEditText = (EditText)((ScoutMatchActivity)getActivity())
-                        .findViewById(R.id.edit_text_scout_name);
+                // Initialise the matchdata object in the parent class
+                ((ScoutMatchActivity)getActivity()).matchData = new MatchData();
+
+                // Get the scout name and add it to the match metadata
+                EditText scoutNameEditText = (EditText) getActivity().findViewById(R.id.edit_text_scout_name);
                 ((ScoutMatchActivity)getActivity()).matchData.scout = scoutNameEditText.getText().toString();
 
                 // Then we start to scout auto
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(new ScoutAutoFragment());
+                fragmentChangeListener.replaceFragment(ScoutAutoFragment.newInstance());
             }
         });
     }

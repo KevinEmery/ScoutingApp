@@ -6,13 +6,14 @@
     tools:context="com.example.angwy.scoutingapp.matchscouting.CollectMetadataFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/label_scout_name" />
 
     <EditText android:id="@+id/edit_text_scout_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="enter name here"/>
 
     <Button
         android:id="@+id/buttonStartAuto"
