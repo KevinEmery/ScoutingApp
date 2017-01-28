@@ -20,9 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".BaseActivity" />
-        <activity android:name=".RecordGameEventActivity" />
         <activity android:name=".PitActivity" />
-        <activity android:name=".FieldMapActivity" />
+        <activity android:name=".matchscouting.ScoutMatchActivity" />
     </application>
 
 </manifest>

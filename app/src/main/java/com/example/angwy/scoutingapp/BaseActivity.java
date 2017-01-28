@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.example.angwy.scoutingapp.matchscouting.ScoutMatchActivity;
+
 public class BaseActivity extends AppCompatActivity {
 
     @Override
@@ -53,8 +55,8 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.action_fieldmap:
-                intent = new Intent(this, FieldMapActivity.class);
+            case R.id.action_scout_match:
+                intent = new Intent(this, ScoutMatchActivity.class);
                 startActivity(intent);
                 return true;
 

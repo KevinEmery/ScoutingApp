@@ -9,7 +9,7 @@
     <string name="action_teleop">TeleOp</string>
     <string name="action_main_screen">Main</string>
     <string name="action_pit">Pit</string>
-    <string name="action_fieldmap">Field Map</string>
+    <string name="action_scout_match">Scout Match</string>
 
     <!-- Shooting screen values -->
     <string name="label_shooting">Shooting</string>
@@ -25,9 +25,9 @@
     <string name="label_attempted">Attempted</string>
     <string name="label_succeeded">Succeeded</string>
 
-    <!--RecordGameEventActivity-->
-    <string name="button_back_to_field_text">Return to field</string>
+    <!--ScoutMatch activity-->
+    <string name="label_scout_name">Scout name</string>
+    <string name="label_start_auto">Auto Start</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Blank fragment</string>
 </resources>

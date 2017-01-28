@@ -15,8 +15,8 @@
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_fieldmap"
+        android:id="@+id/action_scout_match"
         android:icon="@drawable/ic_action_name"
-        android:title="@string/action_fieldmap"
+        android:title="@string/action_scout_match"
         app:showAsAction="never"/>
 </menu>
