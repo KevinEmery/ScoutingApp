@@ -28,6 +28,7 @@
     <!--ScoutMatch activity-->
     <string name="label_scout_name">Scout name</string>
     <string name="label_start_auto">Auto Start</string>
+    <string name="label_finish_game">Match Ended</string>
 
     <string name="hello_blank_fragment">Blank fragment</string>
 </resources>
