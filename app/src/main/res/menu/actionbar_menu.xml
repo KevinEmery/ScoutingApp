@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_main_screen"
+        android:id="@+id/action_bluetooth_sync"
         android:icon="@drawable/ic_action_name"
-        android:title="@string/action_main_screen"
+        android:title="@string/action_bluetooth_sync"
         app:showAsAction="never"/>
 
     <item

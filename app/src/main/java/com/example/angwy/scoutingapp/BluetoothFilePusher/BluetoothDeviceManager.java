@@ -25,7 +25,7 @@ public class BluetoothDeviceManager implements BluetoothDevicePicker {
     /**
      * Finds a device to connect to with the given name
      */
-    protected void findDevice(String targetDeviceName, BluetoothDevicePickResultHandler handler) {
+    public void findDevice(String targetDeviceName, BluetoothDevicePickResultHandler handler) {
         Log.i(TAG, "Finding device with name: " + targetDeviceName);
         Set<BluetoothDevice> pairedDevices = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
 

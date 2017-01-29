@@ -96,7 +96,7 @@ public class FinishMatchFragment extends Fragment {
         {
             try {
                 File directory = this.getScoutingDataStorageDir();
-                File dataFileHandle = new File(directory, "scoutingdata.txt");
+                File dataFileHandle = new File(directory, "scoutingdata.json");
 
                 FileOutputStream outputStream = new FileOutputStream(dataFileHandle);
                 outputStream.write(data.getBytes());
@@ -124,7 +124,7 @@ public class FinishMatchFragment extends Fragment {
     }
 
     /* Gets the directory where the scouting app will store its output files */
-    private File getScoutingDataStorageDir() {
+    public static File getScoutingDataStorageDir() {
         File directoryPath = new File(Environment.getExternalStorageDirectory(),
                 "ScoutingData");
 

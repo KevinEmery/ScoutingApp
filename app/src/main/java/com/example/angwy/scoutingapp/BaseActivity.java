@@ -44,9 +44,9 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent;
 
         switch (item.getItemId()) {
-            case R.id.action_main_screen:
+            case R.id.action_bluetooth_sync:
                 // User chose the shooting view so we show that.
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, BluetoothSyncActivity.class);
                 startActivity(intent);
                 return  true;
 
