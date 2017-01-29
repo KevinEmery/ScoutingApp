@@ -1,9 +1,12 @@
 package com.example.angwy.scoutingapp.matchscouting.datamodel;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Anne_ on 1/18/2017.
+ *
+ * Match data class to send to server,
  */
 
 /**
@@ -17,8 +20,8 @@ public class MatchData {
     public Alliance alliance;
     public boolean deadBot;
     public boolean noShow;
-    public Iterable<MatchEvent> autoMatchEvents;
-    public Iterable<MatchEvent> teleOpMatchEvents;
+    public List<MatchEvent> autoMatchEvents;
+    public List<MatchEvent> teleOpMatchEvents;
     public DefensiveRating defensiveRating;
     public Role role;
 }

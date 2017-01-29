@@ -1,9 +1,9 @@
 package com.example.angwy.scoutingapp.matchscouting.datamodel;
 
-import java.util.Date;
-
 /**
  * Created by Anne_ on 1/18/2017.
+ *
+ * Extends matchevent to include data particular to climbing events.
  */
 
 public class ClimbingEvent extends MatchEvent {
@@ -12,5 +12,10 @@ public class ClimbingEvent extends MatchEvent {
 
     // A secondary timestamp indicating *when* a climbing attempt succeeded.
     // Set when the scout hits the 'succeeded' button.
-    public Date succeededTime;
+    public String succeededTime;
+
+    public ClimbingEvent() {
+        super();
+        super.eventType = EventType.CLIMBING;
+    }
 }

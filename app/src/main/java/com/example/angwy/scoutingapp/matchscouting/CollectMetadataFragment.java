@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 import com.example.angwy.scoutingapp.R;
 import com.example.angwy.scoutingapp.matchscouting.datamodel.MatchData;
+import com.example.angwy.scoutingapp.matchscouting.datamodel.MatchEvent;
+
+import java.util.ArrayList;
 
 /** This is the fragment that displays the screen which collects the basic match data.
  * A simple {@link Fragment} subclass.
@@ -42,8 +45,10 @@ public class CollectMetadataFragment extends Fragment {
         buttonStartAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Initialise the matchdata object in the parent class
+                // Initialise the matchData object in the parent activity class
                 ((ScoutMatchActivity)getActivity()).matchData = new MatchData();
+                ((ScoutMatchActivity)getActivity()).matchData.autoMatchEvents = new ArrayList<>();
+                ((ScoutMatchActivity)getActivity()).matchData.teleOpMatchEvents = new ArrayList<>();
 
                 // Get the scout name and add it to the match metadata
                 EditText scoutNameEditText = (EditText) getActivity().findViewById(R.id.edit_text_scout_name);

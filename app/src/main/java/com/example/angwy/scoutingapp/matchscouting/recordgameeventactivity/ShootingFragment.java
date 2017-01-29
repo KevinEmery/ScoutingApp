@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.angwy.scoutingapp.R;
+import com.example.angwy.scoutingapp.matchscouting.datamodel.ShotEvent;
 
 
 /**
@@ -15,6 +16,10 @@ import com.example.angwy.scoutingapp.R;
  * create an instance of this fragment.
  */
 public class ShootingFragment extends Fragment {
+
+    private static final String SHOT_EVENT = "shotEvent";
+
+    private ShotEvent shotEvent;
 
     public ShootingFragment() {
         // Required empty public constructor
