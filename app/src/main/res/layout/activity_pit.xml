@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.angwy.scoutingapp.PitActivity">
+    tools:context="org.usfirst.frc.team4911.scouting.PitActivity">
 
     <TextView
         android:id="@+id/PitHeader"

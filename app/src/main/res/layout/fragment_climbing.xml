@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".matchscouting.recordgameeventactivity.ClimbingFragment">
+    tools:context="org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventactivity.ClimbingFragment">
 
     <TextView
         android:id="@+id/ClimbingLabel"

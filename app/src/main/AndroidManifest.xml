@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.angwy.scoutingapp">
+    package="org.usfirst.frc.team4911.scouting">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -12,16 +12,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".matchscouting.ScoutMatchActivity">
+        <activity android:name="org.usfirst.frc.team4911.scouting.matchscouting.ScoutMatchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BaseActivity" />
-        <activity android:name=".PitActivity" />
-        <activity android:name=".BluetoothSyncActivity" />
+        <activity android:name="org.usfirst.frc.team4911.scouting.BaseActivity" />
+        <activity android:name="org.usfirst.frc.team4911.scouting.PitActivity" />
+        <activity android:name="org.usfirst.frc.team4911.scouting.BluetoothSyncActivity" />
     </application>
 
 </manifest>

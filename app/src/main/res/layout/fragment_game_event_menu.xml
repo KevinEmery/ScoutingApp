@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.angwy.scoutingapp.matchscouting.recordgameeventactivity.GameEventMenuFragment">
+    tools:context="org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventactivity.GameEventMenuFragment">
 
     <Button
         android:id="@+id/buttonClimbing"
