@@ -35,6 +35,7 @@ public class ScoutMatchActivity extends BaseActivity implements FragmentChangeLi
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment, fragment.toString());
+        fragmentTransaction.addToBackStack(fragment.toString());
         fragmentTransaction.commit();
     }
 }
