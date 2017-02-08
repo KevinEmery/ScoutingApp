@@ -14,8 +14,6 @@ public interface FragmentChangeListener
     /**
      * Helps with switching from fragment to fragment
      * @param fragment The fragment to replace the current fragment with.
-     * @param addToBackStack Indicates whether or not we add the fragment to the back stack
-     *                       when we switch to it.
      */
-    void replaceFragment(Fragment fragment, boolean addToBackStack);
+    void replaceFragment(Fragment fragment);
 }

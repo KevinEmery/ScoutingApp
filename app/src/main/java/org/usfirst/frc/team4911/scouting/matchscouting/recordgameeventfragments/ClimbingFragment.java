@@ -77,7 +77,7 @@ public class ClimbingFragment extends Fragment {
 
             // Go back to scout auto
             FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-            fragmentChangeListener.replaceFragment(ScoutAutoFragment.newInstance(), true);
+            fragmentChangeListener.replaceFragment(ScoutAutoFragment.newInstance());
             }
         });
 

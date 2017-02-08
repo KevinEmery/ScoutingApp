@@ -49,7 +49,7 @@ public class GameEventMenuFragment extends Fragment {
             public void onClick(View v) {
                 ClimbingFragment newFragment = new ClimbingFragment();
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(newFragment, false);
+                fragmentChangeListener.replaceFragment(newFragment);
             }
         });
 
@@ -59,7 +59,7 @@ public class GameEventMenuFragment extends Fragment {
                 // Create fragment and give it an argument specifying the article it should show
                 ShootingFragment newFragment = new ShootingFragment();
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(newFragment, false);
+                fragmentChangeListener.replaceFragment(newFragment);
             }
         });
     }

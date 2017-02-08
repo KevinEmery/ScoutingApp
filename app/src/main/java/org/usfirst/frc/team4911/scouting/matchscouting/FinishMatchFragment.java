@@ -78,7 +78,7 @@ public class FinishMatchFragment extends Fragment {
 
                 // Go back to the data entry screen
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(CollectMetadataFragment.newInstance(), true);
+                fragmentChangeListener.replaceFragment(CollectMetadataFragment.newInstance());
             }
         });
 

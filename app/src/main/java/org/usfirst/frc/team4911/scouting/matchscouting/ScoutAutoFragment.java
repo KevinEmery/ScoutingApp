@@ -43,7 +43,7 @@ public class ScoutAutoFragment extends Fragment {
         @Override
         public void onClick(View v) {
             FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-            fragmentChangeListener.replaceFragment(FinishMatchFragment.newInstance(), true);
+            fragmentChangeListener.replaceFragment(FinishMatchFragment.newInstance());
         }
     };
 
@@ -56,7 +56,7 @@ public class ScoutAutoFragment extends Fragment {
             // https://stackoverflow.com/questions/8182513/ontouch-event-of-ontouchlistener-gets-called-twice-in-android
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(GameEventMenuFragment.newInstance(), true);
+                fragmentChangeListener.replaceFragment(GameEventMenuFragment.newInstance());
             }
 
             return true;

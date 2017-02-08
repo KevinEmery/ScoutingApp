@@ -31,15 +31,10 @@ public class ScoutMatchActivity extends BaseActivity implements FragmentChangeLi
     }
 
     @Override
-    public void replaceFragment(Fragment fragment, boolean addToBackStack) {
+    public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment, fragment.toString());
-
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(fragment.toString());
-        }
-
         fragmentTransaction.commit();
     }
 }

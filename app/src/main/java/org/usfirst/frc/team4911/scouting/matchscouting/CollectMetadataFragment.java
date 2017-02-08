@@ -39,7 +39,7 @@ public class CollectMetadataFragment extends Fragment {
         return view;
     }
 
-    public void addButtonClickListeners(View view) {
+    private void addButtonClickListeners(View view) {
 
         buttonStartAuto = (Button) view.findViewById(R.id.buttonStartAuto);
 
@@ -57,7 +57,7 @@ public class CollectMetadataFragment extends Fragment {
 
                 // Then we start to scout auto
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(ScoutAutoFragment.newInstance(), true);
+                fragmentChangeListener.replaceFragment(ScoutAutoFragment.newInstance());
             }
         });
     }
