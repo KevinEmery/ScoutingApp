@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import org.usfirst.frc.team4911.scouting.R;
-import org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventactivity.GameEventMenuFragment;
+import org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments.GameEventMenuFragment;
 
 public class ScoutAutoFragment extends Fragment {
     private static final String ARG_PARAM1 = "matchData";
@@ -51,8 +51,14 @@ public class ScoutAutoFragment extends Fragment {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-            fragmentChangeListener.replaceFragment(GameEventMenuFragment.newInstance(), true);
+
+            // Fix for the fact that this was getting called multiple times as describedc here:
+            // https://stackoverflow.com/questions/8182513/ontouch-event-of-ontouchlistener-gets-called-twice-in-android
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
+                fragmentChangeListener.replaceFragment(GameEventMenuFragment.newInstance(), true);
+            }
+
             return true;
         }
     };

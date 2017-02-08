@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.usfirst.frc.team4911.scouting.R;
+import org.usfirst.frc.team4911.scouting.matchscouting.datamodel.Alliance;
 import org.usfirst.frc.team4911.scouting.matchscouting.datamodel.MatchData;
+import org.usfirst.frc.team4911.scouting.matchscouting.datamodel.Team;
 
 import java.util.ArrayList;
 
@@ -44,16 +46,14 @@ public class CollectMetadataFragment extends Fragment {
         buttonStartAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Initialise the matchData object in the parent activity class
-                ((ScoutMatchActivity)getActivity()).matchData = new MatchData();
-                ((ScoutMatchActivity)getActivity()).matchData.autoMatchEvents = new ArrayList<>();
-                ((ScoutMatchActivity)getActivity()).matchData.teleOpMatchEvents = new ArrayList<>();
-
                 // Get the scout name and add it to the match metadata
                 EditText scoutNameEditText =
                         (EditText) getActivity().findViewById(R.id.edit_text_scout_name);
-                ((ScoutMatchActivity)getActivity()).matchData.scout =
-                        scoutNameEditText.getText().toString();
+                String scout = scoutNameEditText.getText().toString();
+
+                // Initialise the matchData object in the parent activity class
+                ((ScoutMatchActivity)getActivity()).matchData = new MatchData(scout, 1,
+                        new Team("CyberKnights", 4911), Alliance.RED);
 
                 // Then we start to scout auto
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();

@@ -7,6 +7,19 @@ package org.usfirst.frc.team4911.scouting.matchscouting.datamodel;
  */
 
 public class Team {
-    public int teamNumber;
-    public String teamName;
+    private String teamName;
+    private int teamNumber;
+
+    public Team(String teamName, int teamNumber) {
+        this.teamName = teamName;
+        this.teamNumber = teamNumber;
+    }
+
+    public String getTeamName() {
+        return this.teamName;
+    }
+
+    public int getTeamNumber() {
+        return this.teamNumber;
+    }
 }

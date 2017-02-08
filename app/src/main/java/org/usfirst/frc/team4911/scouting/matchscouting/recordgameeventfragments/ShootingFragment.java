@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventactivity;
+package org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments;
 
 
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventactivity;
+package org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -49,7 +49,7 @@ public class GameEventMenuFragment extends Fragment {
             public void onClick(View v) {
                 ClimbingFragment newFragment = new ClimbingFragment();
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(newFragment, true);
+                fragmentChangeListener.replaceFragment(newFragment, false);
             }
         });
 
@@ -59,7 +59,7 @@ public class GameEventMenuFragment extends Fragment {
                 // Create fragment and give it an argument specifying the article it should show
                 ShootingFragment newFragment = new ShootingFragment();
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(newFragment, true);
+                fragmentChangeListener.replaceFragment(newFragment, false);
             }
         });
     }

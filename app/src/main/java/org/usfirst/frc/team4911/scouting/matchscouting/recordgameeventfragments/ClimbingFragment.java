@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventactivity;
+package org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments;
 
 
 import android.os.Bundle;
@@ -58,10 +58,8 @@ public class ClimbingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (chkSucceeded.isChecked()) {
-                    climbingEvent.succeeded = true;
-                    climbingEvent.succeededTime =
-                            java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
-                                    .getTime());
+                    climbingEvent.setSucceeded(true);
+                    climbingEvent.logSucceededTime();
                 }
             }
         });
@@ -71,11 +69,11 @@ public class ClimbingFragment extends Fragment {
             public void onClick(View v) {
 
             // Copy over the button state to the click event. Note that the succeeded will already
-            // have taken care of itself.
-            climbingEvent.attempted = chkAttempted.isChecked();
+            // have taken care of itself
+            climbingEvent.setAttempted(chkAttempted.isChecked());
 
             // Add the event to the list of events
-            ((ScoutMatchActivity)getActivity()).matchData.autoMatchEvents.add(climbingEvent);
+            ((ScoutMatchActivity)getActivity()).matchData.addAutoMatchEvent(climbingEvent);
 
             // Go back to scout auto
             FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();

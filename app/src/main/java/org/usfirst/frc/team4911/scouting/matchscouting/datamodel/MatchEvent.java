@@ -9,17 +9,49 @@ import java.util.Calendar;
  */
 
 public class MatchEvent {
-    public EventType eventType;
-    public int xCoordinate;
-    public int yCoordinate;
-    public String timeStamp;
-    public boolean wasDefended;
-    public Role role;
+    protected EventType eventType;
+    private int xCoordinate;
+    private int yCoordinate;
+    private String timeStamp;
+    private boolean wasDefended;
+    private Role role;
 
     public MatchEvent() {
         xCoordinate = 1;
         yCoordinate = 1;
         timeStamp = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
                 .getTime());
+    }
+
+    public EventType getEventType() {
+        return this.eventType;
+    }
+
+    public int getxCoordinate() {
+        return this.xCoordinate;
+    }
+
+    public int getyCoordinate() {
+        return this.yCoordinate;
+    }
+
+    public String getTimeStamp() {
+        return this.timeStamp;
+    }
+
+    public boolean getWasDefended() {
+        return this.wasDefended;
+    }
+
+    public void setWasDefended(boolean wasDefended) {
+        this.wasDefended = wasDefended;
+    }
+
+    public Role getRole() {
+        return this.role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

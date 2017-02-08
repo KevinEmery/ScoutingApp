@@ -7,8 +7,40 @@ package org.usfirst.frc.team4911.scouting.matchscouting.datamodel;
  */
 
 public class ShotEvent extends MatchEvent {
-    public ShotSpeed shotSpeed;
-    public ShotAccuracy shotAccuracy;
-    public ShotQuantity shotQuantity;
-    public ShotTarget shotTarget;
+    private ShotSpeed shotSpeed;
+    private ShotAccuracy shotAccuracy;
+    private ShotQuantity shotQuantity;
+    private ShotTarget shotTarget;
+
+    public ShotSpeed getShotSpeed() {
+        return this.shotSpeed;
+    }
+
+    public void setShotSpeed(ShotSpeed shotSpeed) {
+        this.shotSpeed = shotSpeed;
+    }
+
+    public ShotAccuracy getShotAccuracy() {
+        return this.shotAccuracy;
+    }
+
+    public void setShotAccuracy(ShotAccuracy shotAccuracy) {
+        this.shotAccuracy = shotAccuracy;
+    }
+
+    public ShotQuantity getShotQuantity() {
+        return this.shotQuantity;
+    }
+
+    public void setShotQuantity(ShotQuantity shotQuantity) {
+        this.shotQuantity = shotQuantity;
+    }
+
+    public ShotTarget getShotTarget() {
+        return this.shotTarget;
+    }
+
+    public void setShotTarget(ShotTarget shotTarget) {
+        this.shotTarget = shotTarget;
+    }
 }
