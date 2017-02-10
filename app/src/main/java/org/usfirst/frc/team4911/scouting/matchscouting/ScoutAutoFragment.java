@@ -2,6 +2,7 @@ package org.usfirst.frc.team4911.scouting.matchscouting;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,9 +55,10 @@ public class ScoutAutoFragment extends Fragment {
 
             // Fix for the fact that this was getting called multiple times as describedc here:
             // https://stackoverflow.com/questions/8182513/ontouch-event-of-ontouchlistener-gets-called-twice-in-android
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(GameEventMenuFragment.newInstance());
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                GameEventMenuFragment fragment = GameEventMenuFragment.newInstance();
+                fragment.show(fm, "Dialog Fragment");
             }
 
             return true;

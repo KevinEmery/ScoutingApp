@@ -1,11 +1,14 @@
 package org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import android.support.v4.app.FragmentManager;
 
@@ -16,10 +19,10 @@ import org.usfirst.frc.team4911.scouting.matchscouting.FragmentChangeListener;
 /**
  * Fragment that contains the first menu that shows when you push the field button.
  */
-public class GameEventMenuFragment extends Fragment {
+public class GameEventMenuFragment extends DialogFragment implements OnItemClickListener {
 
-    Button buttonClimbing;
-    Button buttonShooting;
+    private String[] MATCH_EVENTS = new String[] { "Climbing", "Shooting" };
+    private ListView mListView;
 
     public GameEventMenuFragment() {
         // Required empty public constructor
@@ -30,39 +33,42 @@ public class GameEventMenuFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater,
-            ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_event_menu, container, false);
-        addButtonClickListeners(view);
+        mListView = (ListView) view.findViewById(R.id.match_event_list_view);
         return view;
     }
 
-    public void addButtonClickListeners(View view) {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
 
-        buttonClimbing = (Button) view.findViewById(R.id.buttonClimbing);
-        buttonShooting = (Button) view.findViewById(R.id.buttonShooting);
+        super.onActivityCreated(savedInstanceState);
 
-        buttonClimbing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                ClimbingFragment newFragment = new ClimbingFragment();
-                newFragment.show(fm, "Dialog Fragment");
-            }
-        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, MATCH_EVENTS);
 
-        buttonShooting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create fragment and give it an argument specifying the article it should show
-                ShootingFragment newFragment = new ShootingFragment();
+        mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // This is the thing that hides the list
+        dismiss();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        switch (position) {
+            case 0:
+                ClimbingFragment climbingFragment = new ClimbingFragment();
+                climbingFragment.show(fm, "Dialog Fragment");
+                return;
+            case 1:
+                ShootingFragment fragment = new ShootingFragment();
                 FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(newFragment);
-            }
-        });
+                fragmentChangeListener.replaceFragment(fragment);
+                return;
+        }
     }
 }
