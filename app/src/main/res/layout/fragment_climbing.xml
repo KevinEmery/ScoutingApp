@@ -5,15 +5,6 @@
     android:orientation="vertical"
     tools:context="org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments.ClimbingFragment">
 
-    <TextView
-        android:id="@+id/ClimbingLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:gravity="start"
-        android:text="@string/label_climbing"
-        android:textSize="25sp" />
-
     <CheckBox
         android:id="@+id/chkClimbingAttempted"
         android:layout_width="wrap_content"

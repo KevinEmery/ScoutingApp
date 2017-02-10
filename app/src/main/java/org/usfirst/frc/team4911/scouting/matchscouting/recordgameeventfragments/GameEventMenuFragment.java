@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.support.v4.app.FragmentManager;
+
 import org.usfirst.frc.team4911.scouting.R;
 import org.usfirst.frc.team4911.scouting.matchscouting.FragmentChangeListener;
 
@@ -47,9 +49,9 @@ public class GameEventMenuFragment extends Fragment {
         buttonClimbing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
                 ClimbingFragment newFragment = new ClimbingFragment();
-                FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(newFragment);
+                newFragment.show(fm, "Dialog Fragment");
             }
         });
 
