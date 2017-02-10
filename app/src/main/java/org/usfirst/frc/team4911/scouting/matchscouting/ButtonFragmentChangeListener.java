@@ -9,11 +9,11 @@ package org.usfirst.frc.team4911.scouting.matchscouting;
 
 import android.support.v4.app.Fragment;
 
-public interface FragmentChangeListener
+public interface ButtonFragmentChangeListener
 {
     /**
-     * Helps with switching from fragment to fragment
+     * Helps with switching between match phase button fragments.
      * @param fragment The fragment to replace the current fragment with.
      */
-    void replaceFragment(Fragment fragment);
+    void replaceButtonFragment(Fragment fragment);
 }

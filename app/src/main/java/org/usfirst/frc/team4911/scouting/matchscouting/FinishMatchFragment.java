@@ -1,13 +1,16 @@
 package org.usfirst.frc.team4911.scouting.matchscouting;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.usfirst.frc.team4911.scouting.PitActivity;
 import org.usfirst.frc.team4911.scouting.R;
 import org.usfirst.frc.team4911.scouting.matchscouting.datamodel.DefensiveRating;
 import org.usfirst.frc.team4911.scouting.matchscouting.datamodel.Role;
@@ -30,7 +34,7 @@ import java.io.IOException;
  * Use the {@link FinishMatchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FinishMatchFragment extends Fragment {
+public class FinishMatchFragment extends DialogFragment {
 
     private static final String LOG_TAG = "FinishMatchFragment";
 
@@ -49,6 +53,15 @@ public class FinishMatchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        // request a window without the title
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
     }
 
     @Override
@@ -71,14 +84,15 @@ public class FinishMatchFragment extends Fragment {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Serialise the matchdata class and save it to file
+                // Serialise the match data and save it to a file
                 Gson gson = new GsonBuilder().create();
                 String matchDataAsString = gson.toJson(((ScoutMatchActivity)getActivity()).matchData);
                 SaveDataToFile(v, matchDataAsString);
 
-                // Go back to the data entry screen
-                FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(CollectMetadataFragment.newInstance());
+                // Start a new scout match activity
+                dismiss();
+                Intent intent = new Intent(getActivity(), ScoutMatchActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -94,7 +108,7 @@ public class FinishMatchFragment extends Fragment {
         if (this.isExternalStorageWritable())
         {
             try {
-                File directory = this.getScoutingDataStorageDir();
+                File directory = getScoutingDataStorageDir();
                 File dataFileHandle = new File(directory, "scoutingdata.json");
 
                 FileOutputStream outputStream = new FileOutputStream(dataFileHandle);

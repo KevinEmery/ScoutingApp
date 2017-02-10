@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.support.v4.app.FragmentManager;
 
 import org.usfirst.frc.team4911.scouting.R;
-import org.usfirst.frc.team4911.scouting.matchscouting.FragmentChangeListener;
 
 
 /**
@@ -23,7 +22,7 @@ import org.usfirst.frc.team4911.scouting.matchscouting.FragmentChangeListener;
  */
 public class GameEventMenuFragment extends DialogFragment implements OnItemClickListener {
 
-    private String[] MATCH_EVENTS = new String[] { "Climbing", "Shooting" };
+    private String[] MATCH_EVENTS = new String[] { "Climbing" };
     private ListView mListView;
 
     public GameEventMenuFragment() {
@@ -74,11 +73,6 @@ public class GameEventMenuFragment extends DialogFragment implements OnItemClick
             case 0:
                 ClimbingFragment climbingFragment = new ClimbingFragment();
                 climbingFragment.show(fm, "Dialog Fragment");
-                return;
-            case 1:
-                ShootingFragment fragment = new ShootingFragment();
-                FragmentChangeListener fragmentChangeListener = (FragmentChangeListener) getActivity();
-                fragmentChangeListener.replaceFragment(fragment);
                 return;
         }
     }
