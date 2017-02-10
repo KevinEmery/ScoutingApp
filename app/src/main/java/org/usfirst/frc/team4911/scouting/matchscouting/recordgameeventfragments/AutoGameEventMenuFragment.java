@@ -3,34 +3,36 @@ package org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import android.support.v4.app.FragmentManager;
-
 import org.usfirst.frc.team4911.scouting.R;
-
+import org.usfirst.frc.team4911.scouting.matchscouting.ScoutMatchActivity;
+import org.usfirst.frc.team4911.scouting.matchscouting.datamodel.CrossedBaselineEvent;
 
 /**
- * Fragment that contains the first menu that shows when you push the field button.
+ * A simple {@link Fragment} subclass.
+ * Use the {@link AutoGameEventMenuFragment#newInstance} factory method to
+ * create an instance of this fragment.
  */
-public class GameEventMenuFragment extends DialogFragment implements OnItemClickListener {
+public class AutoGameEventMenuFragment extends DialogFragment implements AdapterView.OnItemClickListener {
 
-    private String[] MATCH_EVENTS = new String[] { "Climbing" };
+    private String[] MATCH_EVENTS = new String[] { "Crossed baseline" };
     private ListView mListView;
 
-    public GameEventMenuFragment() {
+    public AutoGameEventMenuFragment() {
         // Required empty public constructor
     }
 
-    public static GameEventMenuFragment newInstance() {
-        return new GameEventMenuFragment();
+    public static AutoGameEventMenuFragment newInstance() {
+        return new AutoGameEventMenuFragment();
     }
 
     @Override
@@ -46,8 +48,8 @@ public class GameEventMenuFragment extends DialogFragment implements OnItemClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_game_event_menu, container, false);
-        mListView = (ListView) view.findViewById(R.id.match_event_list_view);
+        View view = inflater.inflate(R.layout.fragment_auto_game_event_menu, container, false);
+        mListView = (ListView) view.findViewById(R.id.auto_match_event_list_view);
         return view;
     }
 
@@ -67,13 +69,13 @@ public class GameEventMenuFragment extends DialogFragment implements OnItemClick
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // This is the thing that hides the list
         dismiss();
-        FragmentManager fm = getActivity().getSupportFragmentManager();
 
         switch (position) {
             case 0:
-                ClimbingFragment climbingFragment = new ClimbingFragment();
-                climbingFragment.show(fm, "Dialog Fragment");
-                return;
+                CrossedBaselineEvent crossedBaselineEvent = new CrossedBaselineEvent();
+                crossedBaselineEvent.setCrossedBaseLine(true);
+                ((ScoutMatchActivity)getActivity()).matchData
+                        .addAutoMatchEvent(crossedBaselineEvent);
         }
     }
 }

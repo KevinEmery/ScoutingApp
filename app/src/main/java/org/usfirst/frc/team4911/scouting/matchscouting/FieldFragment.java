@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.usfirst.frc.team4911.scouting.R;
-import org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments.GameEventMenuFragment;
+import org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments.AutoGameEventMenuFragment;
+import org.usfirst.frc.team4911.scouting.matchscouting.recordgameeventfragments.TeleOpGameEventMenuFragment;
 
 public class FieldFragment extends Fragment {
+
     public FieldFragment() {
         // Required empty public constructor
     }
@@ -37,16 +39,24 @@ public class FieldFragment extends Fragment {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
-            MatchState currentState = ((ScoutMatchActivity) getActivity()).matchState;
-
-            if (currentState == MatchState.PREMATCH || currentState == MatchState.POSTMATCH) {
-                return true;
-            }
-
             if (event.getAction() == MotionEvent.ACTION_UP) {
+
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                GameEventMenuFragment fragment = GameEventMenuFragment.newInstance();
-                fragment.show(fm, "Dialog Fragment");
+                MatchState currentState = ((ScoutMatchActivity) getActivity()).matchState;
+
+                if (currentState == MatchState.AUTO) {
+                    AutoGameEventMenuFragment autoGameEventMenuFragment
+                            = AutoGameEventMenuFragment.newInstance();
+                    autoGameEventMenuFragment.show(fm, "Dialog Fragment");
+                }
+                else if (currentState == MatchState.TELEOP) {
+                    TeleOpGameEventMenuFragment teleOpGameEventMenuFragment =
+                            TeleOpGameEventMenuFragment.newInstance();
+                    teleOpGameEventMenuFragment.show(fm, "Dialog Fragment");
+                }
+                else {
+                    return true;
+                }
             }
 
             return true;

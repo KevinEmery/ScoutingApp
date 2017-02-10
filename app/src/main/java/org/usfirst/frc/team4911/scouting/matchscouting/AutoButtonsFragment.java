@@ -61,6 +61,7 @@ public class AutoButtonsFragment extends Fragment {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FinishMatchFragment finishMatchFragment = new FinishMatchFragment();
                 finishMatchFragment.show(fm, "Dialog Fragment");
+
             }
         });
 

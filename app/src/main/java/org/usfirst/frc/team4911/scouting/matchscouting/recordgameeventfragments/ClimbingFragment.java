@@ -69,7 +69,7 @@ public class ClimbingFragment extends DialogFragment {
             climbingEvent.setAttempted(chkAttempted.isChecked());
 
             // Add the event to the list of events
-            ((ScoutMatchActivity)getActivity()).matchData.addAutoMatchEvent(climbingEvent);
+            ((ScoutMatchActivity)getActivity()).matchData.addTeleOpMatchEvent(climbingEvent);
 
             // Close the fragment
             dismiss();
