@@ -28,6 +28,7 @@
     <string name="label_scout_name">Scout name</string>
     <string name="label_start_auto">Auto Start</string>
     <string name="label_finish_game">Match Ended</string>
+    <string name="match_start">Start match</string>
     <string name="match_end">End match</string>
     <string name="teleop_start">Start TeleOp</string>
     <string name="desc">SteamWorks field image</string>

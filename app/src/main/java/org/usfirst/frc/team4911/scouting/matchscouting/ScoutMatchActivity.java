@@ -23,21 +23,15 @@ public class ScoutMatchActivity extends BaseActivity implements ButtonFragmentCh
 
         setContentView(R.layout.activity_scout_match);
 
-        // When we enter this activity we land on the create match metadata fragment
-        FieldFragment fieldFragment = FieldFragment.newInstance();
-        fieldFragment.setArguments(getIntent().getExtras());
-
-        AutoButtonsFragment buttonsFragment = AutoButtonsFragment.newInstance();
-        buttonsFragment.setArguments(getIntent().getExtras());
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.field_fragment_container, fieldFragment);
-        fragmentTransaction.add(R.id.match_phase_buttons_fragment_container, buttonsFragment);
-        fragmentTransaction.commit();
 
-        CollectMetadataFragment fragment = CollectMetadataFragment.newInstance();
-        fragment.show(fragmentManager, "Dialog Fragment");
+        FieldFragment fieldFragment = FieldFragment.newInstance();
+        PreMatchButtonFragment preMatchButtonFragment = PreMatchButtonFragment.newInstance();
+
+        fragmentTransaction.add(R.id.field_fragment_container, fieldFragment);
+        fragmentTransaction.add(R.id.match_phase_buttons_fragment_container, preMatchButtonFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
