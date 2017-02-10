@@ -52,6 +52,9 @@ public class PreMatchButtonFragment extends Fragment {
                 AutoButtonsFragment autoButtonsFragment = AutoButtonsFragment.newInstance();
                 ButtonFragmentChangeListener fc =(ButtonFragmentChangeListener)getActivity();
                 fc.replaceButtonFragment(autoButtonsFragment);
+
+                // And set the match state to auto
+                ((ScoutMatchActivity) getActivity()).matchState = MatchState.AUTO;
             }
         });
 

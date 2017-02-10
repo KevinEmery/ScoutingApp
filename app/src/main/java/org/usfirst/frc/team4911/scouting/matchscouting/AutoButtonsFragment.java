@@ -46,9 +46,12 @@ public class AutoButtonsFragment extends Fragment {
         buttonTeleOpStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            TeleOpButtonsFragment teleOpButtonsFragment = new TeleOpButtonsFragment();
-            ButtonFragmentChangeListener fc =(ButtonFragmentChangeListener)getActivity();
-            fc.replaceButtonFragment(teleOpButtonsFragment);
+                TeleOpButtonsFragment teleOpButtonsFragment = new TeleOpButtonsFragment();
+                ButtonFragmentChangeListener fc =(ButtonFragmentChangeListener)getActivity();
+                fc.replaceButtonFragment(teleOpButtonsFragment);
+
+                // Set match state to teleop
+                ((ScoutMatchActivity) getActivity()).matchState = MatchState.TELEOP;
             }
         });
 

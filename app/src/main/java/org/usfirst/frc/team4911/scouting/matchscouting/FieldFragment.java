@@ -37,6 +37,12 @@ public class FieldFragment extends Fragment {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
+            MatchState currentState = ((ScoutMatchActivity) getActivity()).matchState;
+
+            if (currentState == MatchState.PREMATCH || currentState == MatchState.POSTMATCH) {
+                return true;
+            }
+
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 GameEventMenuFragment fragment = GameEventMenuFragment.newInstance();

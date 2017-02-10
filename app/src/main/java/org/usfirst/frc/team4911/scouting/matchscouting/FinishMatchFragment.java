@@ -109,7 +109,7 @@ public class FinishMatchFragment extends DialogFragment {
         {
             try {
                 File directory = getScoutingDataStorageDir();
-                File dataFileHandle = new File(directory, "scoutingdata.json");
+                File dataFileHandle = new File(directory, "scoutingdata.txt");
 
                 FileOutputStream outputStream = new FileOutputStream(dataFileHandle);
                 outputStream.write(data.getBytes());

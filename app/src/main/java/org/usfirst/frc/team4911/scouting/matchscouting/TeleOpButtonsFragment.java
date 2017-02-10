@@ -46,6 +46,7 @@ public class TeleOpButtonsFragment extends Fragment {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FinishMatchFragment finishMatchFragment = new FinishMatchFragment();
                 finishMatchFragment.show(fm, "Dialog Fragment");
+                ((ScoutMatchActivity) getActivity()).matchState = MatchState.POSTMATCH;
             }
         });
 
