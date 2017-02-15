@@ -6,15 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.bluetoothfilepusher.*;
 
 import java.util.Date;
 
-public class BluetoothSyncActivity extends BaseActivity {
+public class BluetoothSyncActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 1;
     private static final String TAG = "CyberKnightBluePusher";
     private static final String DEFAULT_TARGET_DEVICE_NAME_PREFERENCE = "DEFAULT_TARGET_DEVICE_NAME";
@@ -88,9 +90,10 @@ public class BluetoothSyncActivity extends BaseActivity {
     }
 
     protected void sendButton_Clicked(View v) {
-        ConnectedDevice connection = filePusher.connect(mBluetoothDevice);
-        // TODO: Make this more elegant ffs
-        connection.send(org.usfirst.frc.team4911.scouting.matchscouting.FinishMatchFragment.getScoutingDataStorageDir());
+        Toast.makeText(getApplicationContext(), "Send button clicked", Toast.LENGTH_SHORT).show();
+        //ConnectedDevice connection = filePusher.connect(mBluetoothDevice);
+        //// TODO: Make this more elegant ffs
+        //connection.send(org.usfirst.frc.team4911.scouting.matchscouting.FinishMatchFragment.getScoutingDataStorageDir());
     }
 
     private void log(String line) {
