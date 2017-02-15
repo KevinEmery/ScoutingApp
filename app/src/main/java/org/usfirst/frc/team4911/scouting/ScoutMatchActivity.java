@@ -29,6 +29,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    // One thing I should probably mention is that it's important to keep track of when UI stuff
+    // gets bound to code. Here in the activity class we initialise all the views and stuff that
+    // belong to the activity specifically and not any of the fragments. Think of it as being the
+    // stuff that's defined in activity_scout_match.xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,37 +47,14 @@ public class ScoutMatchActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // I do not know what this does but I think it's got something to do with
-        // the little bar up the top that lets us jump between activities.
-        getMenuInflater().inflate(R.menu.menu_scout_match, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
+     * one of the sections/tabs/pages. This is the thing that holds all the different pages
+     * and handles us switching between them.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -99,7 +80,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 4 total pages. IDK why we need to keep track of the number like this but
-            // we do so we're doing it.
+            // we do so we're doing it. This method is probably called by something at a deeper
+            // layer of Android.
             return 4;
         }
 
