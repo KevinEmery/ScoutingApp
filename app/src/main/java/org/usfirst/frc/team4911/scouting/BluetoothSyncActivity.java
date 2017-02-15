@@ -16,6 +16,7 @@ import org.usfirst.frc.team4911.scouting.bluetoothfilepusher.*;
 
 import java.util.Date;
 
+// Nathaniel wrote this. It works and I don't question it. We can make it look prettier tho.
 public class BluetoothSyncActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 1;
     private static final String TAG = "CyberKnightBluePusher";

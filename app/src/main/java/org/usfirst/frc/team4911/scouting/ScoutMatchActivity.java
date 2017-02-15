@@ -1,7 +1,5 @@
 package org.usfirst.frc.team4911.scouting;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -10,14 +8,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
-
+// This is the single activity we care about the most.
 public class ScoutMatchActivity extends AppCompatActivity {
 
     /**
@@ -40,8 +34,6 @@ public class ScoutMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scout_match);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -49,23 +41,13 @@ public class ScoutMatchActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // I do not know what this does but I think it's got something to do with
+        // the little bar up the top that lets us jump between activities.
         getMenuInflater().inflate(R.menu.menu_scout_match, menu);
         return true;
     }
@@ -86,41 +68,6 @@ public class ScoutMatchActivity extends AppCompatActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_scout_match, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
-
-    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -132,26 +79,43 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            // This is the method that creates the different fragments for each page.
+            // Notice that it's pretty similar to the OnClickListener of the menu in
+            // MainActivity?
+            switch (position) {
+                case  0:
+                    return PreMatchFragment.newInstance();
+                case 1:
+                    return AutonomousFragment.newInstance();
+                case 2:
+                    return TeleOpFragment.newInstance();
+                case 3:
+                    return PostMatchFragment.newInstance();
+                default:
+                    return null;
+            }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages. IDK why we need to keep track of the number like this but
+            // we do so we're doing it.
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
+            // From the name of this method I think it gets the titles of the pages in the
+            // fragment. IDK what a lot of this code does in detail. I just guess.
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Pre-Match";
                 case 1:
-                    return "SECTION 2";
+                    return "Autonomous";
                 case 2:
-                    return "SECTION 3";
+                    return "Tele-Op";
+                case 3:
+                    return "Post-Match";
             }
             return null;
         }

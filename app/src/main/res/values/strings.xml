@@ -1,4 +1,5 @@
 <resources>
+    <!--This file is a huge mess and needs A LOT of cleaning-->
     <string name="app_name">ScoutingApp</string>
     <string name="save_button_text">Save</string>
     <string name="unable_to_write_file">Save</string>
