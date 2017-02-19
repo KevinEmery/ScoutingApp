@@ -1,13 +1,94 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="org.usfirst.frc.team4911.scouting.PostMatchFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Post-match fragment" />
 
-</FrameLayout>
+    <TextView
+        android:text="End Game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView10" />
+
+    <Space
+        android:layout_width="50dp"
+        android:layout_height="25dp" />
+
+    <TextView
+        android:text="Climbing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView11" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="100dp" >
+
+        <RadioButton
+            android:text="Success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton17"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="Attempt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton20"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="No Attempt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton23"
+            android:layout_weight="1" />
+    </RadioGroup>
+
+    <Button
+        android:text="Location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button5" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+    <TextView
+        android:text="Post Game Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView13" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Scout Name"
+        android:ems="10"
+        android:id="@+id/editText3" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="100dp" >
+
+        <RadioButton
+            android:text="Dead Bot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton24"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="No Show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton25"
+            android:layout_weight="1" />
+    </RadioGroup>
+</LinearLayout>
