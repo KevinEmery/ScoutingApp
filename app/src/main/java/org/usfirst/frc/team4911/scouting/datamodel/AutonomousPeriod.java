@@ -26,25 +26,15 @@ public class AutonomousPeriod {
         this.setShotAttempts(new ArrayList<ShotAttempt>());
     }
 
-    public boolean isAutoMobilityPoints() {
-
+    public boolean getAutoMobilityPoints() {
         return autoMobilityPoints;
     }
 
-    public boolean isLoadedFromHopper() {
-
+    public boolean getsLoadedFromHopper() {
         return loadedFromHopper;
     }
 
-    public List<GearAttempt> getgGearAttempts() {
-        return gearAttempts;
-    }
-
-    public List<ShotAttempt> getShotAttempts() {
-        return shotAttempts;
-    }
-
-    public void setAutoMobilityPoints(boolean autoMobilityPoints) {
+     public void setAutoMobilityPoints(boolean autoMobilityPoints) {
         this.autoMobilityPoints = autoMobilityPoints;
     }
 
@@ -52,11 +42,19 @@ public class AutonomousPeriod {
         this.loadedFromHopper = loadedFromHopper;
     }
 
+    public List<GearAttempt> getGearAttempts() {
+        return gearAttempts;
+    }
     public void setGearAttempts(List<GearAttempt> gGearAttempts) {
         this.gearAttempts = gGearAttempts;
+    }
+
+    public List<ShotAttempt> getShotAttempts() {
+        return shotAttempts;
     }
 
     public void setShotAttempts(List<ShotAttempt> shotAttempts) {
         this.shotAttempts = shotAttempts;
     }
+
 }
