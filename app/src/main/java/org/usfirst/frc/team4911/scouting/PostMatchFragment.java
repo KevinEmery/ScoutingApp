@@ -1,10 +1,13 @@
 package org.usfirst.frc.team4911.scouting;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +39,24 @@ public class PostMatchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // See note in the OnCreateView method of PreMatchFragment
-        return inflater.inflate(R.layout.fragment_post_match, container, false);
+        View view = inflater.inflate(R.layout.fragment_post_match, container, false);
+        Button location = (Button) view.findViewById(R.id.btn_climbing_location);
+        location.setOnClickListener(handleBtnPress);
+        return view;
     }
+
+    /**
+     * OnTouchListener for the location button which invites the user to note down the location
+     * of a gear event.
+     */
+    private View.OnClickListener handleBtnPress = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            FragmentManager fragmentManager = getChildFragmentManager();
+            DialogFragment fieldMapFragment =
+                    RecordLocationFragment.newInstance(R.drawable.airship_blue);
+            fieldMapFragment.show(fragmentManager, "DialogFragment");
+        }
+    };
 }

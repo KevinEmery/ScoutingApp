@@ -1,15 +1,12 @@
 package org.usfirst.frc.team4911.scouting;
 
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 // This is the single activity we care about the most.
 public class ScoutMatchActivity extends AppCompatActivity {
@@ -67,9 +64,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 case  0:
                     return PreMatchFragment.newInstance();
                 case 1:
-                    return AutonomousFragment.newInstance();
+                    return ScoutAutoFragment.newInstance();
                 case 2:
-                    return TeleOpFragment.newInstance();
+                    return ScoutTeleOpFragment.newInstance();
                 case 3:
                     return PostMatchFragment.newInstance();
                 default:

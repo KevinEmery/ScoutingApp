@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.usfirst.frc.team4911.scouting.ScoutTeleOpFragment">
+
+    <!--This is the fragmentcontainer for the shooting event collection fragment-->
+    <FrameLayout
+        android:id="@+id/teleop_shooting_fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--This is the fragmentcontainer for the shooting event collection fragment-->
+    <FrameLayout
+        android:id="@+id/teleop_gear_fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Defense?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8" />
+
+        <RadioButton
+            android:text="None"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton15"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="Bad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton16"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="Decent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton18"
+            android:layout_weight="4.50" />
+
+        <RadioButton
+            android:text="Amazing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButton19"
+            android:layout_weight="1" />
+    </RadioGroup>
+
+</LinearLayout>
