@@ -93,7 +93,7 @@ public class BluetoothSyncActivity extends AppCompatActivity {
     protected void sendButton_Clicked(View v) {
         Toast.makeText(getApplicationContext(), "Send button clicked", Toast.LENGTH_SHORT).show();
         //ConnectedDevice connection = filePusher.connect(mBluetoothDevice);
-        //// TODO: Make this more elegant ffs
+        /// TODO: Make this more elegant ffs
         //connection.send(org.usfirst.frc.team4911.scouting.matchscouting.FinishMatchFragment.getScoutingDataStorageDir());
     }
 

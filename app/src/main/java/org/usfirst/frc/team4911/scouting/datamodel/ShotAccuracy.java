@@ -7,9 +7,8 @@ package org.usfirst.frc.team4911.scouting.datamodel;
  */
 
 public enum ShotAccuracy {
-    FAILED,
-    POOR,
-    AVERAGE,
-    DECENT,
-    GREAT
+    Failed,  // missed all shots
+    Poor, // 0%-39% %
+    Average, // 40%-79%
+    Great // 80%+
 }

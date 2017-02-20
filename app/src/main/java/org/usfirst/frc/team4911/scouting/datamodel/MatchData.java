@@ -2,6 +2,8 @@ package org.usfirst.frc.team4911.scouting.datamodel;
 
 import android.view.ViewGroup;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,109 +11,59 @@ import java.util.List;
 
 /**
  * Created by Anne_ on 1/18/2017.
- *
- * Match data class to send to server,
+ * Modified by johansu on 2/19/2017.
  */
 
-public class MatchData {
-    private String scout;
-    private String dateStamp;
-    private int driveStation;
-    private Team team;
-    private Alliance alliance;
-    private boolean deadBot;
-    private boolean noShow;
-    private List<MatchEvent> autoMatchEvents;
-    private List<MatchEvent> teleOpMatchEvents;
-    private DefensiveRating defensiveRating;
-    private Role role;
-    private PenaltyType penalty;
+public class MatchData
+{
+    // The pre-game data on how a team sets up for a match.
+    @SerializedName("PreGame") PreGame preGame;
 
-    public MatchData(String scout, int driveStation, Team team, Alliance alliance) {
-        this.scout = scout;
-        this.driveStation = driveStation;
-        this.team = team;
-        this.alliance = alliance;
+    // The autonomous period data, the first 15s of the match
+    @SerializedName("AutonomousPeriod") AutonomousPeriod autonomousPeriod;
 
-        this.dateStamp = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
-                .getTime());
-        this.autoMatchEvents = new ArrayList<>();
-        this.teleOpMatchEvents = new ArrayList<>();
+    // The teleop period data, from 15s to about 30s before match is over
+    @SerializedName("TeleopPeriod") TeleopPeriod teleopPeriod;
+
+    // The end game period is typically the last 30s
+    @SerializedName("EndGame")  EndGame endGame;
+
+    public MatchData(){
+        this.setPreGame(new PreGame());
+        this.setAutonomousPeriod(new AutonomousPeriod());
+        this.setTeleopPeriod(new TeleopPeriod());
+        this.setEndGame(new EndGame());
     }
 
-    public String getScout() {
-        return this.scout;
+    public EndGame getEndGame() {
+        return endGame;
     }
 
-    public String getDate() {
-        return this.dateStamp;
+    public void setEndGame(EndGame endGame) {
+        this.endGame = endGame;
     }
 
-    public int getDriveStation() {
-        return this.driveStation;
+    public PreGame getPreGame() {
+        return preGame;
     }
 
-    public Team getTeam() {
-        return this.team;
+    public void setPreGame(PreGame preGame) {
+        this.preGame = preGame;
     }
 
-    public Alliance getAlliance() {
-        return this.alliance;
+    public AutonomousPeriod getAutonomousPeriod() {
+        return autonomousPeriod;
     }
 
-    public boolean getDeadbot() {
-        return this.deadBot;
+    public void setAutonomousPeriod(AutonomousPeriod autonomousPeriod) {
+        this.autonomousPeriod = autonomousPeriod;
     }
 
-    public void setDeadBot(boolean deadBot) {
-        this.deadBot = deadBot;
+    public TeleopPeriod getTeleopPeriod() {
+        return teleopPeriod;
     }
 
-    public boolean getNoShow() {
-        return this.noShow;
-    }
-
-    public void setNoShow(boolean noShow) {
-        this.noShow = noShow;
-    }
-
-    public List<MatchEvent> getAutoMatchEvents() {
-        return this.autoMatchEvents;
-    }
-
-    public void addAutoMatchEvent(MatchEvent matchEvent) {
-        this.autoMatchEvents.add(matchEvent);
-    }
-
-    public List<MatchEvent> getTeleOpMatchEvents() {
-        return this.teleOpMatchEvents;
-    }
-
-    public void addTeleOpMatchEvent(MatchEvent matchEvent) {
-        this.teleOpMatchEvents.add(matchEvent);
-    }
-
-    public DefensiveRating getDefensiveRating() {
-        return this.defensiveRating;
-    }
-
-    public void setDefensiveRating(DefensiveRating defensiveRating) {
-        this.defensiveRating = defensiveRating;
-    }
-
-    public Role getRole() {
-        return this.role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public PenaltyType getPenalty() {
-        return this.penalty;
-    }
-
-    public void setPenalty(PenaltyType penalty) {
-        this.penalty = penalty;
+    public void setTeleopPeriod(TeleopPeriod teleopPeriod) {
+        this.teleopPeriod = teleopPeriod;
     }
 }

@@ -7,8 +7,9 @@ package org.usfirst.frc.team4911.scouting.datamodel;
  */
 
 public enum GearResult {
-    NONE,
-    PLACEDGEAR,
-    DROPPEDGEAR,
-    RANOUTOFTIME,
+    None,
+    Success,
+    Failed,
+    RanOutOfTime,
+    Abandoned
 }
