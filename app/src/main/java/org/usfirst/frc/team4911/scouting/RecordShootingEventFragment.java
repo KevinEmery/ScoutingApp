@@ -59,8 +59,9 @@ public class RecordShootingEventFragment extends DialogFragment {
         @Override
         public void onClick(View v) {
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment =
-                    RecordLocationFragment.newInstance(R.drawable.shootingzone_blue);
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(
+                    ((ScoutMatchActivity) getActivity()).getAlliance(),
+                    LocationMapType.SHOOTING_AREA);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

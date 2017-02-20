@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
 import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
+import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 
 // This is the single activity we care about the most.
 public class ScoutMatchActivity extends AppCompatActivity {
@@ -31,7 +32,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
     /**
      * The {@link MatchData} object that stores all scouted data collected from this match.
      */
-    private MatchData matchData;
+    private ScoutingData scoutingData;
+
+    /**
+     * Keeps track of the alliance type that the match is scouting for
+     */
+    private AllianceType alliance;
 
     // One thing I should probably mention is that it's important to keep track of when UI stuff
     // gets bound to code. Here in the activity class we initialise all the views and stuff that
@@ -49,6 +55,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        //TODO: Fix when we're getting drive station from sharedpreferences.
+        alliance = AllianceType.BLUE;
     }
 
     /**
@@ -69,13 +78,13 @@ public class ScoutMatchActivity extends AppCompatActivity {
             // MainActivity?
             switch (position) {
                 case  0:
-                    return PreMatchFragment.newInstance();
+                    return PreGameFragment.newInstance();
                 case 1:
                     return ScoutAutoFragment.newInstance();
                 case 2:
                     return ScoutTeleOpFragment.newInstance();
                 case 3:
-                    return PostMatchFragment.newInstance();
+                    return EndGameFragment.newInstance();
                 default:
                     return null;
             }
@@ -111,15 +120,31 @@ public class ScoutMatchActivity extends AppCompatActivity {
      * Getter for the {@link MatchData} object associated with this class.
      * @return The matchdata object associated with this class.
      */
-    public MatchData getMatchData() {
-        return this.matchData;
+    public ScoutingData getScoutingData() {
+        return this.scoutingData;
     }
 
     /**
      * Setter for the {@link MatchData} object associated with this class.
-     * @param matchData The matchdata object to set matchdata to.
+     * @param scoutingData The matchdata object to set matchdata to.
      */
-    public void setMatchData(MatchData matchData) {
-        this.matchData = matchData;
+    public void setScoutingData(ScoutingData scoutingData) {
+        this.scoutingData = scoutingData;
+    }
+
+    /**
+     * Gets the alliance type of the current match.
+     * @return The alliance type of the current match.
+     */
+    public AllianceType getAlliance() {
+        return this.alliance;
+    }
+
+    /**
+     * Sets the alliance type of the current match.
+     * @param alliance The alliance type to set.
+     */
+    public void setAlliance(AllianceType alliance) {
+        this.alliance = alliance;
     }
 }

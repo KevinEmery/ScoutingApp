@@ -60,8 +60,8 @@ public class RecordGearEventFragment extends Fragment {
         @Override
         public void onClick(View v) {
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment =
-                    RecordLocationFragment.newInstance(R.drawable.airship_blue);
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(
+                    ((ScoutMatchActivity) getActivity()).getAlliance(), LocationMapType.AIRSHIP);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };
