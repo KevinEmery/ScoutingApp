@@ -8,11 +8,12 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AutonomousFragment#newInstance} factory method to
+ * Use the {@link ScoutTeleOpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AutonomousFragment extends Fragment {
-    public AutonomousFragment() {
+public class ScoutTeleOpFragment extends Fragment {
+
+    public ScoutTeleOpFragment() {
         // Required empty public constructor
     }
 
@@ -20,10 +21,10 @@ public class AutonomousFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment AutonomousFragment.
+     * @return A new instance of fragment ScoutTeleOpFragment.
      */
-    public static AutonomousFragment newInstance() {
-        return new AutonomousFragment();
+    public static ScoutTeleOpFragment newInstance() {
+        return new ScoutTeleOpFragment();
     }
 
     @Override
@@ -34,7 +35,7 @@ public class AutonomousFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // See note in the OnCreateView method of PreMatchFragment
-        return inflater.inflate(R.layout.fragment_autonomous, container, false);
+        // See note in OnCreateView of PreMatchFragment
+        return inflater.inflate(R.layout.fragment_scout_tele_op, container, false);
     }
 }

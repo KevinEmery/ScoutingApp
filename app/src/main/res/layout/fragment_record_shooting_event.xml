@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.usfirst.frc.team4911.scouting.RecordShootingEventFragment">
+
+    <TextView
+        android:text="Fuel "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--Radio group for shot location-->
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Target location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:text="High"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/rbtn_shooting_location_high"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:text="Low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtn_shooting_location_low"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="Both"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtn_shooting_location_both"
+            android:layout_weight="1" />
+    </RadioGroup>
+
+    <!--Radio group for shot speed-->
+    <RadioGroup
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <TextView
+            android:text="Shot speed (balls per second)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:text="1-2"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/rbtn_shot_speed_low"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:text="2-3"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/rbtn_shot_speed_med"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:text="4+"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/rbtn_shot_speed_high"
+            android:layout_weight="1"/>
+    </RadioGroup>
+
+    <!--Radio group for shots missed-->
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Shots missed (percentage)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:text="0-25"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/rbtn_shot_percentage_missed_low"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:text="25-50"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/rbtn_shot_percentage_missed_med"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:text="50+"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/rbtn_shot_percentage_missed_high"
+            android:layout_weight="1"/>
+    </RadioGroup>
+
+    <Button
+        android:text="Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_shooting_record_location" />
+</LinearLayout>

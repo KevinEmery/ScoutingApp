@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.usfirst.frc.team4911.scouting.ScoutAutoFragment">
+
+    <CheckBox
+        android:id="@+id/chkbx_crossed_baseline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crossed baseline" />
+
+    <!--This is the fragmentcontainer for the shooting event collection fragment-->
+    <FrameLayout
+        android:id="@+id/auto_shooting_fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--This is the fragmentcontainer for the shooting event collection fragment-->
+    <FrameLayout
+        android:id="@+id/auto_gear_fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:id="@+id/SecondActionButton_Auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2nd Action?" />
+</LinearLayout>
