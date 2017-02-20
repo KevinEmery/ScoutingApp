@@ -52,7 +52,7 @@ public class RecordShootingEventFragment extends DialogFragment {
 
     /**
      * OnTouchListener for the location button which invites the user to note down the location
-     * of a gear event.
+     * of a shooting event.
      */
     private View.OnClickListener handleBtnPress = new View.OnClickListener() {
 
