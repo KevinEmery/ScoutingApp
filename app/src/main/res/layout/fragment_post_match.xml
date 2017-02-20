@@ -63,15 +63,16 @@
         android:text="Post Game Info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView13" />
+        android:id="@+id/textView13"
+        android:autoText="false" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Scout Name"
         android:ems="10"
-        android:id="@+id/editText3" />
+        android:id="@+id/editText3"
+        android:hint="Scout Name" />
 
     <RadioGroup
         android:layout_width="match_parent"
