@@ -2,6 +2,7 @@ package org.usfirst.frc.team4911.scouting;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,18 @@ public class ScoutTeleOpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // See note in OnCreateView of PreMatchFragment
-        return inflater.inflate(R.layout.fragment_scout_tele_op, container, false);
+        View view = inflater.inflate(R.layout.fragment_scout_tele_op, container, false);
+
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+
+        RecordShootingEventFragment shootingEventFragment =
+                RecordShootingEventFragment.newInstance();
+        RecordGearEventFragment recordGearEventFragment = RecordGearEventFragment.newInstance();
+
+        fragmentTransaction.add(R.id.teleop_shooting_fragment_container, shootingEventFragment);
+        fragmentTransaction.add(R.id.teleop_gear_fragment_container, recordGearEventFragment);
+        fragmentTransaction.commit();
+
+        return view;
     }
 }
