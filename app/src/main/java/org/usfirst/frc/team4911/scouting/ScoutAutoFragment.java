@@ -44,14 +44,14 @@ public class ScoutAutoFragment extends Fragment {
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
-        RecordShootingAttemptFragment shootingEventFragment =
-                RecordShootingAttemptFragment.newInstance();
+        RecordShotAttemptFragment shootingEventFragment =
+                RecordShotAttemptFragment.newInstance();
         RecordGearAttemptFragment recordGearAttemptFragment = RecordGearAttemptFragment.newInstance();
 
         fragmentTransaction.add(R.id.auto_shooting_fragment_container, shootingEventFragment);
         fragmentTransaction.add(R.id.auto_gear_fragment_container, recordGearAttemptFragment);
         fragmentTransaction.commit();
-        
+
         crossedBaseline = (CheckBox) view.findViewById(R.id.chkbx_auto_crossed_baseline);
         crossedBaseline.setOnClickListener(crossedBaselineListener);
 

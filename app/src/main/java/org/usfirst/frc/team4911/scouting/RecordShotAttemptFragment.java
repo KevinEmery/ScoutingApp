@@ -8,27 +8,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
 
 /**
  * A simple {@link Fragment} subclass.
  * Contains all data interfaces necessary to collect information about a shooting event.
  * Intended for use in auto and teleop scouting events.
- * Use the {@link RecordShootingAttemptFragment#newInstance} factory method to
+ * Use the {@link RecordShotAttemptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordShootingAttemptFragment extends DialogFragment {
+public class RecordShotAttemptFragment extends DialogFragment
+        implements OnRecordLocationEventListener{
+    ShotAttempt shotAttempt;
+    private TextView locationMessage;
 
-    public RecordShootingAttemptFragment() {
+    public RecordShotAttemptFragment() {
         // Required empty public constructor
     }
 
     /**
      * Use this factory method to create a new instance of this fragment.
      *
-     * @return A new instance of fragment RecordShootingAttemptFragment.
+     * @return A new instance of fragment RecordShotAttemptFragment.
      */
-    public static RecordShootingAttemptFragment newInstance() {
-        return new RecordShootingAttemptFragment();
+    public static RecordShotAttemptFragment newInstance() {
+        return new RecordShotAttemptFragment();
     }
 
     @Override
@@ -40,14 +46,24 @@ public class RecordShootingAttemptFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_record_shooting_attempt, container, false);
+        View view = inflater.inflate(R.layout.fragment_record_shot_attempt, container, false);
 
-        Button location = (Button) view.findViewById(R.id.btn_shooting_record_location);
+        shotAttempt = new ShotAttempt();
+        locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_location);
 
-        // Add an onclick listener for the location button
+        Button location = (Button) view.findViewById(R.id.button_shot_attempt_location);
         location.setOnClickListener(handleBtnPress);
 
         return view;
+    }
+
+    // This method gets called by the record location dialog fragment
+    @Override
+    public void OnRecordLocationEvent(Object locationObject) {
+        String position = (String) locationObject;
+        shotAttempt.setShotLocation(position);
+        String message = "Location: " + position;
+        locationMessage.setText(message);
     }
 
     /**

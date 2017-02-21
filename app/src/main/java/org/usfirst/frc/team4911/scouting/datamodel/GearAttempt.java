@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class GearAttempt {
-    @SerializedName("GearResult") String gearResult;
-    @SerializedName("GearPegPosition") GearPegPosition gearPegPosition;
+    @SerializedName("GearResult") private String gearResult = "TODO";
+    @SerializedName("GearPegPosition") private GearPegPosition gearPegPosition = GearPegPosition.None;
 
     public GearPegPosition getGearPegPosition() {
         return gearPegPosition;

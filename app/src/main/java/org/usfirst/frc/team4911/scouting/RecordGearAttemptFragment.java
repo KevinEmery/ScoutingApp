@@ -91,12 +91,29 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         }
     };
 
+    /**
+     * OnClickListener for the save button that records the current gear event.
+     */
     private View.OnClickListener saveGearAttempt = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
             String result = (placedGear.isChecked()) ? "Placed gear" : "Dropped gear";
             gearAttempt.setGearResult(result);
+            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getAutonomousPeriod()
+                    .AddGearAttempt(gearAttempt);
+            restoreDefaults();
         }
     };
+
+    /**
+     * Clears the current gearResult object and restores all the appropriate defaults.
+     */
+    private void restoreDefaults() {
+        gearAttempt = new GearAttempt();
+        String message = "Location: ";
+        locationMessage.setText(message);
+        placedGear.setChecked(false);
+    }
+
 }
