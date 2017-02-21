@@ -23,13 +23,15 @@ import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
  * Use the {@link PreGameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PreGameFragment extends Fragment {
-    EditText etxtMatchNum;
-    EditText etxtTeamNum;
-    CheckBox chkbxHasGear;
-    CheckBox chkbxHasFuel;
-    CheckBox chbxUsesOwnRope;
+public class PreGameFragment extends Fragment implements OnRecordLocationEventListener{
+    private EditText etxtMatchNum;
+    private EditText etxtTeamNum;
+    private CheckBox chkbxHasGear;
+    private CheckBox chkbxHasFuel;
+    private CheckBox chbxUsesOwnRope;
     private Spinner spnrFuelQuantity;
+    private TouchPadPosition ropePosition = TouchPadPosition.None;
+
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -105,7 +107,7 @@ public class PreGameFragment extends Fragment {
     };
 
     /**
-     * OnClickListener for the button that starts the game.
+     * OnClickListener for the button that initialises the scouting data object.
      */
     private View.OnClickListener initScoutingData = new View.OnClickListener() {
         @Override
@@ -126,13 +128,8 @@ public class PreGameFragment extends Fragment {
             boolean usesOwnRope = chbxUsesOwnRope.isChecked();
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getPreGame()
                     .setUsesOwnRope(usesOwnRope);
-
-            if (usesOwnRope) {
-                // TODO: Mappings for touchpad position
-                TouchPadPosition touchPadPosition = TouchPadPosition.Far;
-                ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getPreGame()
-                        .setRopeTouchPadPosition(touchPadPosition);
-            }
+            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getPreGame()
+                    .setRopeTouchPadPosition(ropePosition);
         }
     };
 
@@ -150,5 +147,11 @@ public class PreGameFragment extends Fragment {
 
         return new ScoutingData(eventCode, matchNumber, tournamentLevel, station, teamNumber,
                 deviceId, scoutName, scoutingTeamName);
+    }
+
+    // This method gets called by the record location dialog fragment
+    @Override
+    public void OnRecordLocationEvent(Object locationObject) {
+        ropePosition = (TouchPadPosition) locationObject;
     }
 }

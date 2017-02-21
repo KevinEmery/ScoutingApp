@@ -51,13 +51,7 @@ public class ScoutAutoFragment extends Fragment {
         fragmentTransaction.add(R.id.auto_shooting_fragment_container, shootingEventFragment);
         fragmentTransaction.add(R.id.auto_gear_fragment_container, recordGearAttemptFragment);
         fragmentTransaction.commit();
-
-        // Initialise the auto points and hopper hit properties to have default values of false
-        ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                .getAutonomousPeriod().setAutoMobilityPoints(false);
-        ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                .getAutonomousPeriod().setLoadedFromHopper(false);
-
+        
         crossedBaseline = (CheckBox) view.findViewById(R.id.chkbx_auto_crossed_baseline);
         crossedBaseline.setOnClickListener(crossedBaselineListener);
 

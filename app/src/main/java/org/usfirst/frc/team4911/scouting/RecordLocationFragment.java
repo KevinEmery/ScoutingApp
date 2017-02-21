@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import org.usfirst.frc.team4911.scouting.datamodel.EndGame;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 
@@ -109,8 +110,6 @@ public class RecordLocationFragment extends DialogFragment {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 drawMapWithMarker(event.getX(), event.getY());
                 setNormalizedTouchPoint(event.getX(), event.getY());
-                ((OnRecordLocationEventListener) getParentFragment())
-                        .OnRecordLocationEvent(getEventLocationObject());
                 return true;
             }
 
@@ -124,6 +123,10 @@ public class RecordLocationFragment extends DialogFragment {
     private View.OnClickListener closeWindow = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            OnRecordLocationEventListener listener =
+                    (OnRecordLocationEventListener) getParentFragment();
+            Object location = getEventLocationObject();
+            listener.OnRecordLocationEvent(location);
             dismiss();
         }
     };
@@ -136,19 +139,19 @@ public class RecordLocationFragment extends DialogFragment {
 
         // First the blue alliance
         idArray[AllianceType.BLUE.getValue()][EventLocationType.SHOOT.getValue()] =
-                R.drawable.airship_blue;
+                R.drawable.shootingzone_blue;
         idArray[AllianceType.BLUE.getValue()][EventLocationType.PLACEGEAR.getValue()] =
                 R.drawable.airship_blue;
         idArray[AllianceType.BLUE.getValue()][EventLocationType.CLIMB.getValue()] =
-                R.drawable.steamworks_field;
+                R.drawable.airship_blue;
 
         // Then the red
         idArray[AllianceType.RED.getValue()][EventLocationType.SHOOT.getValue()] =
-                R.drawable.airship_red;
+                R.drawable.shootingzone_red;
         idArray[AllianceType.RED.getValue()][EventLocationType.PLACEGEAR.getValue()] =
                 R.drawable.airship_red;
         idArray[AllianceType.RED.getValue()][EventLocationType.CLIMB.getValue()] =
-                R.drawable.steamworks_field;
+                R.drawable.airship_red;
 
         return idArray;
     }
@@ -234,15 +237,23 @@ public class RecordLocationFragment extends DialogFragment {
      * event that just got recorded.
      */
     private Object getEventLocationObject() {
+        // TODO: Replace all of this with the math that determines what sector it's in
+        Object ret = null;
+
         switch (eventLocationType) {
             case PLACEGEAR:
-                return GearPegPosition.Far;
+                ret = GearPegPosition.Far;
+                break;
             case CLIMB:
-                return TouchPadPosition.Far;
+                ret = TouchPadPosition.Far;
+                break;
             case SHOOT:
-                return "TODO: Shot location not a string";
+                ret = "TODO";
+                break;
             default:
-                return null;
+                break;
         }
+
+        return ret;
     }
 }

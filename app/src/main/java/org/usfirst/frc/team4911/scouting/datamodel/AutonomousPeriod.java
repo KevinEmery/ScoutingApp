@@ -12,10 +12,10 @@ import java.util.List;
 public class AutonomousPeriod {
 
     // Does robot cross baseline by t=0 for 5 points?
-    @SerializedName("AutoMobilityPoints") private boolean autoMobilityPoints;
+    @SerializedName("AutoMobilityPoints") private boolean autoMobilityPoints = false;
 
     // Did robot get fuel from hopper?
-    @SerializedName("LoadedFromHopper") private boolean loadedFromHopper;
+    @SerializedName("LoadedFromHopper") private boolean loadedFromHopper = false;
 
     @SerializedName("GearAttempts") private List<GearAttempt> gearAttempts;
 

@@ -9,19 +9,20 @@ import com.google.gson.annotations.SerializedName;
 public class PreGame {
 
     // Does robot start with a gear?
-    @SerializedName("HasGear") private boolean hasGear;
+    @SerializedName("HasGear") private boolean hasGear = false;
 
     // Does robot start with fuel?
-    @SerializedName("HasFuel") private boolean hasFuel;
+    @SerializedName("HasFuel") private boolean hasFuel = false;
 
     // How much fuel does robot start with?
-    @SerializedName("FuelCount") private int fuelCount;
+    @SerializedName("FuelCount") private int fuelCount = 0;
 
     // Does robot use it's own rope?
-    @SerializedName("UsesOwnRope") private boolean usesOwnRope;
+    @SerializedName("UsesOwnRope") private boolean usesOwnRope = false;
 
     // What touch pad position is rope place at?
-    @SerializedName("RopeTouchPadPosition") private TouchPadPosition ropeTouchPadPosition;
+    @SerializedName("RopeTouchPadPosition") private TouchPadPosition ropeTouchPadPosition =
+            TouchPadPosition.None;
 
     public boolean getHasGear() {
         return hasGear;
