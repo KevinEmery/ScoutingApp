@@ -15,6 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
+import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
+
+
 /**
  * Dialog fragment subclass which displays a given field and records a normalised location
  * where it was pressed.
@@ -25,9 +29,16 @@ public class RecordLocationFragment extends DialogFragment {
 
     // The keys we use to store argument parameters
     private static final String ARG_PARAM1 = "argParam1";
+    private static final String ARG_PARAM2 = "argParam2";
 
     // The variable we store the ID in once we've gone through the whole argument passing process.
     private int mapImageResourceId;
+
+    // The type of event whose location we're recording
+    public EventLocationType eventLocationType;
+
+    // Array which stores all the EventLocationType/AllianceType resource ID values.
+    private final int[][] resourceIdArray = createResourceIdArray();
 
     // Object for interacting with the image of the map shown on screen.
     private ImageView map;
@@ -36,12 +47,8 @@ public class RecordLocationFragment extends DialogFragment {
     // with methods that calculate the zone.
     private Pair<Float, Float> normalizedTouchPoint;
 
-    // Array which stores all the LocationMapType/AllianceType resource ID values.
-    private final int[][] resourceIdArray;
-
     public RecordLocationFragment() {
-        // Putting this in the constructor because IDK where else it should go.
-        resourceIdArray = createResourceIdArray();
+        // Required empty constructor
     }
 
     /**
@@ -49,18 +56,19 @@ public class RecordLocationFragment extends DialogFragment {
      * this fragment using the provided parameters.
      *
      * @param allianceType The allianceType to display a map for as a {@link AllianceType}.
-     * @param locationMapType The type of map to display as a {@link LocationMapType}.
+     * @param locationMapType The type of map to display as a {@link EventLocationType}.
      *
      * @return A new instance of fragment RecordLocationFragment.
      */
     public static RecordLocationFragment newInstance(AllianceType allianceType,
-                                                     LocationMapType locationMapType) {
+                                                     EventLocationType eventLocationType) {
         RecordLocationFragment fragment = new RecordLocationFragment();
         int resourceId =
-                fragment.resourceIdArray[allianceType.getValue()][locationMapType.getValue()];
+                fragment.resourceIdArray[allianceType.getValue()][eventLocationType.getValue()];
 
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, resourceId);
+        args.putInt(ARG_PARAM2, eventLocationType.getValue());
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,6 +78,7 @@ public class RecordLocationFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mapImageResourceId = getArguments().getInt(ARG_PARAM1);
+            eventLocationType = EventLocationType.values()[getArguments().getInt(ARG_PARAM2)];
         }
     }
 
@@ -99,6 +108,9 @@ public class RecordLocationFragment extends DialogFragment {
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 drawMapWithMarker(event.getX(), event.getY());
+                setNormalizedTouchPoint(event.getX(), event.getY());
+                ((OnRecordLocationEventListener) getParentFragment())
+                        .OnRecordLocationEvent(getEventLocationObject());
                 return true;
             }
 
@@ -120,22 +132,22 @@ public class RecordLocationFragment extends DialogFragment {
      * Fills the resource ID array with the correct resources for each map type.
      */
     private int[][] createResourceIdArray() {
-        int[][] idArray = new int[AllianceType.values().length][LocationMapType.values().length];
+        int[][] idArray = new int[AllianceType.values().length][EventLocationType.values().length];
 
         // First the blue alliance
-        idArray[AllianceType.BLUE.getValue()][LocationMapType.AIRSHIP.getValue()] =
+        idArray[AllianceType.BLUE.getValue()][EventLocationType.SHOOT.getValue()] =
                 R.drawable.airship_blue;
-        idArray[AllianceType.BLUE.getValue()][LocationMapType.SHOOTING_AREA.getValue()] =
-                R.drawable.shootingzone_blue;
-        idArray[AllianceType.BLUE.getValue()][LocationMapType.WHOLEFIELD.getValue()] =
+        idArray[AllianceType.BLUE.getValue()][EventLocationType.PLACEGEAR.getValue()] =
+                R.drawable.airship_blue;
+        idArray[AllianceType.BLUE.getValue()][EventLocationType.CLIMB.getValue()] =
                 R.drawable.steamworks_field;
 
         // Then the red
-        idArray[AllianceType.RED.getValue()][LocationMapType.AIRSHIP.getValue()] =
+        idArray[AllianceType.RED.getValue()][EventLocationType.SHOOT.getValue()] =
                 R.drawable.airship_red;
-        idArray[AllianceType.RED.getValue()][LocationMapType.SHOOTING_AREA.getValue()] =
-                R.drawable.shootingzone_blue;
-        idArray[AllianceType.RED.getValue()][LocationMapType.WHOLEFIELD.getValue()] =
+        idArray[AllianceType.RED.getValue()][EventLocationType.PLACEGEAR.getValue()] =
+                R.drawable.airship_red;
+        idArray[AllianceType.RED.getValue()][EventLocationType.CLIMB.getValue()] =
                 R.drawable.steamworks_field;
 
         return idArray;
@@ -215,5 +227,22 @@ public class RecordLocationFragment extends DialogFragment {
         int bottom = centerYAsInt + halfHeight;
 
         return new Rect(left, top, right, bottom);
+    }
+
+    /**
+     * Returns a location object corresponding to the coordinates and event type of the
+     * event that just got recorded.
+     */
+    private Object getEventLocationObject() {
+        switch (eventLocationType) {
+            case PLACEGEAR:
+                return GearPegPosition.Far;
+            case CLIMB:
+                return TouchPadPosition.Far;
+            case SHOOT:
+                return "TODO: Shot location not a string";
+            default:
+                return null;
+        }
     }
 }

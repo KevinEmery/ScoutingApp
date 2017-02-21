@@ -12,14 +12,14 @@ import java.util.List;
 public class AutonomousPeriod {
 
     // Does robot cross baseline by t=0 for 5 points?
-    @SerializedName("AutoMobilityPoints") boolean autoMobilityPoints;
+    @SerializedName("AutoMobilityPoints") private boolean autoMobilityPoints;
 
     // Did robot get fuel from hopper?
-    @SerializedName("LoadedFromHopper") boolean loadedFromHopper;
+    @SerializedName("LoadedFromHopper") private boolean loadedFromHopper;
 
-    @SerializedName("GearAttempts") List<GearAttempt> gearAttempts;
+    @SerializedName("GearAttempts") private List<GearAttempt> gearAttempts;
 
-    @SerializedName("ShotAttempts") List<ShotAttempt> shotAttempts;
+    @SerializedName("ShotAttempts") private List<ShotAttempt> shotAttempts;
 
     public AutonomousPeriod() {
         this.setGearAttempts(new ArrayList<GearAttempt>());
@@ -45,8 +45,13 @@ public class AutonomousPeriod {
     public List<GearAttempt> getGearAttempts() {
         return gearAttempts;
     }
+
     public void setGearAttempts(List<GearAttempt> gGearAttempts) {
         this.gearAttempts = gGearAttempts;
+    }
+
+    public void AddGearAttempt(GearAttempt gearAttempt) {
+        this.gearAttempts.add(gearAttempt);
     }
 
     public List<ShotAttempt> getShotAttempts() {
@@ -57,4 +62,7 @@ public class AutonomousPeriod {
         this.shotAttempts = shotAttempts;
     }
 
+    public void AddShotAttempt(ShotAttempt shotAttempt) {
+        this.shotAttempts.add(shotAttempt);
+    }
 }

@@ -55,7 +55,7 @@ public class EndGameFragment extends Fragment {
         public void onClick(View v) {
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment =
-                    RecordLocationFragment.newInstance(AllianceType.BLUE, LocationMapType.AIRSHIP);
+                    RecordLocationFragment.newInstance(AllianceType.BLUE, EventLocationType.PLACEGEAR);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

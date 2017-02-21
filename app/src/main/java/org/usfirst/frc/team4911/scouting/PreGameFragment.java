@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.text.method.Touch;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +99,7 @@ public class PreGameFragment extends Fragment {
             // Show the location record dialog
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(
-                    ((ScoutMatchActivity) getActivity()).getAlliance(), LocationMapType.AIRSHIP);
+                    ((ScoutMatchActivity) getActivity()).getAlliance(), EventLocationType.CLIMB);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

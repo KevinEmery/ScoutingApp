@@ -41,12 +41,12 @@ public class ScoutTeleOpFragment extends Fragment {
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
-        RecordShootingEventFragment shootingEventFragment =
-                RecordShootingEventFragment.newInstance();
-        RecordGearEventFragment recordGearEventFragment = RecordGearEventFragment.newInstance();
+        RecordShootingAttemptFragment shootingEventFragment =
+                RecordShootingAttemptFragment.newInstance();
+        RecordGearAttemptFragment recordGearAttemptFragment = RecordGearAttemptFragment.newInstance();
 
         fragmentTransaction.add(R.id.teleop_shooting_fragment_container, shootingEventFragment);
-        fragmentTransaction.add(R.id.teleop_gear_fragment_container, recordGearEventFragment);
+        fragmentTransaction.add(R.id.teleop_gear_fragment_container, recordGearAttemptFragment);
         fragmentTransaction.commit();
 
         return view;

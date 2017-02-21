@@ -18,14 +18,15 @@
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/chkbx_crossed_baseline"
+        android:id="@+id/chkbx_auto_crossed_baseline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crossed baseline" />
 
+
     <CheckBox
-        android:id="@+id/SecondActionButton_Auto"
+        android:id="@+id/chkbx_auto_loaded_from_hopper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2nd Action?" />
+        android:text="Loaded from hopper" />
 </LinearLayout>
