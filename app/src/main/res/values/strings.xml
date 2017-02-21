@@ -51,4 +51,23 @@
         <item>Red2</item>
         <item>Red3</item>
     </string-array>
+
+    <string-array name="pnw_events_array">
+        <item>West Valley Event</item>
+        <item>Mount Vernon Event</item>
+        <item>Glacier Peak Event</item>
+        <item>Auburn Event</item>
+        <item>PNW District Championship</item>
+        <item>Practice</item>
+    </string-array>
+
+    <string-array name="pnw_eventcodes_array">
+        <item>waspo</item>
+        <item>wamou</item>
+        <item>wasno</item>
+        <item>waahs</item>
+        <item>pncmp</item>
+        <item>practice</item>
+    </string-array>
+
 </resources>
