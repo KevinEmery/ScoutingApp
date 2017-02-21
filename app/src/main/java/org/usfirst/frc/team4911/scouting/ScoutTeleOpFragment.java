@@ -36,7 +36,7 @@ public class ScoutTeleOpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // See note in OnCreateView of PreMatchFragment
+        // See note in OnCreateView of PreGameFragment
         View view = inflater.inflate(R.layout.fragment_scout_tele_op, container, false);
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();

@@ -35,7 +35,7 @@ public class ScoutAutoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // See note in the OnCreateView method of PreMatchFragment
+        // See note in the OnCreateView method of PreGameFragment
         View view = inflater.inflate(R.layout.fragment_scout_auto, container, false);
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();

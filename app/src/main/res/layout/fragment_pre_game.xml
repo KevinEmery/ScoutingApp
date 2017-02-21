@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.usfirst.frc.team4911.scouting.PreGameFragment"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game info"/>
+
+    <EditText
+        android:id="@+id/etxt_pre_game_team_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Team number" />
+
+    <EditText
+        android:id="@+id/etxt_pre_game_match_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Match number" />
+
+
+    <!--Here's all the stuff for who's scouting which match-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pre-game setup data"/>
+
+    <!--Has gear-->
+    <CheckBox
+        android:id="@+id/chkbx_pre_game_has_gear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Has pre-loaded gear"/>
+
+    <!--Linear layout for fuel info-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/chkbx_pre_game_has_fuel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Has pre-loaded fuel"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fuel count"/>
+
+        <Spinner
+            android:id="@+id/spinner_pre_game_fuel_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <!--Uses own rope-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/chkbx_pre_game_uses_own_rope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uses own rope"/>
+
+        <Button
+            android:id="@+id/btn_pre_game_own_rope_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rope location"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_pre_game_start_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Data"/>
+</LinearLayout>
