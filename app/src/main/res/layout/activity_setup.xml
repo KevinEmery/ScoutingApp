@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapCharacters"
+        android:text="Event Code"
+        android:ems="10"
+        android:id="@+id/editText_EventCode"
+        android:contentDescription="The FRC Event Code for this event."
+        tools:text="The FRC Event Code for this event." />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Scout Name"
+        android:ems="10"
+        android:id="@+id/editText_ScoutName"
+        tools:text="Name of scout" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Scouting Team"
+        android:ems="10"
+        android:id="@+id/editText_ScoutTeam"
+        android:contentDescription="Name of team "
+        tools:text="Name of team scouting, e.g. Cyberknights" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_drive_station" />
+
+    <Button
+        android:text="Save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_Save_Preverences" />
+
+</LinearLayout>

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView ;
 
     // This array contains the values that will be the items of our list.
-    private String[] values = new String[] { "Scout Match", "Scout Pit", "Bluetooth Sync" };
+    private String[] values = new String[] { "Scout Match", "Scout Pit", "Bluetooth Sync", "Setup" };
 
     // The onCreate of the main activity. This is the first thing that runs
     // when the app is started.
@@ -87,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         // Start the bluetooth sync activity
                         intent = new Intent(MainActivity.this, BluetoothSyncActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        // Start the setup activity
+                        intent = new Intent(MainActivity.this, SetupActivity.class);
                         startActivity(intent);
                         break;
                     default:

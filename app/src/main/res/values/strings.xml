@@ -42,4 +42,13 @@
     <string name="alertdialogfragment">Open Alert DialogFragment</string>
     <string name="title_activity_scout_match">ScoutMatchActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string-array name="drive_stations_array">
+        <item>Blue1</item>
+        <item>Blue2</item>
+        <item>Blue3</item>
+        <item>Red1</item>
+        <item>Red2</item>
+        <item>Red3</item>
+    </string-array>
 </resources>
