@@ -11,30 +11,23 @@ import java.util.List;
 
 public class TeleopPeriod {
     // Did robot play defense during teleop period?
-    @SerializedName("PlayedDefense") boolean playedDefense;
+    @SerializedName("PlayedDefense") private boolean playedDefense = false;
 
     // Count of attempts to load gears at airship.
-    @SerializedName("GearAttemptCount") int gearAttemptCount;
+    @SerializedName("GearAttemptCount") private int gearAttemptCount = 0;
 
     // Count of attempts to shot balls.
-    @SerializedName("ShotAttemptCount") int ShotAttemptCount;
+    @SerializedName("ShotAttemptCount") private int ShotAttemptCount = 0;
 
-    @SerializedName("GearAttempts") List<GearAttemptTeleop> gearAttempts;
+    @SerializedName("GearAttempts") private List<GearAttemptTeleop> gearAttempts;
 
-    @SerializedName("ShotAttempts") List<ShotAttemptTeleop> shotAttempts;
+    @SerializedName("ShotAttempts") private List<ShotAttemptTeleop> shotAttempts;
 
     public TeleopPeriod() {
         this.setGearAttempts(new ArrayList<GearAttemptTeleop>());
         this.setShotAttempts(new ArrayList<ShotAttemptTeleop>());
     }
 
-    public int getGearAttemptCount() {
-        return gearAttemptCount;
-    }
-
-    public int getShotAttemptCount() {
-        return ShotAttemptCount;
-    }
 
     public List<GearAttemptTeleop> getGearAttempts() {
         return gearAttempts;
@@ -48,8 +41,17 @@ public class TeleopPeriod {
         this.gearAttemptCount = gearAttemptCount;
     }
 
+    public int getGearAttemptCount() {
+        return gearAttemptCount;
+    }
+
     public void setGearAttempts(List<GearAttemptTeleop> gearAttempts) {
         this.gearAttempts = gearAttempts;
+    }
+
+    public void addGearAttempt(GearAttemptTeleop gearAttemptTeleop) {
+        gearAttempts.add(gearAttemptTeleop);
+        setGearAttemptCount(gearAttempts.size());
     }
 
     public void setPlayedDefense(boolean playedDefense) {
@@ -60,8 +62,17 @@ public class TeleopPeriod {
         ShotAttemptCount = shotAttemptCount;
     }
 
+    public int getShotAttemptCount() {
+        return ShotAttemptCount;
+    }
+
     public void setShotAttempts(List<ShotAttemptTeleop> shotAttempts) {
         this.shotAttempts = shotAttempts;
+    }
+
+    public void addShotAttempt(ShotAttemptTeleop shotAttemptTeleop) {
+        shotAttempts.add(shotAttemptTeleop);
+        setShotAttemptCount(shotAttempts.size());
     }
 }
 

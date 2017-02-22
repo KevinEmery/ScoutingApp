@@ -8,6 +8,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.FuelAmount;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
+import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAccuracy;
@@ -52,7 +53,7 @@ public class DataModelTests {
         autonomousPeriod.getShotAttempts().add(shotAttempt);
 
         GearAttempt gearAttempt = new GearAttempt();
-        gearAttempt.setGearResult("Success");
+        gearAttempt.setGearResult(GearResult.Success);
         gearAttempt.setGearPegPosition(GearPegPosition.Middle);
         autonomousPeriod.getGearAttempts().add(gearAttempt);
 
@@ -60,13 +61,13 @@ public class DataModelTests {
         data.getMatchData().setTeleopPeriod(teleopPeriod);
 
         GearAttemptTeleop gearAttemptTeleop = new GearAttemptTeleop();
-        gearAttemptTeleop.setGearResult("Failed");
+        gearAttemptTeleop.setGearResult(GearResult.Failed);
         gearAttemptTeleop.setWasDefended(true);
         gearAttemptTeleop.setGearPegPosition(GearPegPosition.None);
         teleopPeriod.getGearAttempts().add(gearAttemptTeleop);
 
         gearAttemptTeleop = new GearAttemptTeleop();
-        gearAttemptTeleop.setGearResult("Success");
+        gearAttemptTeleop.setGearResult(GearResult.Success);
         gearAttemptTeleop.setWasDefended(false);
         gearAttemptTeleop.setGearPegPosition(GearPegPosition.Far);
         teleopPeriod.getGearAttempts().add(gearAttemptTeleop);
