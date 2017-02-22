@@ -58,6 +58,10 @@ public class TeleopPeriod {
         this.playedDefense = playedDefense;
     }
 
+    public boolean getPlayedDefence() {
+        return this.playedDefense;
+    }
+
     public void setShotAttemptCount(int shotAttemptCount) {
         ShotAttemptCount = shotAttemptCount;
     }

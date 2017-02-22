@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ScoutTeleOpFragment extends Fragment {
+    CheckBox playedDefence;
 
     public ScoutTeleOpFragment() {
         // Required empty public constructor
@@ -39,17 +42,30 @@ public class ScoutTeleOpFragment extends Fragment {
         // See note in OnCreateView of PreGameFragment
         View view = inflater.inflate(R.layout.fragment_scout_tele_op, container, false);
 
+        playedDefence = (CheckBox) view.findViewById(R.id.checkbox_tele_op_played_defence);
+        Button save = (Button) view.findViewById(R.id.button_tele_op_save);
+        save.setOnClickListener(saveTeleop);
+
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
-        RecordShotAttemptFragment shootingEventFragment =
-                RecordShotAttemptFragment.newInstance();
-        RecordGearAttemptTeleOpFragment gearAttemptTeleOpFragment =
+        RecordShotAttemptTeleOpFragment shotAttemptFragment =
+                RecordShotAttemptTeleOpFragment.newInstance();
+        RecordGearAttemptTeleOpFragment gearAttemptFragment =
                 RecordGearAttemptTeleOpFragment.newInstance();
 
-        fragmentTransaction.add(R.id.teleop_shooting_fragment_container, shootingEventFragment);
-        fragmentTransaction.add(R.id.teleop_gear_fragment_container, gearAttemptTeleOpFragment);
+        fragmentTransaction.add(R.id.teleop_shooting_fragment_container, shotAttemptFragment);
+        fragmentTransaction.add(R.id.teleop_gear_fragment_container, gearAttemptFragment);
         fragmentTransaction.commit();
 
         return view;
     }
+
+    View.OnClickListener saveTeleop = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
+                    .getTeleopPeriod().setPlayedDefense(playedDefence.isChecked());
+        }
+    };
 }
