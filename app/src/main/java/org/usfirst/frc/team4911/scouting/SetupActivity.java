@@ -1,20 +1,20 @@
 package org.usfirst.frc.team4911.scouting;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
+
+import static android.support.v7.app.AlertDialog.*;
 
 /**
  * Created by johansu on 2/20/2017.
@@ -28,11 +28,12 @@ public class SetupActivity extends AppCompatActivity {
     Spinner spinner_driveStation;
     Button button_savePreferences;
 
-    public static final String MyPREFERENCES = "MyScoutingPrefsTest" ;
+    public static final String MyPREFERENCES = "MyScoutingPrefs" ;
     public static final String EventCode = "eventCodeKey";
     public static final String ScoutName = "scoutNameKey";
     public static final String ScoutTeam = "scoutTeamKey";
     public static final String DriveStation = "driveStationKey";
+    public static final String AppInstanceId = "appInstanceKey";
 
     SharedPreferences sharedpreferences;
 
@@ -59,6 +60,7 @@ public class SetupActivity extends AppCompatActivity {
         edit_scoutName.setText(sharedpreferences.getString(ScoutName, ""));
         edit_scoutTeam.setText(sharedpreferences.getString(ScoutTeam, ""));
         String drive_Station = sharedpreferences.getString(DriveStation, "");
+        final String appInstanceId = sharedpreferences.getString(AppInstanceId, UUID.randomUUID().toString());
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> eventNameAdapter = ArrayAdapter.createFromResource(this,
@@ -82,7 +84,6 @@ public class SetupActivity extends AppCompatActivity {
         }
 
         spinner_driveStation.setAdapter(driveStationAdapter);
-
         for (int position = 0; position < drive_stations.length; position++) {
             if (drive_stations[position].equals(drive_Station)) {
                 spinner_driveStation.setSelection(position % drive_stations.length);
@@ -100,24 +101,32 @@ public class SetupActivity extends AppCompatActivity {
 
                 boolean isFinished = scout_Name.length() > 2 && scout_Team.length() > 2;
 
-                if (!isFinished)
-                {
-                    if (scout_Name.length() > 2 && scout_Team.length() > 2)
-                    {
-                        // TODO: Alert User with dialog
+                if (!isFinished) {
+                    if (scout_Name.length() < 2 || scout_Team.length() < 2) {
+                        Builder dlgAlert = new Builder(v.getContext());
+                        dlgAlert.setMessage("Please enter your name.");
+                        dlgAlert.setTitle("Missing Info");
+                        dlgAlert.setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //dismiss the dialog
+                                    }
+                                });
+                        dlgAlert.setCancelable(true);
+                        dlgAlert.create().show();
                     }
                 }
+                else {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(EventCode, event_Code);
+                    editor.putString(ScoutName, scout_Name);
+                    editor.putString(ScoutTeam, scout_Team);
+                    editor.putString(DriveStation, drive_station);
+                    editor.putString(AppInstanceId, appInstanceId);
+                    editor.commit();
 
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(EventCode, event_Code);
-                editor.putString(ScoutName, scout_Name);
-                editor.putString(ScoutTeam, scout_Team);
-                editor.putString(DriveStation, drive_station);
-                editor.commit();
-
-                //Toast.makeText(SetupActivity.this, "Thanks", Toast.LENGTH_LONG).show();
-
-                finish();
+                    finish();
+                }
             }
         });
     }
