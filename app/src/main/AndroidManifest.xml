@@ -25,6 +25,7 @@
             android:name=".ScoutMatchActivity"
             android:label="@string/title_activity_scout_match"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".SetupActivity" />
     </application>
 
 </manifest>
