@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
+import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 
 /**
  * Code for the fragment which handles recording gear events.
@@ -98,7 +99,7 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
 
         @Override
         public void onClick(View v) {
-            String result = (placedGear.isChecked()) ? "Placed gear" : "Dropped gear";
+            GearResult result = (placedGear.isChecked()) ? GearResult.Success : GearResult.Failed;
             gearAttempt.setGearResult(result);
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getAutonomousPeriod()
                     .AddGearAttempt(gearAttempt);

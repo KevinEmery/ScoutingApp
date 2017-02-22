@@ -8,16 +8,17 @@ import com.google.gson.annotations.SerializedName;
 
 public class EndGame {
     // Did robot attempt to climb?
-    @SerializedName("Attempted") boolean attempted;
+    @SerializedName("Attempted") private boolean attempted = false;
 
     // Did robot succeed in climbing?
-    @SerializedName("Succeeded") boolean succeeded;
+    @SerializedName("Succeeded") private boolean succeeded = false;
 
     // How long did it take to climb?
-    @SerializedName("TimeInSeconds") int timeInSeconds;
+    @SerializedName("TimeInSeconds") private int timeInSeconds = 0;
 
     // Which touch pad position did they climb at?
-    @SerializedName("TouchPadPosition") TouchPadPosition touchPadPosition;
+    @SerializedName("TouchPadPosition") private TouchPadPosition touchPadPosition =
+            TouchPadPosition.None;
 
     public int getTimeInSeconds() {
         return timeInSeconds;

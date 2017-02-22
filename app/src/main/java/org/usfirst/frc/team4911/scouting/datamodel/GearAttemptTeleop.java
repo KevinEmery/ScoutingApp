@@ -9,8 +9,8 @@ import java.util.Calendar;
  */
 
 public class GearAttemptTeleop extends GearAttempt {
-    @SerializedName("WasDefended") boolean wasDefended;
-    @SerializedName("TimeStamp") String timeStamp;
+    @SerializedName("WasDefended") private boolean wasDefended = false;
+    @SerializedName("TimeStamp") private String timeStamp = "";
 
     public GearAttemptTeleop() {
         this.timeStamp = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()

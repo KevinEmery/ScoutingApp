@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class GearAttempt {
-    @SerializedName("GearResult") private String gearResult = "TODO";
+    @SerializedName("GearResult") private GearResult gearResult = GearResult.None;
     @SerializedName("GearPegPosition") private GearPegPosition gearPegPosition = GearPegPosition.None;
 
     public GearPegPosition getGearPegPosition() {
         return gearPegPosition;
     }
 
-    public String getGearResult() {
+    public GearResult getGearResult() {
         return gearResult;
     }
 
@@ -22,7 +22,7 @@ public class GearAttempt {
         this.gearPegPosition = gearPegPosition;
     }
 
-    public void setGearResult(String gearResult) {
+    public void setGearResult(GearResult gearResult) {
         this.gearResult = gearResult;
     }
 }

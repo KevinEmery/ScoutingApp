@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 /**
@@ -58,6 +59,9 @@ public class ScoutAutoFragment extends Fragment {
         loadedFromHopper = (CheckBox) view.findViewById(R.id.chkbx_auto_loaded_from_hopper);
         loadedFromHopper.setOnClickListener(loadedFromHopperListener);
 
+        Button save = (Button) view.findViewById(R.id.button_auto_save);
+        save.setOnClickListener(saveButton);
+
         return view;
     }
 
@@ -86,6 +90,17 @@ public class ScoutAutoFragment extends Fragment {
                 ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
                         .getAutonomousPeriod().setLoadedFromHopper(false);
             }
+        }
+    };
+
+    View.OnClickListener saveButton = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
+                    .getAutonomousPeriod().setAutoMobilityPoints(crossedBaseline.isChecked());
+            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
+                    .getAutonomousPeriod().setLoadedFromHopper(loadedFromHopper.isChecked());
         }
     };
 }

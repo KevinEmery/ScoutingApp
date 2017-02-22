@@ -134,8 +134,8 @@ public class RecordShotAttemptFragment extends DialogFragment
             shotAttempt.setFuelAmount(fuelAmount);
             shotAttempt.setShotMode(shotMode);
 
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getAutonomousPeriod()
-                    .AddShotAttempt(shotAttempt);
+            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
+                    .getAutonomousPeriod().AddShotAttempt(shotAttempt);
             restoreDefaults();
         }
     };

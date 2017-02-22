@@ -5,91 +5,48 @@
     android:orientation="vertical"
     tools:context="org.usfirst.frc.team4911.scouting.EndGameFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <TextView
-        android:text="End Game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView10" />
-
-    <Space
-        android:layout_width="50dp"
-        android:layout_height="25dp" />
+        android:text="End Game" />
 
     <TextView
-        android:text="Climbing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView11" />
+        android:text="Climbing" />
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="100dp" >
+    <CheckBox
+        android:id="@+id/checkbox_end_game_attempt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attempt" />
 
-        <RadioButton
-            android:text="Success"
+    <CheckBox
+        android:id="@+id/checkbox_end_game_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Success" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_view_end_game_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radioButton17"
-            android:layout_weight="1" />
+            android:text="Location: "/>
 
-        <RadioButton
-            android:text="Attempt"
+        <Button
+            android:id="@+id/btn_climbing_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radioButton20"
-            android:layout_weight="1" />
-
-        <RadioButton
-            android:text="No Attempt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton23"
-            android:layout_weight="1" />
-    </RadioGroup>
+            android:text="Location" />
+    </LinearLayout>
 
     <Button
-        android:text="Location"
+        android:id="@+id/button_end_game_save_data_to_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_climbing_location" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="25dp" />
-
-    <TextView
-        android:text="Post Game Info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView13"
-        android:autoText="false" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText3"
-        android:hint="Scout Name" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="100dp" >
-
-        <RadioButton
-            android:text="Dead Bot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton24"
-            android:layout_weight="1" />
-
-        <RadioButton
-            android:text="No Show"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioButton25"
-            android:layout_weight="1" />
-    </RadioGroup>
+        android:text="Save data to file"/>
 </LinearLayout>
