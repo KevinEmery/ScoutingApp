@@ -42,4 +42,7 @@
     <string name="alertdialogfragment">Open Alert DialogFragment</string>
     <string name="title_activity_scout_match">ScoutMatchActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="high">High</string>
+    <string name="low">Low</string>
 </resources>

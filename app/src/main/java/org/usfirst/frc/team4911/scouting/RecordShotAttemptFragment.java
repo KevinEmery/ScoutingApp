@@ -7,10 +7,18 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.usfirst.frc.team4911.scouting.datamodel.FuelAmount;
+import org.usfirst.frc.team4911.scouting.datamodel.ShotAccuracy;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
+import org.usfirst.frc.team4911.scouting.datamodel.ShotMode;
+import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +29,12 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
  */
 public class RecordShotAttemptFragment extends DialogFragment
         implements OnRecordLocationEventListener{
-    ShotAttempt shotAttempt;
+    private ShotAttempt shotAttempt;
+
+    private Spinner spinnerSpeed;
+    private Spinner spinnerAccuracy;
+    private Spinner spinnerFuelAmount;
+    private Spinner spinnerShotMode;
     private TextView locationMessage;
 
     public RecordShotAttemptFragment() {
@@ -51,8 +64,27 @@ public class RecordShotAttemptFragment extends DialogFragment
         shotAttempt = new ShotAttempt();
         locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_location);
 
+        spinnerSpeed = (Spinner) view.findViewById(R.id.spinner_shot_attempt_speed);
+        spinnerSpeed.setAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, ShotSpeed.values()));
+
+        spinnerAccuracy = (Spinner) view.findViewById(R.id.spinner_shot_attempt_accuracy);
+        spinnerAccuracy.setAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, ShotAccuracy.values()));
+
+        spinnerFuelAmount = (Spinner) view.findViewById(R.id.spinner_shot_attempt_fuel_amount);
+        spinnerFuelAmount.setAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, FuelAmount.values()));
+
+        spinnerShotMode = (Spinner) view.findViewById(R.id.spinner_shot_attempt_mode);
+        spinnerShotMode.setAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, ShotMode.values()));
+
         Button location = (Button) view.findViewById(R.id.button_shot_attempt_location);
-        location.setOnClickListener(handleBtnPress);
+        location.setOnClickListener(recordShotAttemptLocation);
+
+        Button save = (Button) view.findViewById(R.id.button_shot_attempt_save);
+        save.setOnClickListener(saveShotAttempt);
 
         return view;
     }
@@ -70,7 +102,7 @@ public class RecordShotAttemptFragment extends DialogFragment
      * OnTouchListener for the location button which invites the user to note down the location
      * of a shooting event.
      */
-    private View.OnClickListener handleBtnPress = new View.OnClickListener() {
+    private View.OnClickListener recordShotAttemptLocation = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -81,4 +113,39 @@ public class RecordShotAttemptFragment extends DialogFragment
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };
+
+    /**
+     * OnTouchListener for the save button.
+     */
+    private View.OnClickListener saveShotAttempt = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            // Scrape the data model and restore all defaults
+            ShotSpeed shotSpeed = ShotSpeed.valueOf(spinnerSpeed.getSelectedItem().toString());
+            ShotAccuracy shotAccuracy =
+                    ShotAccuracy.valueOf(spinnerAccuracy.getSelectedItem().toString());
+            FuelAmount fuelAmount =
+                    FuelAmount.valueOf(spinnerFuelAmount.getSelectedItem().toString());
+            ShotMode shotMode = ShotMode.valueOf(spinnerShotMode.getSelectedItem().toString());
+
+            shotAttempt.setShotSpeed(shotSpeed);
+            shotAttempt.setShotAccuracy(shotAccuracy);
+            shotAttempt.setFuelAmount(fuelAmount);
+            shotAttempt.setShotMode(shotMode);
+
+            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getAutonomousPeriod()
+                    .AddShotAttempt(shotAttempt);
+            restoreDefaults();
+        }
+    };
+
+    /**
+     * Restores the default values of all fields
+     */
+    private void restoreDefaults() {
+        shotAttempt = new ShotAttempt();
+        String message = "Location: ";
+        locationMessage.setText(message);
+    }
 }
