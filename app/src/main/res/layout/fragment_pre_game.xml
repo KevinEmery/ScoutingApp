@@ -9,7 +9,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game info"/>
+        android:text="Game info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <EditText
         android:id="@+id/etxt_pre_game_team_num"
@@ -17,6 +18,10 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:hint="Team number" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
     <EditText
         android:id="@+id/etxt_pre_game_match_num"
@@ -27,10 +32,15 @@
 
 
     <!--Here's all the stuff for who's scouting which match-->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pre-game setup data"/>
+        android:text="Pre-game setup data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <!--Has gear-->
     <CheckBox
