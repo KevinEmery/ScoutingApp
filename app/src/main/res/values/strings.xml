@@ -1,48 +1,11 @@
 <resources>
-    <!--This file is a huge mess and needs A LOT of cleaning-->
     <string name="app_name">ScoutingApp</string>
-    <string name="save_button_text">Save</string>
-    <string name="unable_to_write_file">Save</string>
-    <string name="data_written">Data successfully written to </string>
-
-    <!--Action bar menu items-->
-    <string name="action_settings">Settings</string>
-    <string name="action_bluetooth_sync">Bluetooth Sync</string>
-    <string name="action_pit">Pit</string>
-    <string name="action_scout_match">Scout Match</string>
-
-    <!-- Shooting screen values -->
-    <string name="label_shooting">Shooting</string>
-    <string name="high_goal_accuracy">High goal accuracy</string>
-    <string name="high_goal_speed">High goal speed</string>
-    <string name="low_goal_accuracy">Low goal accuracy</string>
-    <string name="low_goal_speed">Low goal speed</string>
-
-    <!-- Climbing screen values -->
-    <string name="label_climbing">Climbing</string>
-
-    <!--Values used on multiple screens -->
-    <string name="label_attempted">Attempted</string>
-    <string name="label_succeeded">Succeeded</string>
-
-    <!--ScoutMatch activity-->
-    <string name="label_scout_name">Scout name</string>
-    <string name="label_start_auto">Auto Start</string>
-    <string name="label_finish_game">Match Ended</string>
-    <string name="match_start">Start match</string>
-    <string name="match_end">End match</string>
-    <string name="teleop_start">Start TeleOp</string>
-    <string name="desc">SteamWorks field image</string>
-
-    <string name="hello_blank_fragment">Blank fragment</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="welcome">This is a DialogFragment.</string>
-    <string name="dialogfragment">Open DialogFragment</string>
-    <string name="alertdialogfragment">Open Alert DialogFragment</string>
     <string name="title_activity_scout_match">ScoutMatchActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
+    <!--Pit scouting strings-->
+    <string name="scout_pit_header">Pit</string>
+
+    <!--Array setup parameters used by the settings activity-->
     <string-array name="drive_stations_array">
         <item>Blue1</item>
         <item>Blue2</item>

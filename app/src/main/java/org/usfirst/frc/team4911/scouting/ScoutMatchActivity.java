@@ -56,7 +56,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        //TODO: Fix when we're getting drive station from sharedpreferences.
+        // If we haven't set the stuff in shared preferences, make a fuss
+
+        // Get the alliance type from sharedPreferences
         alliance = AllianceType.BLUE;
     }
 
