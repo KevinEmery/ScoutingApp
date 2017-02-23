@@ -101,8 +101,10 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         public void onClick(View v) {
             GearResult result = (placedGear.isChecked()) ? GearResult.Success : GearResult.Failed;
             gearAttempt.setGearResult(result);
+            // TODO: Get the proper value form UI element
+            gearAttempt.setGearPegPosition(GearPegPosition.None);
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getAutonomousPeriod()
-                    .AddGearAttempt(gearAttempt);
+                    .getGearAttempts().add(gearAttempt);
             restoreDefaults();
         }
     };

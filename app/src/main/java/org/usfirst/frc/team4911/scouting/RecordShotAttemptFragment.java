@@ -135,7 +135,7 @@ public class RecordShotAttemptFragment extends DialogFragment
             shotAttempt.setShotMode(shotMode);
 
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                    .getAutonomousPeriod().AddShotAttempt(shotAttempt);
+                    .getAutonomousPeriod().getShotAttempts().add(shotAttempt);
             restoreDefaults();
         }
     };

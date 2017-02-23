@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
+import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
+import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
+import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScoutAutoFragment#newInstance} factory method to
@@ -97,10 +102,18 @@ public class ScoutAutoFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                    .getAutonomousPeriod().setAutoMobilityPoints(crossedBaseline.isChecked());
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                    .getAutonomousPeriod().setLoadedFromHopper(loadedFromHopper.isChecked());
+            AutonomousPeriod autonomousPeriod = ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
+                    .getAutonomousPeriod();
+
+            autonomousPeriod.setAutoMobilityPoints(crossedBaseline.isChecked());
+            autonomousPeriod.setLoadedFromHopper(loadedFromHopper.isChecked());
+
+            // TODO: Should be able to call shootingEventFragment for the ShotAttempt data.
+            // The instance shoudl maintain the it's own state and not add the ShotAttempt to
+            // the array.
+
+            //ShotAttempt shotapptempt =
+            //autonomousPeriod.getShotAttempts().add()
         }
     };
 }

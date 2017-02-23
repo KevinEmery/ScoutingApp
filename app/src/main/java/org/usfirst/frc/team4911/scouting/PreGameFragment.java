@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -31,7 +33,6 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
     private CheckBox chbxUsesOwnRope;
     private Spinner spnrFuelQuantity;
     private TouchPadPosition ropePosition = TouchPadPosition.None;
-
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -134,13 +135,17 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
     };
 
     private ScoutingData createNewScoutingData() {
-        //TODO: Fetch these from SharedPreferences when we've gotten that working
-        String eventCode = "eventCode";
-        String tournamentLevel = "tournamentLevel";
-        DriveStation station = DriveStation.Blue1;
-        String deviceId = "testKindle";
-        String scoutName = "Anne Gwynne-Robson";
-        String scoutingTeamName = "ScoutingTeamName";
+        // TODO : Make this an enum and add to SetupActivity.
+        String tournamentLevel = "qual";
+
+        SharedPreferences sharedpreferences = getActivity().getApplicationContext().getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+
+        String eventCode = sharedpreferences.getString(SetupActivity.EventCode, "DEMO");
+        String scoutName = sharedpreferences.getString(SetupActivity.ScoutName, "Anne Gwynne-Robson");
+        String scoutingTeamName = sharedpreferences.getString(SetupActivity.ScoutTeam, "ScoutingTeamName");
+        String drive_Station = sharedpreferences.getString(SetupActivity.DriveStation, "");
+        DriveStation station = !drive_Station.equals("") ? DriveStation.valueOf(drive_Station) : DriveStation.Blue1;
+        String deviceId = sharedpreferences.getString(SetupActivity.AppInstanceId, "testKindle");
 
         int matchNumber = Integer.parseInt(etxtMatchNum.getText().toString());
         int teamNumber = Integer.parseInt(etxtTeamNum.getText().toString());

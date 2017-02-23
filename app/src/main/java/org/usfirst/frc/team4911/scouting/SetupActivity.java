@@ -35,7 +35,7 @@ public class SetupActivity extends AppCompatActivity {
     public static final String DriveStation = "driveStationKey";
     public static final String AppInstanceId = "appInstanceKey";
 
-    SharedPreferences sharedpreferences;
+    private SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

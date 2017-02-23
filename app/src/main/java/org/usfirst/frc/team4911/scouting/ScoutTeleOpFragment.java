@@ -48,6 +48,7 @@ public class ScoutTeleOpFragment extends Fragment {
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
+        // TODO:  You probably need an array list of framgments corresponding to each attempt
         RecordShotAttemptTeleOpFragment shotAttemptFragment =
                 RecordShotAttemptTeleOpFragment.newInstance();
         RecordGearAttemptTeleOpFragment gearAttemptFragment =
