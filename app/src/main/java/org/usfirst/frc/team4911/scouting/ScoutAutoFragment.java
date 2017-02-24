@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
+import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
+import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
@@ -113,6 +115,30 @@ public class ScoutAutoFragment extends Fragment {
 
             //ShotAttempt shotapptempt =
             //autonomousPeriod.getShotAttempts().add()
+
+            // TODO: Find a cleaner way to do this
+            if (((ScoutMatchActivity) getActivity())
+                    .getScoutingData()
+                    .getMatchData()
+                    .getAutonomousPeriod()
+                    .getGearAttempts().size() == 0) {
+                GearAttempt attempt = new GearAttempt();
+
+                ((ScoutMatchActivity) getActivity())
+                        .getScoutingData()
+                        .getMatchData().getAutonomousPeriod().getGearAttempts().add(attempt);
+            }
+
+            if (((ScoutMatchActivity) getActivity())
+                    .getScoutingData()
+                    .getMatchData()
+                    .getAutonomousPeriod().getShotAttempts().size() == 0) {
+                ShotAttempt attempt = new ShotAttempt();
+
+                ((ScoutMatchActivity) getActivity())
+                        .getScoutingData()
+                        .getMatchData().getAutonomousPeriod().getShotAttempts().add(attempt);
+            }
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(2);

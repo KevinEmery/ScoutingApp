@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
+import org.usfirst.frc.team4911.scouting.datamodel.ShotAttemptTeleop;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScoutTeleOpFragment#newInstance} factory method to
@@ -64,6 +67,29 @@ public class ScoutTeleOpFragment extends Fragment {
         public void onClick(View v) {
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
                     .getTeleopPeriod().setPlayedDefense(playedDefence.isChecked());
+
+            // TODO: Find a cleaner way to do this
+            if (((ScoutMatchActivity) getActivity())
+                    .getScoutingData()
+                    .getMatchData()
+                    .getTeleopPeriod().getGearAttempts().size() == 0) {
+                GearAttemptTeleop attempt = new GearAttemptTeleop();
+
+                ((ScoutMatchActivity) getActivity())
+                            .getScoutingData()
+                            .getMatchData().getTeleopPeriod().getGearAttempts().add(attempt);
+            }
+
+            if (((ScoutMatchActivity) getActivity())
+                    .getScoutingData()
+                    .getMatchData()
+                    .getTeleopPeriod().getShotAttempts().size() == 0) {
+                ShotAttemptTeleop attempt = new ShotAttemptTeleop();
+
+                ((ScoutMatchActivity) getActivity())
+                        .getScoutingData()
+                        .getMatchData().getTeleopPeriod().getShotAttempts().add(attempt);
+            }
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(3);

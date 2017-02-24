@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ShotAttempt {
-    @SerializedName("ShotSpeed") ShotSpeed shotSpeed;
-    @SerializedName("ShotAccuracy") ShotAccuracy shotAccuracy;
-    @SerializedName("FuelAmount") FuelAmount fuelAmount;
-    @SerializedName("ShotLocation") String shotLocation;
-    @SerializedName("ShotMode") ShotMode shotMode;
+    @SerializedName("ShotSpeed") ShotSpeed shotSpeed = ShotSpeed.Slow;
+    @SerializedName("ShotAccuracy") ShotAccuracy shotAccuracy = ShotAccuracy.Failed;
+    @SerializedName("FuelAmount") FuelAmount fuelAmount = FuelAmount.Small;
+    @SerializedName("ShotLocation") String shotLocation = "";
+    @SerializedName("ShotMode") ShotMode shotMode = ShotMode.Low;
 
     public FuelAmount getFuelAmount() {
         return fuelAmount;

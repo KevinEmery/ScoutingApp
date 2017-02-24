@@ -10,8 +10,8 @@ import java.util.Calendar;
 
 public class ShotAttemptTeleop extends ShotAttempt {
 
-    @SerializedName("WasDefended") boolean wasDefended;
-    @SerializedName("TimeStamp") String timeStamp;
+    @SerializedName("WasDefended") boolean wasDefended = false;
+    @SerializedName("TimeStamp") String timeStamp = "";
 
     public ShotAttemptTeleop() {
         this.timeStamp = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
