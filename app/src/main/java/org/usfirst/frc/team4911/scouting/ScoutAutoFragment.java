@@ -3,6 +3,7 @@ package org.usfirst.frc.team4911.scouting;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +113,9 @@ public class ScoutAutoFragment extends Fragment {
 
             //ShotAttempt shotapptempt =
             //autonomousPeriod.getShotAttempts().add()
+
+            ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
+            viewPager.setCurrentItem(2);
         }
     };
 }

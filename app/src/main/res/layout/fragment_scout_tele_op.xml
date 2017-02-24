@@ -5,6 +5,12 @@
     android:orientation="vertical"
     tools:context="org.usfirst.frc.team4911.scouting.ScoutTeleOpFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TeleOp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
     <!--This is the fragmentcontainer for the shooting event collection fragment-->
     <FrameLayout
         android:id="@+id/teleop_shooting_fragment_container"
