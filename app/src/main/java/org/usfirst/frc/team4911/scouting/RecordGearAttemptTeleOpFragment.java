@@ -28,6 +28,7 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
     private Spinner gearResult;
     private CheckBox wasDefended;
     private TextView locationMessage;
+    private TextView countMessage;
     private GearPegPosition location;
 
     public RecordGearAttemptTeleOpFragment() {
@@ -61,6 +62,7 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
 
         wasDefended = (CheckBox) view.findViewById(R.id.checkbox_gear_attempt_tele_op_defended);
         locationMessage = (TextView) view.findViewById(R.id.text_gear_attempt_tele_op_location);
+        countMessage = (TextView) view.findViewById(R.id.text_view_record_gear_teleop_count);
 
         Button location = (Button) view.findViewById(R.id.button_gear_attempt_tele_op_location);
         location.setOnClickListener(recordLocation);
@@ -103,6 +105,11 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
 
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getTeleopPeriod()
                     .addGearAttempt(gearAttemptTeleop);
+
+            String message = "Attempts recorded: " + ((ScoutMatchActivity) getActivity())
+                    .getScoutingData().getMatchData().getTeleopPeriod().getGearAttempts().size();
+            countMessage.setText(message);
+
             restoreDefaults();
         }
     };
