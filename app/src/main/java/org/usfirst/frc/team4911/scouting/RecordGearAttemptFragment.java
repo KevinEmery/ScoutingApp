@@ -24,6 +24,7 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
 
     GearPegPosition gearPegPosition;
     private TextView locationMessage;
+    private TextView countMessage;
     private CheckBox placedGear;
 
     public RecordGearAttemptFragment() {
@@ -52,6 +53,7 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         View view = inflater.inflate(R.layout.fragment_record_gear_attempt, container, false);
 
         locationMessage = (TextView) view.findViewById(R.id.txt_gear_record_auto_location);
+        countMessage = (TextView) view.findViewById(R.id.text_view_record_gear_count);
         placedGear = (CheckBox) view.findViewById(R.id.checkbox_record_gear_success);
 
         Button location = (Button) view.findViewById(R.id.btn_gear_record_location);
@@ -106,6 +108,10 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
 
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getAutonomousPeriod()
                     .getGearAttempts().add(gearAttempt);
+
+            String message = "Attempts recorded: " + ((ScoutMatchActivity) getActivity())
+                    .getScoutingData().getMatchData().getAutonomousPeriod().getGearAttempts().size();
+            countMessage.setText(message);
 
             restoreDefaults();
         }

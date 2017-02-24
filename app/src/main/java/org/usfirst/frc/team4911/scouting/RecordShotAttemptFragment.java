@@ -36,6 +36,7 @@ public class RecordShotAttemptFragment extends DialogFragment
     private Spinner spinnerFuelAmount;
     private Spinner spinnerShotMode;
     private TextView locationMessage;
+    private TextView countMessage;
 
     public RecordShotAttemptFragment() {
         // Required empty public constructor
@@ -63,6 +64,7 @@ public class RecordShotAttemptFragment extends DialogFragment
 
         shotAttempt = new ShotAttempt();
         locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_location);
+        countMessage = (TextView) view.findViewById(R.id.text_view_record_shot_count);
 
         spinnerSpeed = (Spinner) view.findViewById(R.id.spinner_shot_attempt_speed);
         spinnerSpeed.setAdapter(new ArrayAdapter<>(getContext(),
@@ -136,6 +138,11 @@ public class RecordShotAttemptFragment extends DialogFragment
 
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
                     .getAutonomousPeriod().getShotAttempts().add(shotAttempt);
+
+            String message = "Attempts recorded: " + ((ScoutMatchActivity) getActivity())
+                    .getScoutingData().getMatchData().getAutonomousPeriod().getShotAttempts().size();
+            countMessage.setText(message);
+
             restoreDefaults();
         }
     };

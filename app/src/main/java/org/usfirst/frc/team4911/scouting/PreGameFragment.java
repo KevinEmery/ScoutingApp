@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,6 +147,9 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
 
             String tournamentLevel = (String) spinner_tournamentLevel.getItemAtPosition(spinner_tournamentLevel.getSelectedItemPosition());
             ((ScoutMatchActivity) getActivity()).getScoutingData().setTournamentLevel(tournamentLevel);
+
+            ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
+            viewPager.setCurrentItem(1);
         }
     };
 
