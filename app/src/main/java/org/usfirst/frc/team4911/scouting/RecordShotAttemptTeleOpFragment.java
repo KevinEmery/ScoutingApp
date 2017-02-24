@@ -35,6 +35,7 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
     private Spinner spinnerFuelAmount;
     private Spinner spinnerShotMode;
     private TextView locationMessage;
+    private TextView countMessage;
     private CheckBox wasDefended;
     private String position;
 
@@ -64,6 +65,7 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_record_shot_attempt_tele_op, container, false);
 
         locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_tele_op_location);
+        countMessage = (TextView) view.findViewById(R.id.text_view_record_shot_tele_op_count);
 
         spinnerSpeed = (Spinner) view.findViewById(R.id.spinner_shot_attempt_tele_op_speed);
         spinnerSpeed.setAdapter(new ArrayAdapter<>(getContext(),
@@ -142,6 +144,10 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
 
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getTeleopPeriod()
                     .addShotAttempt(shotAttemptTeleop);
+
+            String message = "Attempts recorded: " + ((ScoutMatchActivity) getActivity())
+                    .getScoutingData().getMatchData().getTeleopPeriod().getShotAttempts().size();
+            countMessage.setText(message);
 
             restoreDefaults();
         }
