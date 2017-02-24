@@ -34,6 +34,17 @@
         android:inputType="number"
         android:hint="Match number" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tournment Level"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_tournamentlevel"
+        android:layout_marginBottom="30dp"/>
 
     <!--Here's all the stuff for who's scouting which match-->
     <Space
@@ -52,6 +63,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Has pre-loaded gear"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
     <!--Linear layout for fuel info-->
     <LinearLayout
@@ -77,6 +92,9 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
     <!--Uses own rope-->
     <LinearLayout
@@ -102,5 +120,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="30dp"/>
 </LinearLayout>

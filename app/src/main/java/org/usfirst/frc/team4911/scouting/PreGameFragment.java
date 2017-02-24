@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
+import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
+import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
+import org.usfirst.frc.team4911.scouting.datamodel.TournamentLevel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +36,7 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
     private CheckBox chbxUsesOwnRope;
     private Spinner spnrFuelQuantity;
     private TouchPadPosition ropePosition = TouchPadPosition.None;
+    private Spinner spinner_tournamentLevel;
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -76,6 +79,7 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
         etxtMatchNum = (EditText) view.findViewById(R.id.etxt_pre_game_match_num);
         etxtTeamNum = (EditText) view.findViewById(R.id.etxt_pre_game_team_num);
 
+        spinner_tournamentLevel = (Spinner) view.findViewById(R.id.spinner_tournamentlevel);
         chkbxHasGear = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_gear);
         chkbxHasFuel = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_fuel);
         chbxUsesOwnRope = (CheckBox) view.findViewById(R.id.chkbx_pre_game_uses_own_rope);
@@ -90,6 +94,15 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
         // Initialise the start game button
         Button btnSaveData = (Button) view.findViewById(R.id.btn_pre_game_start_game);
         btnSaveData.setOnClickListener(initScoutingData);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> tournamnetLevelAdapter = ArrayAdapter.createFromResource(
+                getActivity().getApplicationContext(),
+                R.array.tournamnetlevel_array,
+                android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        tournamnetLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.spinner_tournamentLevel.setAdapter(tournamnetLevelAdapter);
 
         return view;
     }
@@ -114,33 +127,31 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
     private View.OnClickListener initScoutingData = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((ScoutMatchActivity) getActivity()).setScoutingData(createNewScoutingData());
+            ScoutingData scoutingData = createNewScoutingData();
+            PreGame preGame = scoutingData.getMatchData().getPreGame();
+
+            ((ScoutMatchActivity) getActivity()).setScoutingData(scoutingData);
 
             // Now that we've initialised the scouting data we can add the pre-match data
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getPreGame()
-                    .setHasFuel(chkbxHasFuel.isChecked());
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getPreGame()
-                    .setHasGear(chkbxHasGear.isChecked());
+            preGame .setHasFuel(chkbxHasFuel.isChecked());
+            preGame .setHasGear(chkbxHasGear.isChecked());
 
             int fuelCount = Integer.parseInt(spnrFuelQuantity
                     .getItemAtPosition(spnrFuelQuantity.getSelectedItemPosition()).toString());
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getPreGame()
-                    .setFuelCount(fuelCount);
+            preGame .setFuelCount(fuelCount);
 
             boolean usesOwnRope = chbxUsesOwnRope.isChecked();
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getPreGame()
-                    .setUsesOwnRope(usesOwnRope);
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getPreGame()
-                    .setRopeTouchPadPosition(ropePosition);
+            preGame.setUsesOwnRope(usesOwnRope);
+            preGame.setRopeTouchPadPosition(ropePosition);
 
-            ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
-            viewPager.setCurrentItem(1);
+            String tournamentLevel = (String) spinner_tournamentLevel.getItemAtPosition(spinner_tournamentLevel.getSelectedItemPosition());
+            ((ScoutMatchActivity) getActivity()).getScoutingData().setTournamentLevel(tournamentLevel);
         }
     };
 
     private ScoutingData createNewScoutingData() {
         // TODO : Make this an enum and add to SetupActivity.
-        String tournamentLevel = "qual";
+        TournamentLevel tournamentLevel = TournamentLevel.qual;
 
         SharedPreferences sharedpreferences = getActivity().getApplicationContext().getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -154,7 +165,7 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
         int matchNumber = Integer.parseInt(etxtMatchNum.getText().toString());
         int teamNumber = Integer.parseInt(etxtTeamNum.getText().toString());
 
-        return new ScoutingData(eventCode, matchNumber, tournamentLevel, station, teamNumber,
+        return new ScoutingData(eventCode, matchNumber, tournamentLevel.toString(), station, teamNumber,
                 deviceId, scoutName, scoutingTeamName);
     }
 
