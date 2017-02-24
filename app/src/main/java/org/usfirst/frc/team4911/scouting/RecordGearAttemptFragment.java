@@ -22,7 +22,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
  */
 public class RecordGearAttemptFragment extends Fragment implements OnRecordLocationEventListener {
 
-    private GearAttempt gearAttempt;
+    GearPegPosition gearPegPosition;
     private TextView locationMessage;
     private CheckBox placedGear;
 
@@ -51,7 +51,6 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_gear_attempt, container, false);
 
-        gearAttempt = new GearAttempt();
         locationMessage = (TextView) view.findViewById(R.id.txt_gear_record_auto_location);
         placedGear = (CheckBox) view.findViewById(R.id.checkbox_record_gear_success);
 
@@ -69,8 +68,8 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
     // This method gets called by the record location dialog fragment
     @Override
     public void OnRecordLocationEvent(Object locationObject) {
+
         GearPegPosition position = (GearPegPosition) locationObject;
-        gearAttempt.setGearPegPosition(position);
         String message = "Location: " + position;
         locationMessage.setText(message);
     }
@@ -99,12 +98,15 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
 
         @Override
         public void onClick(View v) {
+            GearAttempt gearAttempt = new GearAttempt();
             GearResult result = (placedGear.isChecked()) ? GearResult.Success : GearResult.Failed;
+
             gearAttempt.setGearResult(result);
-            // TODO: Get the proper value form UI element
-            gearAttempt.setGearPegPosition(GearPegPosition.None);
+            gearAttempt.setGearPegPosition(gearPegPosition);
+
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getAutonomousPeriod()
                     .getGearAttempts().add(gearAttempt);
+
             restoreDefaults();
         }
     };
@@ -113,7 +115,6 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
      * Clears the current gearResult object and restores all the appropriate defaults.
      */
     private void restoreDefaults() {
-        gearAttempt = new GearAttempt();
         String message = "Location: ";
         locationMessage.setText(message);
         placedGear.setChecked(false);

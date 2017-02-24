@@ -34,6 +34,14 @@ public class ScoutTeleOpFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RecordShotAttemptTeleOpFragment shotAttemptFragment = RecordShotAttemptTeleOpFragment.newInstance();
+        RecordGearAttemptTeleOpFragment gearAttemptFragment = RecordGearAttemptTeleOpFragment.newInstance();
+
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.teleop_shooting_fragment_container, shotAttemptFragment);
+        fragmentTransaction.add(R.id.teleop_gear_fragment_container, gearAttemptFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -45,18 +53,6 @@ public class ScoutTeleOpFragment extends Fragment {
         playedDefence = (CheckBox) view.findViewById(R.id.checkbox_tele_op_played_defence);
         Button save = (Button) view.findViewById(R.id.button_tele_op_save);
         save.setOnClickListener(saveTeleop);
-
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-
-        // TODO:  You probably need an array list of framgments corresponding to each attempt
-        RecordShotAttemptTeleOpFragment shotAttemptFragment =
-                RecordShotAttemptTeleOpFragment.newInstance();
-        RecordGearAttemptTeleOpFragment gearAttemptFragment =
-                RecordGearAttemptTeleOpFragment.newInstance();
-
-        fragmentTransaction.add(R.id.teleop_shooting_fragment_container, shotAttemptFragment);
-        fragmentTransaction.add(R.id.teleop_gear_fragment_container, gearAttemptFragment);
-        fragmentTransaction.commit();
 
         return view;
     }

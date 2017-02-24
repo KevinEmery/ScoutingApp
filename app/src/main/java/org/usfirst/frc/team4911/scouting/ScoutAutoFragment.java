@@ -40,6 +40,14 @@ public class ScoutAutoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+
+        RecordShotAttemptFragment shootingEventFragment = RecordShotAttemptFragment.newInstance();
+        RecordGearAttemptFragment recordGearAttemptFragment = RecordGearAttemptFragment.newInstance();
+
+        fragmentTransaction.add(R.id.auto_shooting_fragment_container, shootingEventFragment);
+        fragmentTransaction.add(R.id.auto_gear_fragment_container, recordGearAttemptFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -47,16 +55,6 @@ public class ScoutAutoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // See note in the OnCreateView method of PreGameFragment
         View view = inflater.inflate(R.layout.fragment_scout_auto, container, false);
-
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-
-        RecordShotAttemptFragment shootingEventFragment =
-                RecordShotAttemptFragment.newInstance();
-        RecordGearAttemptFragment recordGearAttemptFragment = RecordGearAttemptFragment.newInstance();
-
-        fragmentTransaction.add(R.id.auto_shooting_fragment_container, shootingEventFragment);
-        fragmentTransaction.add(R.id.auto_gear_fragment_container, recordGearAttemptFragment);
-        fragmentTransaction.commit();
 
         crossedBaseline = (CheckBox) view.findViewById(R.id.chkbx_auto_crossed_baseline);
         crossedBaseline.setOnClickListener(crossedBaselineListener);
