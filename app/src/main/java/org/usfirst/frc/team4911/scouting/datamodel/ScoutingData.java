@@ -52,4 +52,8 @@ public class ScoutingData {
     public void setMatchData(MatchData matchData) {
         this.matchData = matchData;
     }
+
+    public void setTournamentLevel(String tournamentLevel) {
+        this.tournamentLevel = tournamentLevel;
+    }
 }
