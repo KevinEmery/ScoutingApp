@@ -33,8 +33,10 @@
         <item>practice</item>
     </string-array>
 
-    <string-array name="tournamnetlevel_array">
-        <item>qual</item>
-        <item>playoff</item>
+    <string-array name="scoutteams_array">
+        <item>CyberKnights</item>
+        <item>CPR</item>
     </string-array>
+
+
 </resources>
