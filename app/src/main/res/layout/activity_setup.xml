@@ -52,26 +52,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView3" />
 
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText_ScoutTeam"
-        android:contentDescription="Name of team "
-        tools:text="Name of team scouting, e.g. Cyberknights" />
+        android:id="@+id/spinner_scout_team" />
 
     <TextView
         android:text="Assigned Drive Station"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4" />
+        android:id="@+id/textView4"
+        android:layout_marginTop="30dp" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner_drive_station" />
-
 
     <Button
         android:text="Save"
