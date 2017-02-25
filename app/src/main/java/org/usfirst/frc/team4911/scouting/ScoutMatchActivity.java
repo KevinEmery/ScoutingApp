@@ -8,11 +8,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
+import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 
 // This is the single activity we care about the most.
-public class ScoutMatchActivity extends AppCompatActivity {
+public class ScoutMatchActivity extends AppCompatActivity
+        implements RecordGearAttemptFragment.OnRecordGearAttemptFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -116,6 +118,14 @@ public class ScoutMatchActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    /**
+     * Interaction listener for the fragment that records gear attempts in auto
+     * @param gearAttempt The attempt to add the the master list of all attempts.
+     */
+    public void onRecordGearAttemptFragmentInteraction(GearAttempt gearAttempt) {
+        scoutingData.getMatchData().getAutonomousPeriod().getGearAttempts().add(gearAttempt);
     }
 
     /**

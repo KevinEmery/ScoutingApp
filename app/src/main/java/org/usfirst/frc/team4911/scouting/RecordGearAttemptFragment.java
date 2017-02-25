@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,8 @@ import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
  * create an instance of this fragment.
  */
 public class RecordGearAttemptFragment extends Fragment implements OnRecordLocationEventListener {
+
+    private OnRecordGearAttemptFragmentInteractionListener mListener;
 
     GearPegPosition gearPegPosition;
     private TextView locationMessage;
@@ -67,6 +71,23 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnRecordGearAttemptFragmentInteractionListener) {
+            mListener = (OnRecordGearAttemptFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
     // This method gets called by the record location dialog fragment
     @Override
     public void OnRecordLocationEvent(Object locationObject) {
@@ -106,12 +127,10 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
             gearAttempt.setGearResult(result);
             gearAttempt.setGearPegPosition(gearPegPosition);
 
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getAutonomousPeriod()
-                    .getGearAttempts().add(gearAttempt);
-
-            String message = "Attempts recorded: " + ((ScoutMatchActivity) getActivity())
-                    .getScoutingData().getMatchData().getAutonomousPeriod().getGearAttempts().size();
-            countMessage.setText(message);
+            // Call the parent activity and pass it the gear attempt
+            if (mListener != null) {
+                mListener.onRecordGearAttemptFragmentInteraction(gearAttempt);
+            }
 
             restoreDefaults();
         }
@@ -126,4 +145,10 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         placedGear.setChecked(false);
     }
 
+    /**
+     * All activities containing this fragment must implement this interface.
+     */
+    public interface OnRecordGearAttemptFragmentInteractionListener {
+        void onRecordGearAttemptFragmentInteraction(GearAttempt gearAttempt);
+    }
 }
