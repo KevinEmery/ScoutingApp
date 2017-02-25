@@ -24,7 +24,6 @@ public class ScoutingData {
     public ScoutingData(
         String eventCode,
         int matchNumber,
-        String tournamentLevel,
         DriveStation station,
         int teamNumber,
         String deviceId,
@@ -33,7 +32,7 @@ public class ScoutingData {
     {
         this.eventCode = eventCode;
         this.matchNumber = matchNumber;
-        this.tournamentLevel = tournamentLevel;
+        this.tournamentLevel = TournamentLevel.qual.toString();
         this.station = station;
         this.teamNumber = teamNumber;
         this.deviceId = deviceId;

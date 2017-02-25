@@ -33,7 +33,7 @@ public class DataModelTests {
 
     @Test
     public void scoutingDataModel_isCorrect() throws Exception {
-        ScoutingData data = new ScoutingData("DEMO", 1, "qual", DriveStation.Red1, 4911, "Device_1", "scout@Red1", "Cyberknights");
+        ScoutingData data = new ScoutingData("DEMO", 1, DriveStation.Red1, 4911, "Device_1", "scout@Red1", "Cyberknights");
         PreGame pregame = data.getMatchData().getPreGame();
         pregame.setHasGear(true);
         pregame.setHasFuel(true);

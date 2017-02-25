@@ -37,7 +37,6 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
     private CheckBox chbxUsesOwnRope;
     private Spinner spnrFuelQuantity;
     private TouchPadPosition ropePosition = TouchPadPosition.None;
-    private Spinner spinner_tournamentLevel;
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -80,7 +79,6 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
         etxtMatchNum = (EditText) view.findViewById(R.id.etxt_pre_game_match_num);
         etxtTeamNum = (EditText) view.findViewById(R.id.etxt_pre_game_team_num);
 
-        spinner_tournamentLevel = (Spinner) view.findViewById(R.id.spinner_tournamentlevel);
         chkbxHasGear = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_gear);
         chkbxHasFuel = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_fuel);
         chbxUsesOwnRope = (CheckBox) view.findViewById(R.id.chkbx_pre_game_uses_own_rope);
@@ -95,15 +93,6 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
         // Initialise the start game button
         Button btnSaveData = (Button) view.findViewById(R.id.btn_pre_game_start_game);
         btnSaveData.setOnClickListener(initScoutingData);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> tournamnetLevelAdapter = ArrayAdapter.createFromResource(
-                getActivity().getApplicationContext(),
-                R.array.tournamnetlevel_array,
-                android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        tournamnetLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.spinner_tournamentLevel.setAdapter(tournamnetLevelAdapter);
 
         return view;
     }
@@ -145,18 +134,12 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
             preGame.setUsesOwnRope(usesOwnRope);
             preGame.setRopeTouchPadPosition(ropePosition);
 
-            String tournamentLevel = (String) spinner_tournamentLevel.getItemAtPosition(spinner_tournamentLevel.getSelectedItemPosition());
-            ((ScoutMatchActivity) getActivity()).getScoutingData().setTournamentLevel(tournamentLevel);
-
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(1);
         }
     };
 
     private ScoutingData createNewScoutingData() {
-        // TODO : Make this an enum and add to SetupActivity.
-        TournamentLevel tournamentLevel = TournamentLevel.qual;
-
         SharedPreferences sharedpreferences = getActivity().getApplicationContext().getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
         String eventCode = sharedpreferences.getString(SetupActivity.EventCode, "DEMO");
@@ -169,8 +152,7 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
         int matchNumber = Integer.parseInt(etxtMatchNum.getText().toString());
         int teamNumber = Integer.parseInt(etxtTeamNum.getText().toString());
 
-        return new ScoutingData(eventCode, matchNumber, tournamentLevel.toString(), station, teamNumber,
-                deviceId, scoutName, scoutingTeamName);
+        return new ScoutingData(eventCode, matchNumber, station, teamNumber, deviceId, scoutName, scoutingTeamName);
     }
 
     // This method gets called by the record location dialog fragment

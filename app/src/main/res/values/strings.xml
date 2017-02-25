@@ -33,8 +33,4 @@
         <item>practice</item>
     </string-array>
 
-    <string-array name="tournamnetlevel_array">
-        <item>qual</item>
-        <item>playoff</item>
-    </string-array>
 </resources>
