@@ -109,9 +109,21 @@ public class EndGameFragment extends Fragment implements OnRecordLocationEventLi
             saveAndClearEndGameData();
 
             ScoutingData scoutingData = ((ScoutMatchActivity) getActivity()).getScoutingData();
+
+            String fileName = String.format(
+                "%1s_%2$d_%3s_%4s_%5d_%6s_%7s_%8s.json",
+                scoutingData.getEventCode(),
+                scoutingData.getMatchNumber(),
+                scoutingData.getTournamentLevel(),
+                scoutingData.getStation(),
+                scoutingData.getTeamNumber(),
+                scoutingData.getScoutName(),
+                scoutingData.getScoutingTeamName(),
+                scoutingData.getDeviceId());
+
             Gson gson = new GsonBuilder().create();
             String serialisedScoutingData = gson.toJson(scoutingData);
-            SaveDataToFile(v, serialisedScoutingData);
+            SaveDataToFile(v, fileName, serialisedScoutingData);
         }
     };
 
@@ -131,14 +143,13 @@ public class EndGameFragment extends Fragment implements OnRecordLocationEventLi
     }
 
     /** Actually does the work of saving the matchdata object to a file */
-    private void SaveDataToFile(View view, String data) {
+    private void SaveDataToFile(View view, String fileName, String data) {
         CharSequence text;
 
-        if (this.isExternalStorageWritable())
-        {
+        if (this.isExternalStorageWritable()) {
             try {
                 File directory = getScoutingDataStorageDir();
-                File dataFileHandle = new File(directory, "scoutingdata.json");
+                File dataFileHandle = new File(directory, fileName);
 
                 FileOutputStream outputStream = new FileOutputStream(dataFileHandle);
                 outputStream.write(data.getBytes());
@@ -149,15 +160,13 @@ public class EndGameFragment extends Fragment implements OnRecordLocationEventLi
                 text = "unable to write file because of an exception: " + e.toString();
             }
         }
-        else
-        {
+        else {
             text = "External storage not writeable";
         }
 
         Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
         toast.show();
     }
-
 
     /* Checks if external storage is available for read and write */
     private boolean isExternalStorageWritable() {

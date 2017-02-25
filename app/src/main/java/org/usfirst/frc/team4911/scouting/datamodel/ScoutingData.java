@@ -56,4 +56,36 @@ public class ScoutingData {
     public void setTournamentLevel(String tournamentLevel) {
         this.tournamentLevel = tournamentLevel;
     }
+
+    public String getEventCode() {
+        return eventCode;
+    }
+
+    public int getMatchNumber() {
+        return matchNumber;
+    }
+
+    public int getTeamNumber() {
+        return teamNumber;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public String getTournamentLevel() {
+        return tournamentLevel;
+    }
+
+    public DriveStation getStation() {
+        return station;
+    }
+
+    public String getScoutName() {
+        return scoutName;
+    }
+
+    public String getScoutingTeamName() {
+        return scoutingTeamName;
+    }
 }
