@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,9 +16,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
-import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
 import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
@@ -29,7 +30,8 @@ import org.usfirst.frc.team4911.scouting.datamodel.TournamentLevel;
  * Use the {@link PreGameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PreGameFragment extends Fragment implements OnRecordLocationEventListener{
+public class PreGameFragment extends Fragment
+        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
     private EditText etxtMatchNum;
     private EditText etxtTeamNum;
     private CheckBox chkbxHasGear;
@@ -98,6 +100,18 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
     }
 
     /**
+     * Handles touch events on the location map. Implements an interface defined in that class.
+     */
+    @Override
+    public void onRecordLocationMapTouch(MotionEvent event) {
+        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
+        // it does is show a toast containing the X and Y coordinates of the touch point.
+        // I leave the mapping in your hands :)
+        String text = "X: " + event.getX() + "Y: " + event.getY();
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
      * OnClickListener for the button that records the rope location.
      */
     private View.OnClickListener recordRopeLocation = new View.OnClickListener() {
@@ -105,8 +119,7 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
         public void onClick(View v) {
             // Show the location record dialog
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(
-                    ((ScoutMatchActivity) getActivity()).getAlliance(), EventLocationType.CLIMB);
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };
@@ -153,11 +166,5 @@ public class PreGameFragment extends Fragment implements OnRecordLocationEventLi
         int teamNumber = Integer.parseInt(etxtTeamNum.getText().toString());
 
         return new ScoutingData(eventCode, matchNumber, station, teamNumber, deviceId, scoutName, scoutingTeamName);
-    }
-
-    // This method gets called by the record location dialog fragment
-    @Override
-    public void OnRecordLocationEvent(Object locationObject) {
-        ropePosition = (TouchPadPosition) locationObject;
     }
 }

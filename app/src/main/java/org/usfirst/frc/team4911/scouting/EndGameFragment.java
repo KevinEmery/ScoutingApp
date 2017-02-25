@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,7 +30,8 @@ import com.google.gson.GsonBuilder;
  * Use the {@link EndGameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EndGameFragment extends Fragment implements OnRecordLocationEventListener {
+public class EndGameFragment extends Fragment
+        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
     TextView locationMessage;
     CheckBox attempted;
     CheckBox succeeded;
@@ -63,7 +66,7 @@ public class EndGameFragment extends Fragment implements OnRecordLocationEventLi
         succeeded = (CheckBox) view.findViewById(R.id.checkbox_end_game_success);
 
         Button location = (Button) view.findViewById(R.id.btn_climbing_location);
-        location.setOnClickListener(handleBtnPress);
+        location.setOnClickListener(recordLocation);
 
         Button saveToFile = (Button) view.findViewById(R.id.button_end_game_save_data_to_file);
         saveToFile.setOnClickListener(saveDataToFile);
@@ -71,15 +74,32 @@ public class EndGameFragment extends Fragment implements OnRecordLocationEventLi
         return view;
     }
 
-    // This method gets called by the record location dialog fragment
+    /**
+     * Handles touch events on the location map.
+     */
     @Override
-    public void OnRecordLocationEvent(Object locationObject) {
-        TouchPadPosition position = (TouchPadPosition) locationObject;
-        ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getEndGame()
-                .setTouchPadPosition(position);
-        String message = "Location: " + position;
-        locationMessage.setText(message);
+    public void onRecordLocationMapTouch(MotionEvent event) {
+        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
+        // it does is show a toast containing the X and Y coordinates of the touch point.
+        // I leave the mapping in your hands :)
+        String text = "X: " + event.getX() + "Y: " + event.getY();
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
+
+    /**
+     * OnTouchListener for the location button which invites the user to note down the location
+     * of a shooting event.
+     */
+    private View.OnClickListener recordLocation = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            FragmentManager fragmentManager = getChildFragmentManager();
+            // TODO: Alliance awareness
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
+            fieldMapFragment.show(fragmentManager, "DialogFragment");
+        }
+    };
 
     /**
      * OnTouchListener for the location button which invites the user to note down the location
@@ -91,9 +111,7 @@ public class EndGameFragment extends Fragment implements OnRecordLocationEventLi
         public void onClick(View v) {
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment =
-                    RecordLocationFragment.newInstance(
-                            ((ScoutMatchActivity) getActivity()).getAlliance(),
-                            EventLocationType.CLIMB);
+                    RecordLocationFragment.newInstance(R.drawable.airship_blue);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };
@@ -110,8 +128,8 @@ public class EndGameFragment extends Fragment implements OnRecordLocationEventLi
 
             ScoutingData scoutingData = ((ScoutMatchActivity) getActivity()).getScoutingData();
 
-            String fileName = String.format(
-                "%1s_%2$d_%3s_%4s_%5d_%6s_%7s_%8s.json",
+            String fileName = String.format(Locale.getDefault(),
+                "%1$s_%2$d_%3$s_%4$s_%5$d_%6$s_%7$s_%8$s.json",
                 scoutingData.getEventCode(),
                 scoutingData.getMatchNumber(),
                 scoutingData.getTournamentLevel(),
@@ -181,6 +199,7 @@ public class EndGameFragment extends Fragment implements OnRecordLocationEventLi
 
         if (!directoryPath.exists()) {
             if (!directoryPath.mkdirs()) {
+                // Figure out something to do here someday
             }
         }
 

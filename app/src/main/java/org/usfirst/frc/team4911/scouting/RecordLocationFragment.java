@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,11 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import org.usfirst.frc.team4911.scouting.datamodel.EndGame;
-import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
-import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
-
 
 /**
  * Dialog fragment subclass which displays a given field and records a normalised location
@@ -28,25 +24,16 @@ import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
  */
 public class RecordLocationFragment extends DialogFragment {
 
+    OnRecordLocationMapTouchListener mRecordLocationMapTouchListener;
+
     // The keys we use to store argument parameters
-    private static final String ARG_PARAM1 = "argParam1";
-    private static final String ARG_PARAM2 = "argParam2";
+    private static final String ARG_RESOURCE_ID = "resourceId";
 
     // The variable we store the ID in once we've gone through the whole argument passing process.
     private int mapImageResourceId;
 
-    // The type of event whose location we're recording
-    public EventLocationType eventLocationType;
-
-    // Array which stores all the EventLocationType/AllianceType resource ID values.
-    private final int[][] resourceIdArray = createResourceIdArray();
-
     // Object for interacting with the image of the map shown on screen.
     private ImageView map;
-
-    // The touch point coordinates - I'm guessing these will very shortly be replaced
-    // with methods that calculate the zone.
-    private Pair<Float, Float> normalizedTouchPoint;
 
     public RecordLocationFragment() {
         // Required empty constructor
@@ -56,20 +43,14 @@ public class RecordLocationFragment extends DialogFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param allianceType The allianceType to display a map for as a {@link AllianceType}.
-     * @param locationMapType The type of map to display as a {@link EventLocationType}.
+     * @param resourceId The resource ID of the picture to draw.
      *
      * @return A new instance of fragment RecordLocationFragment.
      */
-    public static RecordLocationFragment newInstance(AllianceType allianceType,
-                                                     EventLocationType eventLocationType) {
+    public static RecordLocationFragment newInstance(int resourceId) {
         RecordLocationFragment fragment = new RecordLocationFragment();
-        int resourceId =
-                fragment.resourceIdArray[allianceType.getValue()][eventLocationType.getValue()];
-
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, resourceId);
-        args.putInt(ARG_PARAM2, eventLocationType.getValue());
+        args.putInt(ARG_RESOURCE_ID, resourceId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,9 +59,10 @@ public class RecordLocationFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mapImageResourceId = getArguments().getInt(ARG_PARAM1);
-            eventLocationType = EventLocationType.values()[getArguments().getInt(ARG_PARAM2)];
+            mapImageResourceId = getArguments().getInt(ARG_RESOURCE_ID);
         }
+
+        onAttachToParentFragment(getParentFragment());
     }
 
     @Override
@@ -90,26 +72,46 @@ public class RecordLocationFragment extends DialogFragment {
 
         map = (ImageView) view.findViewById(R.id.fragment_map);
         map.setImageBitmap(getEditableFieldCanvas());
-        map.setOnTouchListener(handleTouch);
+        map.setOnTouchListener(mapTouchEventListener);
 
         Button close = (Button) view.findViewById(R.id.btn_fragment_close);
-        close.setOnClickListener(closeWindow);
+        close.setOnClickListener(doneButtonListener);
 
         return view;
+    }
+
+    public void onAttachToParentFragment(Fragment fragment)
+    {
+        try
+        {
+            mRecordLocationMapTouchListener = (OnRecordLocationMapTouchListener)fragment;
+        }
+        catch (ClassCastException e)
+        {
+            throw new ClassCastException(
+                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+        }
     }
 
     /**
      * OnTouchListener for the map which draws a white event position marker on the screen
      * when the screen is touched.
      */
-    private View.OnTouchListener handleTouch = new View.OnTouchListener() {
+    private View.OnTouchListener mapTouchEventListener = new View.OnTouchListener() {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 drawMapWithMarker(event.getX(), event.getY());
-                setNormalizedTouchPoint(event.getX(), event.getY());
+
+                // This is where we call the map touch event listener in the parent class to pass
+                // the data back to it.
+                if (mRecordLocationMapTouchListener != null)
+                {
+                    mRecordLocationMapTouchListener.onRecordLocationMapTouch(event);
+                }
+
                 return true;
             }
 
@@ -120,66 +122,12 @@ public class RecordLocationFragment extends DialogFragment {
     /**
      * OnClickListener for the button that records the location and closes the dialog.
      */
-    private View.OnClickListener closeWindow = new View.OnClickListener() {
+    private View.OnClickListener doneButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            OnRecordLocationEventListener listener =
-                    (OnRecordLocationEventListener) getParentFragment();
-            Object location = getEventLocationObject();
-            listener.OnRecordLocationEvent(location);
             dismiss();
         }
     };
-
-    /**
-     * Fills the resource ID array with the correct resources for each map type.
-     */
-    private int[][] createResourceIdArray() {
-        int[][] idArray = new int[AllianceType.values().length][EventLocationType.values().length];
-
-        // First the blue alliance
-        idArray[AllianceType.BLUE.getValue()][EventLocationType.SHOOT.getValue()] =
-                R.drawable.shootingzone_blue;
-        idArray[AllianceType.BLUE.getValue()][EventLocationType.PLACEGEAR.getValue()] =
-                R.drawable.airship_blue;
-        idArray[AllianceType.BLUE.getValue()][EventLocationType.CLIMB.getValue()] =
-                R.drawable.airship_blue;
-
-        // Then the red
-        idArray[AllianceType.RED.getValue()][EventLocationType.SHOOT.getValue()] =
-                R.drawable.shootingzone_red;
-        idArray[AllianceType.RED.getValue()][EventLocationType.PLACEGEAR.getValue()] =
-                R.drawable.airship_red;
-        idArray[AllianceType.RED.getValue()][EventLocationType.CLIMB.getValue()] =
-                R.drawable.airship_red;
-
-        return idArray;
-    }
-
-    /**
-     * Sets the value of the pair that stored the coordinates of the touch point onto an axis
-     * between 0 and 1 where 0 is the
-     * top left corner of the field and 1 is the bottom right.
-     * @param touchX x coordinate of the touched point.
-     * @param touchY y coordinate of the touch point.
-     * point.
-     */
-    private void setNormalizedTouchPoint(float touchX, float touchY) {
-
-        float mapBottomRightX = map.getWidth();
-        float mapBottomRightY = map.getHeight();
-        normalizedTouchPoint = new Pair<>(touchX/mapBottomRightX, touchY/mapBottomRightY);
-    }
-
-    /**
-     * Gets the normalised touch point.
-     * @return A pair contianing the normalised X and Y coordinates of the touched point.
-     * Null if they're not defined.
-     */
-    public Pair<Float, Float> getNormalizedTouchPoint() {
-
-        return normalizedTouchPoint;
-    }
 
     /**
      * Draws the map with the marker.
@@ -191,8 +139,11 @@ public class RecordLocationFragment extends DialogFragment {
         Bitmap image = getEditableFieldCanvas();
         Canvas canvas = new Canvas(image);
         Drawable d = getActivity().getDrawable(R.drawable.marker_shape);
-        d.setBounds(getDrawableBounds(scrX, scrY, d));
-        d.draw(canvas);
+
+        if (d != null) {
+            d.setBounds(getDrawableBounds(scrX, scrY, d));
+            d.draw(canvas);
+        }
         map.setImageBitmap(image);
     }
 
@@ -233,27 +184,10 @@ public class RecordLocationFragment extends DialogFragment {
     }
 
     /**
-     * Returns a location object corresponding to the coordinates and event type of the
-     * event that just got recorded.
+     * Interface that allows the object that created this fragment to react to events where
+     * the map got clicked. Needs to be implemented by all parent fragments of this class.
      */
-    private Object getEventLocationObject() {
-        // TODO: Replace all of this with the math that determines what sector it's in
-        Object ret = null;
-
-        switch (eventLocationType) {
-            case PLACEGEAR:
-                ret = GearPegPosition.Far;
-                break;
-            case CLIMB:
-                ret = TouchPadPosition.Far;
-                break;
-            case SHOOT:
-                ret = "TODO";
-                break;
-            default:
-                break;
-        }
-
-        return ret;
+    public interface OnRecordLocationMapTouchListener {
+        void onRecordLocationMapTouch(MotionEvent event);
     }
 }

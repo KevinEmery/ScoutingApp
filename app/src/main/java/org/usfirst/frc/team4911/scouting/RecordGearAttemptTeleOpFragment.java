@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
@@ -24,7 +26,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
  * create an instance of this fragment.
  */
 public class RecordGearAttemptTeleOpFragment extends Fragment
-        implements OnRecordLocationEventListener{
+        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
     private Spinner gearResult;
     private CheckBox wasDefended;
     private TextView locationMessage;
@@ -73,11 +75,16 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
         return view;
     }
 
+    /**
+     * Handles touch events on the location map.
+     */
     @Override
-    public void OnRecordLocationEvent(Object locationObject) {
-        location = (GearPegPosition) locationObject;
-        String message = "Location: " + location;
-        locationMessage.setText(message);
+    public void onRecordLocationMapTouch(MotionEvent event) {
+        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
+        // it does is show a toast containing the X and Y coordinates of the touch point.
+        // I leave the mapping in your hands :)
+        String text = "X: " + event.getX() + "Y: " + event.getY();
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     private View.OnClickListener recordLocation = new View.OnClickListener() {
@@ -85,10 +92,8 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
         @Override
         public void onClick(View v) {
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment =
-                    RecordLocationFragment.newInstance(
-                            ((ScoutMatchActivity) getActivity()).getAlliance(),
-                            EventLocationType.PLACEGEAR);
+            // TODO: This needs to know which alliance its scouting.
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

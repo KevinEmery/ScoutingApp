@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.FuelAmount;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAccuracy;
@@ -27,8 +29,8 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
  * Use the {@link RecordShotAttemptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordShotAttemptFragment extends DialogFragment
-        implements OnRecordLocationEventListener{
+public class RecordShotAttemptFragment extends Fragment
+        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
     private ShotAttempt shotAttempt;
 
     private Spinner spinnerSpeed;
@@ -83,7 +85,7 @@ public class RecordShotAttemptFragment extends DialogFragment
                 android.R.layout.simple_spinner_item, ShotMode.values()));
 
         Button location = (Button) view.findViewById(R.id.button_shot_attempt_location);
-        location.setOnClickListener(recordShotAttemptLocation);
+        location.setOnClickListener(recordLocation);
 
         Button save = (Button) view.findViewById(R.id.button_shot_attempt_save);
         save.setOnClickListener(saveShotAttempt);
@@ -91,27 +93,30 @@ public class RecordShotAttemptFragment extends DialogFragment
         return view;
     }
 
-    // This method gets called by the record location dialog fragment
+    /**
+     * Handles touch events on the location map.
+     */
     @Override
-    public void OnRecordLocationEvent(Object locationObject) {
-        String position = (String) locationObject;
-        shotAttempt.setShotLocation(position);
-        String message = "Location: " + position;
-        locationMessage.setText(message);
+    public void onRecordLocationMapTouch(MotionEvent event) {
+        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
+        // it does is show a toast containing the X and Y coordinates of the touch point.
+        // I leave the mapping in your hands :)
+        String text = "X: " + event.getX() + "Y: " + event.getY();
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * OnTouchListener for the location button which invites the user to note down the location
      * of a shooting event.
      */
-    private View.OnClickListener recordShotAttemptLocation = new View.OnClickListener() {
+    private View.OnClickListener recordLocation = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(
-                    ((ScoutMatchActivity) getActivity()).getAlliance(),
-                    EventLocationType.SHOOT);
+
+            // TODO: Refactor so this knows about alliance
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

@@ -7,11 +7,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
@@ -22,13 +24,13 @@ import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
  * Use the {@link RecordGearAttemptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordGearAttemptFragment extends Fragment implements OnRecordLocationEventListener {
+public class RecordGearAttemptFragment extends Fragment
+        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
 
     private OnRecordGearAttemptFragmentInteractionListener mListener;
 
     GearPegPosition gearPegPosition;
     private TextView locationMessage;
-    private TextView countMessage;
     private CheckBox placedGear;
 
     public RecordGearAttemptFragment() {
@@ -57,7 +59,6 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         View view = inflater.inflate(R.layout.fragment_record_gear_attempt, container, false);
 
         locationMessage = (TextView) view.findViewById(R.id.txt_gear_record_auto_location);
-        countMessage = (TextView) view.findViewById(R.id.text_view_record_gear_count);
         placedGear = (CheckBox) view.findViewById(R.id.checkbox_record_gear_success);
 
         Button location = (Button) view.findViewById(R.id.btn_gear_record_location);
@@ -88,13 +89,16 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         mListener = null;
     }
 
-    // This method gets called by the record location dialog fragment
+    /**
+     * Handles touch events on the location map.
+     */
     @Override
-    public void OnRecordLocationEvent(Object locationObject) {
-
-        GearPegPosition position = (GearPegPosition) locationObject;
-        String message = "Location: " + position;
-        locationMessage.setText(message);
+    public void onRecordLocationMapTouch(MotionEvent event) {
+        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
+        // it does is show a toast containing the X and Y coordinates of the touch point.
+        // I leave the mapping in your hands :)
+        String text = "X: " + event.getX() + "Y: " + event.getY();
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -106,10 +110,9 @@ public class RecordGearAttemptFragment extends Fragment implements OnRecordLocat
         @Override
         public void onClick(View v) {
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment =
-                    RecordLocationFragment.newInstance(
-                            ((ScoutMatchActivity) getActivity()).getAlliance(),
-                            EventLocationType.PLACEGEAR);
+
+            //TODO: Set this so map changes depending on alliance
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };
