@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -9,14 +11,17 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
+import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
 import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
+import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.TeleopPeriod;
 
 // This is the single activity we care about the most.
 public class ScoutMatchActivity extends AppCompatActivity implements
         ScoutAutoFragment.OnAutoPeriodObjectCreatedListener,
-        ScoutTeleOpFragment.OnTeleopPeriodObjectCreatedListener {
+        ScoutTeleOpFragment.OnTeleopPeriodObjectCreatedListener,
+        PreGameFragment.OnStartClickedListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -131,18 +136,23 @@ public class ScoutMatchActivity extends AppCompatActivity implements
     }
 
     /**
-     * Getter for the {@link MatchData} object associated with this class.
-     * @return The matchdata object associated with this class.
+     * Method that gets called when a match is started.
+     * @param matchNumber the match number of the match that's starting.
+     * @param teamNumber Team number of the team being scouted in this match.
+     * @param preGame The pre-game data object for this team for this match.
      */
-    public ScoutingData getScoutingData() {
-        return this.scoutingData;
-    }
+    @Override public void onStartClicked(int matchNumber, int teamNumber, PreGame preGame) {
+        // Create the new scouting data object
+        SharedPreferences sharedpreferences = getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
-    /**
-     * Setter for the {@link MatchData} object associated with this class.
-     * @param scoutingData The matchdata object to set matchdata to.
-     */
-    public void setScoutingData(ScoutingData scoutingData) {
-        this.scoutingData = scoutingData;
+        String eventCode = sharedpreferences.getString(SetupActivity.EventCode, "DEMO");
+        String scoutName = sharedpreferences.getString(SetupActivity.ScoutName, "Anne Gwynne-Robson");
+        String scoutingTeamName = sharedpreferences.getString(SetupActivity.ScoutTeam, "ScoutingTeamName");
+        String drive_Station = sharedpreferences.getString(SetupActivity.DriveStation, "");
+        DriveStation station = !drive_Station.equals("") ? DriveStation.valueOf(drive_Station) : DriveStation.Blue1;
+        String deviceId = sharedpreferences.getString(SetupActivity.AppInstanceId, "testKindle");
+
+        this.scoutingData = new ScoutingData(eventCode, matchNumber, station, teamNumber, deviceId, scoutName, scoutingTeamName);
+        this.scoutingData.getMatchData().setPreGame(preGame);
     }
 }
