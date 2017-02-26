@@ -138,7 +138,7 @@ public class EndGameFragment extends Fragment
             mListener = (OnSaveAndClearClickedListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnSaveAndClearClickedListener");
         }
     }
 

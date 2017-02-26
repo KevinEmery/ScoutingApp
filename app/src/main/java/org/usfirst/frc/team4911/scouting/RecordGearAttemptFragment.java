@@ -55,7 +55,7 @@ public class RecordGearAttemptFragment extends Fragment
         onAttachToParentFragment(getParentFragment());
     }
 
-    public void onAttachToParentFragment(Fragment fragment)
+    private void onAttachToParentFragment(Fragment fragment)
     {
         try
         {
@@ -64,7 +64,7 @@ public class RecordGearAttemptFragment extends Fragment
         catch (ClassCastException e)
         {
             throw new ClassCastException(
-                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+                    fragment.toString() + " must implement OnGearAttemptCreatedListener");
         }
     }
 

@@ -1,27 +1,17 @@
 package org.usfirst.frc.team4911.scouting;
 
-
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
-import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
 import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 
 /**
@@ -54,7 +44,6 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         onAttachToParentFragment(getParentFragment());
 
         // This is what it looks like when I try to do composition with fragments.
@@ -65,13 +54,13 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
         if (recordGearAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container_shot_attempt_teleop,
-                            RecordShotAttemptFragment.newInstance());
+                    .add(R.id.fragment_container_gear_attempt_teleop,
+                            RecordGearAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
     }
 
-    public void onAttachToParentFragment(Fragment fragment)
+    private void onAttachToParentFragment(Fragment fragment)
     {
         try
         {
@@ -80,7 +69,7 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
         catch (ClassCastException e)
         {
             throw new ClassCastException(
-                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+                    fragment.toString() + " must implement OnGearAttemptTeleopCreatedListener");
         }
     }
 

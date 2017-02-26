@@ -106,7 +106,7 @@ public class ScoutTeleOpFragment extends Fragment implements
             mListener = (OnTeleopPeriodObjectCreatedListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnTeleopPeriodObjectCreatedListener");
         }
     }
 

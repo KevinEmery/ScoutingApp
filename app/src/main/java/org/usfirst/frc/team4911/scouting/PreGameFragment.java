@@ -122,7 +122,7 @@ public class PreGameFragment extends Fragment
             mListener = (OnStartClickedListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnStartClickedListener");
         }
     }
 
