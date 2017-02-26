@@ -22,7 +22,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
 import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
-import org.usfirst.frc.team4911.scouting.datamodel.TournamentLevel;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +37,10 @@ public class PreGameFragment extends Fragment
     private CheckBox chkbxHasGear;
     private CheckBox chkbxHasFuel;
     private CheckBox chbxUsesOwnRope;
+    private CheckBox chbxHasPilot;
     private Spinner spnrFuelQuantity;
     private TouchPadPosition ropePosition = TouchPadPosition.None;
+    private Button button_robot_location;
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -84,9 +86,10 @@ public class PreGameFragment extends Fragment
         chkbxHasGear = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_gear);
         chkbxHasFuel = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_fuel);
         chbxUsesOwnRope = (CheckBox) view.findViewById(R.id.chkbx_pre_game_uses_own_rope);
+        chbxHasPilot = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_pilot);
 
-        spnrFuelQuantity = (Spinner) view.findViewById(R.id.spinner_pre_game_fuel_count);
-        spnrFuelQuantity.setAdapter(adapter);
+        Button robotLocation = (Button) view.findViewById(R.id.btn_pre_game_own_robot_location);
+        // TODO:  Hook up a onClickListener.
 
         // Initialise the rope location button
         Button btnRopeLocation = (Button) view.findViewById(R.id.btn_pre_game_own_rope_location);
@@ -145,13 +148,8 @@ public class PreGameFragment extends Fragment
             // Now that we've initialised the scouting data we can add the pre-match data
             preGame.setHasFuel(chkbxHasFuel.isChecked());
             preGame.setHasGear(chkbxHasGear.isChecked());
-
-            int fuelCount = Integer.parseInt(spnrFuelQuantity
-                    .getItemAtPosition(spnrFuelQuantity.getSelectedItemPosition()).toString());
-            preGame.setFuelCount(fuelCount);
-
-            boolean usesOwnRope = chbxUsesOwnRope.isChecked();
-            preGame.setUsesOwnRope(usesOwnRope);
+            preGame.setHasPilot(chbxHasPilot.isChecked());
+            preGame.setUsesOwnRope(chbxUsesOwnRope.isChecked());
             preGame.setRopeTouchPadPosition(ropePosition);
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);

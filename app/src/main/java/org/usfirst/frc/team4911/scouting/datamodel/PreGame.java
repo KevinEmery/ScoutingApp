@@ -15,7 +15,7 @@ public class PreGame {
     @SerializedName("HasFuel") private boolean hasFuel = false;
 
     // How much fuel does robot start with?
-    @SerializedName("FuelCount") private int fuelCount = 0;
+    @SerializedName("HasPilot") private boolean hasPilot = false;
 
     // Does robot use it's own rope?
     @SerializedName("UsesOwnRope") private boolean usesOwnRope = false;
@@ -28,38 +28,37 @@ public class PreGame {
         return hasGear;
     }
 
-    public boolean getHasFuel() {
-        return hasFuel;
-    }
-
-    public int getFuelCount() {
-        return fuelCount;
-    }
-
-    public boolean getUsesOwnRope() {
-        return usesOwnRope;
-    }
-
-    public TouchPadPosition getRopeTouchPadPosition() {
-        return ropeTouchPadPosition;
-    }
-
     public void setHasGear(boolean hasGear) {
         this.hasGear = hasGear;
+    }
+
+    public boolean getHasFuel() {
+        return hasFuel;
     }
 
     public void setHasFuel(boolean hasFuel) {
         this.hasFuel = hasFuel;
     }
 
-    public void setFuelCount(int fuelCount) {
-        this.fuelCount = fuelCount;
-    }
 
+    public boolean getUsesOwnRope() {
+        return usesOwnRope;
+    }
     public void setUsesOwnRope(boolean usesOwnRope) {
         this.usesOwnRope = usesOwnRope;
     }
 
+    public void setHasPilot(boolean hasPilot) {
+        this.hasPilot= hasPilot;
+    }
+
+    public boolean getHasPilot() {
+        return hasPilot;
+    }
+
+    public TouchPadPosition getRopeTouchPadPosition() {
+        return ropeTouchPadPosition;
+    }
     public void setRopeTouchPadPosition(TouchPadPosition ropeTouchPadPosition) {
         this.ropeTouchPadPosition = ropeTouchPadPosition;
     }

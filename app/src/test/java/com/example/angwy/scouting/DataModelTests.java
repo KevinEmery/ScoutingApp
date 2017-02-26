@@ -37,8 +37,8 @@ public class DataModelTests {
         PreGame pregame = data.getMatchData().getPreGame();
         pregame.setHasGear(true);
         pregame.setHasFuel(true);
-        pregame.setFuelCount(10);
         pregame.setUsesOwnRope(true);
+        pregame.setHasPilot(false);
         pregame.setRopeTouchPadPosition(TouchPadPosition.Near);
 
         AutonomousPeriod autonomousPeriod = data.getMatchData().getAutonomousPeriod();

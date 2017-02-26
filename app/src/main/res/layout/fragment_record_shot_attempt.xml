@@ -1,8 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:gravity="fill"
+    android:layout_gravity="fill"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -29,6 +31,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_weight="10">
+
             <TextView
                 android:id="@+id/text_shot_made"
                 android:layout_width="wrap_content"
@@ -70,23 +73,23 @@
         </TableRow>
     </TableLayout>
 
-     <LinearLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+
+       <TextView
+           android:id="@+id/text_shot_attempt_location"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="location: "/>
+
+       <Button
+        android:id="@+id/button_shot_attempt_location"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/text_shot_attempt_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="location: "/>
-
-        <Button
-         android:id="@+id/button_shot_attempt_location"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Location" />
-    </LinearLayout>
+        android:text="Location" />
+   </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
