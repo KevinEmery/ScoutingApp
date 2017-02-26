@@ -40,13 +40,29 @@ public class ScoutTeleOpFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RecordShotAttemptTeleOpFragment shotAttemptFragment = RecordShotAttemptTeleOpFragment.newInstance();
-        RecordGearAttemptTeleOpFragment gearAttemptFragment = RecordGearAttemptTeleOpFragment.newInstance();
+        RecordShotAttemptTeleOpFragment shotAttemptFragment =
+                (RecordShotAttemptTeleOpFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.teleop_shooting_fragment_container);
 
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.teleop_shooting_fragment_container, shotAttemptFragment);
-        fragmentTransaction.add(R.id.teleop_gear_fragment_container, gearAttemptFragment);
-        fragmentTransaction.commit();
+        if (shotAttemptFragment == null) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.teleop_shooting_fragment_container,
+                            RecordShotAttemptTeleOpFragment.newInstance());
+            fragmentTransaction.commit();
+        }
+
+        RecordGearAttemptTeleOpFragment gearAttemptTeleOpFragment =
+                (RecordGearAttemptTeleOpFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.teleop_gear_fragment_container);
+
+        if (gearAttemptTeleOpFragment == null) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.teleop_gear_fragment_container,
+                            RecordGearAttemptTeleOpFragment.newInstance());
+            fragmentTransaction.commit();
+        }
     }
 
     @Override

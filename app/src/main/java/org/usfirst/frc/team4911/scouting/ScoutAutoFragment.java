@@ -44,14 +44,30 @@ public class ScoutAutoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
-        RecordShotAttemptFragment shootingEventFragment = RecordShotAttemptFragment.newInstance();
-        RecordGearAttemptFragment recordGearAttemptFragment = RecordGearAttemptFragment.newInstance();
+        RecordShotAttemptFragment recordShotAttemptFragment =
+                (RecordShotAttemptFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.auto_shooting_fragment_container);
 
-        fragmentTransaction.add(R.id.auto_shooting_fragment_container, shootingEventFragment);
-        fragmentTransaction.add(R.id.auto_gear_fragment_container, recordGearAttemptFragment);
-        fragmentTransaction.commit();
+        if (recordShotAttemptFragment == null) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.auto_shooting_fragment_container,
+                            RecordShotAttemptFragment.newInstance());
+            fragmentTransaction.commit();
+        }
+
+        RecordGearAttemptFragment recordGearAttemptFragment =
+                (RecordGearAttemptFragment) getChildFragmentManager()
+                .findFragmentById(R.id.auto_gear_fragment_container);
+
+        if (recordGearAttemptFragment == null) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.auto_gear_fragment_container,
+                            RecordGearAttemptFragment.newInstance());
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
