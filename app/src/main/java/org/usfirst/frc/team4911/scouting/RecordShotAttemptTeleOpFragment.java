@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4911.scouting;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -115,9 +116,16 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
 
         @Override
         public void onClick(View v) {
+            SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                    .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+
+            String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
+
+            int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
+                    R.drawable.shootingzone_red : R.drawable.shootingzone_blue;
+
             FragmentManager fragmentManager = getChildFragmentManager();
-            // TODO: Alliance awareness
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4911.scouting;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
 import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
@@ -109,10 +110,17 @@ public class RecordGearAttemptFragment extends Fragment
 
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager = getChildFragmentManager();
+            // Here we determine the alliance we're scouting for so we can display the correct map
+            SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                    .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
-            //TODO: Set this so map changes depending on alliance
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
+            String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
+
+            int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
+                    R.drawable.airship_red : R.drawable.airship_blue;
+
+            FragmentManager fragmentManager = getChildFragmentManager();
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

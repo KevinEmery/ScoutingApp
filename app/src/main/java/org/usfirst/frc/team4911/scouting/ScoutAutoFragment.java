@@ -23,6 +23,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
  * create an instance of this fragment.
  */
 public class ScoutAutoFragment extends Fragment {
+
     CheckBox crossedBaseline;
     CheckBox loadedFromHopper;
 

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
@@ -94,24 +96,16 @@ public class EndGameFragment extends Fragment
 
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager = getChildFragmentManager();
-            // TODO: Alliance awareness
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
-            fieldMapFragment.show(fragmentManager, "DialogFragment");
-        }
-    };
+            SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                    .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
-    /**
-     * OnTouchListener for the location button which invites the user to note down the location
-     * of a gear event.
-     */
-    private View.OnClickListener handleBtnPress = new View.OnClickListener() {
+            String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
 
-        @Override
-        public void onClick(View v) {
+            int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
+                    R.drawable.airship_red : R.drawable.airship_blue;
+
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment =
-                    RecordLocationFragment.newInstance(R.drawable.airship_blue);
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

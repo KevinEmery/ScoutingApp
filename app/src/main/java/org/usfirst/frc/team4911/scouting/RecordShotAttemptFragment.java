@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -113,10 +115,16 @@ public class RecordShotAttemptFragment extends Fragment
 
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager = getChildFragmentManager();
+            SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                    .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
-            // TODO: Refactor so this knows about alliance
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
+            String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
+
+            int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
+                    R.drawable.shootingzone_red : R.drawable.shootingzone_blue;
+
+            FragmentManager fragmentManager = getChildFragmentManager();
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };

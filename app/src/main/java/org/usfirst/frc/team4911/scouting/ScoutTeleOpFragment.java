@@ -19,6 +19,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotAttemptTeleop;
  * create an instance of this fragment.
  */
 public class ScoutTeleOpFragment extends Fragment {
+
     CheckBox playedDefence;
 
     public ScoutTeleOpFragment() {

@@ -90,7 +90,7 @@ public class PreGameFragment extends Fragment
 
         // Initialise the rope location button
         Button btnRopeLocation = (Button) view.findViewById(R.id.btn_pre_game_own_rope_location);
-        btnRopeLocation.setOnClickListener(recordRopeLocation);
+        btnRopeLocation.setOnClickListener(recordLocation);
 
         // Initialise the start game button
         Button btnSaveData = (Button) view.findViewById(R.id.btn_pre_game_start_game);
@@ -114,12 +114,19 @@ public class PreGameFragment extends Fragment
     /**
      * OnClickListener for the button that records the rope location.
      */
-    private View.OnClickListener recordRopeLocation = new View.OnClickListener() {
+    private View.OnClickListener recordLocation = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            // Show the location record dialog
+            SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                    .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+
+            String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
+
+            int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
+                    R.drawable.airship_red : R.drawable.airship_blue;
+
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };
