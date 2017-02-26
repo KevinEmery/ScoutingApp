@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,9 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.usfirst.frc.team4911.scouting.datamodel.EndGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
+import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,11 +37,18 @@ import com.google.gson.GsonBuilder;
  */
 public class EndGameFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
+
+    OnSaveAndClearClickedListener mListener;
+
     TextView locationMessage;
     CheckBox checkBox_attempted;
     CheckBox checkBox_noattempt;
     CheckBox checkBox_Succeeded;
     CheckBox checkBox_Failed;
+    TouchPadPosition climbPosition = TouchPadPosition.None;
+
+    long climbStartedTimeMs = 0;
+    long climbEndedTimeMs = 0;
 
 
     public EndGameFragment() {
@@ -78,6 +88,8 @@ public class EndGameFragment extends Fragment
                 if (isChecked && checkBox_Failed.isChecked()) {
                     checkBox_Failed.setChecked(!isChecked);
                 }
+
+                climbEndedTimeMs = System.currentTimeMillis();
             }
         });
 
@@ -96,6 +108,8 @@ public class EndGameFragment extends Fragment
                 if (isChecked && checkBox_noattempt.isChecked()) {
                     checkBox_noattempt.setChecked(!isChecked);
                 }
+
+                climbStartedTimeMs = System.currentTimeMillis();
             }
         });
 
@@ -112,9 +126,26 @@ public class EndGameFragment extends Fragment
         location.setOnClickListener(recordLocation);
 
         Button saveToFile = (Button) view.findViewById(R.id.button_end_game_save_data_to_file);
-        saveToFile.setOnClickListener(saveDataToFile);
+        saveToFile.setOnClickListener(saveAndEndGame);
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnSaveAndClearClickedListener) {
+            mListener = (OnSaveAndClearClickedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     /**
@@ -155,89 +186,40 @@ public class EndGameFragment extends Fragment
      * OnTouchListener for the location button which invites the user to note down the location
      * of a gear event.
      */
-    private View.OnClickListener saveDataToFile = new View.OnClickListener() {
+    private View.OnClickListener saveAndEndGame = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            saveAndClearEndGameData();
+            EndGame endGame = new EndGame();
 
-            ScoutingData scoutingData = ((ScoutMatchActivity) getActivity()).getScoutingData();
+            endGame.setAttempted(checkBox_attempted.isChecked());
+            endGame.setSucceeded(checkBox_Succeeded.isChecked());
+            endGame.setTimeInSeconds((int)(climbStartedTimeMs - climbEndedTimeMs)/1000);
+            endGame.setTouchPadPosition(climbPosition);
 
-            String fileName = String.format(Locale.getDefault(),
-                "%1$s_%2$d_%3$s_%4$s_%5$d_%6$s_%7$s_%8$s.json",
-                scoutingData.getEventCode(),
-                scoutingData.getMatchNumber(),
-                scoutingData.getTournamentLevel(),
-                scoutingData.getStation(),
-                scoutingData.getTeamNumber(),
-                scoutingData.getScoutName(),
-                scoutingData.getScoutingTeamName(),
-                scoutingData.getDeviceId());
+            if (mListener != null) {
+                mListener.onSaveAndClearClicked(endGame);
+            }
 
-            Gson gson = new GsonBuilder().create();
-            String serialisedScoutingData = gson.toJson(scoutingData);
-            SaveDataToFile(v, fileName, serialisedScoutingData);
+            clearEndGameData();
         }
     };
 
-    private void saveAndClearEndGameData() {
-        // Save the data
-        ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getEndGame()
-                .setAttempted(checkBox_attempted.isChecked());
-
-        ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getEndGame()
-                .setSucceeded(checkBox_Succeeded.isChecked());
-
-        // and clear it
+    /**
+     * Clears the end-game data
+     */
+    private void clearEndGameData() {
         checkBox_attempted.setChecked(false);
         checkBox_Succeeded.setChecked(false);
         String message = "Location: ";
         locationMessage.setText(message);
     }
 
-    /** Actually does the work of saving the matchdata object to a file */
-    private void SaveDataToFile(View view, String fileName, String data) {
-        CharSequence text;
-
-        if (this.isExternalStorageWritable()) {
-            try {
-                File directory = getScoutingDataStorageDir();
-                File dataFileHandle = new File(directory, fileName);
-
-                FileOutputStream outputStream = new FileOutputStream(dataFileHandle);
-                outputStream.write(data.getBytes());
-                outputStream.close();
-
-                text = "File written: " + dataFileHandle.getPath();
-            } catch (IOException e) {
-                text = "unable to write file because of an exception: " + e.toString();
-            }
-        }
-        else {
-            text = "External storage not writeable";
-        }
-
-        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-    /* Checks if external storage is available for read and write */
-    private boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    /* Gets the directory where the scouting app will store its output files */
-    public static File getScoutingDataStorageDir() {
-        File directoryPath = new File(Environment.getExternalStorageDirectory(),
-                "ScoutingData");
-
-        if (!directoryPath.exists()) {
-            if (!directoryPath.mkdirs()) {
-                // Figure out something to do here someday
-            }
-        }
-
-        return directoryPath;
+    /**
+     * Passes the end-game data object created when the start match button is clicked up to
+     * whoever's listening.
+     */
+    public interface OnSaveAndClearClickedListener {
+        void onSaveAndClearClicked(EndGame endGame);
     }
 }

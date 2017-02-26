@@ -178,8 +178,7 @@ public class PreGameFragment extends Fragment
     };
 
     /**
-     * Passes the pre-game data object created when the start match button is clicked up to
-     * whoever's listening.
+     * Passes the necessary parameters up to the scoutmatchactivity.
      */
     public interface OnStartClickedListener {
         void onStartClicked(int matchNumber, int teamNumber, PreGame preGame);
