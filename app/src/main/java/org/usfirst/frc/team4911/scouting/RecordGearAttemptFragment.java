@@ -28,11 +28,12 @@ import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 public class RecordGearAttemptFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
 
-    private OnRecordGearAttemptFragmentInteractionListener mListener;
+    private OnGearAttemptCreatedListener mListener;
 
     GearPegPosition gearPegPosition;
-    private TextView locationMessage;
     private CheckBox placedGear;
+
+    private TextView locationMessage;
 
     public RecordGearAttemptFragment() {
         // Required empty public constructor
@@ -51,6 +52,20 @@ public class RecordGearAttemptFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onAttachToParentFragment(getParentFragment());
+    }
+
+    public void onAttachToParentFragment(Fragment fragment)
+    {
+        try
+        {
+            mListener = (OnGearAttemptCreatedListener)fragment;
+        }
+        catch (ClassCastException e)
+        {
+            throw new ClassCastException(
+                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+        }
     }
 
     @Override
@@ -71,23 +86,6 @@ public class RecordGearAttemptFragment extends Fragment
         // Add an onclick listener for the location button
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnRecordGearAttemptFragmentInteractionListener) {
-            mListener = (OnRecordGearAttemptFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -140,7 +138,7 @@ public class RecordGearAttemptFragment extends Fragment
 
             // Call the parent activity and pass it the gear attempt
             if (mListener != null) {
-                mListener.onRecordGearAttemptFragmentInteraction(gearAttempt);
+                mListener.onGearAttemptCreated(gearAttempt);
             }
 
             restoreDefaults();
@@ -159,7 +157,7 @@ public class RecordGearAttemptFragment extends Fragment
     /**
      * All activities containing this fragment must implement this interface.
      */
-    public interface OnRecordGearAttemptFragmentInteractionListener {
-        void onRecordGearAttemptFragmentInteraction(GearAttempt gearAttempt);
+    public interface OnGearAttemptCreatedListener {
+        void onGearAttemptCreated(GearAttempt gearAttempt);
     }
 }

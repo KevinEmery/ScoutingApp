@@ -34,6 +34,8 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
 
     OnShotAttemptTeleopCreatedListener mListener;
 
+    private CheckBox wasDefended;
+
     public RecordShotAttemptTeleOpFragment() {
         // Required empty public constructor
     }
@@ -84,13 +86,16 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_record_shot_attempt_tele_op, container, false);
+        View view = inflater.inflate(R.layout.fragment_record_shot_attempt_tele_op, container, false);
+        wasDefended = (CheckBox) view.findViewById(R.id.checkbox_shot_attempt_teleop_defended);
+        return view;
     }
 
     @Override
     public void onShotAttemptCreated(ShotAttempt shotAttempt) {
         // Create a teleop shot event based on this and pass it on up.
         ShotAttemptTeleop shotAttemptTeleop = new ShotAttemptTeleop(shotAttempt);
+        shotAttemptTeleop.setWasDefended(wasDefended.isChecked());
 
         if (mListener != null) {
             mListener.onShotAttemptTeleopCreated(shotAttemptTeleop);

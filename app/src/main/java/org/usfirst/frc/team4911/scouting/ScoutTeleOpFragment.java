@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,15 +13,26 @@ import android.widget.CheckBox;
 
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttemptTeleop;
+import org.usfirst.frc.team4911.scouting.datamodel.TeleopPeriod;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScoutTeleOpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScoutTeleOpFragment extends Fragment {
+public class ScoutTeleOpFragment extends Fragment implements
+        RecordGearAttemptTeleOpFragment.OnGearAttemptTeleopCreatedListener,
+        RecordShotAttemptTeleOpFragment.OnShotAttemptTeleopCreatedListener {
+
+    OnTeleopPeriodObjectCreatedListener mListener;
 
     CheckBox playedDefence;
+
+    List<ShotAttemptTeleop> shotAttempts;
+    List<GearAttemptTeleop> gearAttempts;
 
     public ScoutTeleOpFragment() {
         // Required empty public constructor
@@ -63,6 +75,15 @@ public class ScoutTeleOpFragment extends Fragment {
                             RecordGearAttemptTeleOpFragment.newInstance());
             fragmentTransaction.commit();
         }
+
+        // We need to make VERY SURE that rotating won't mess up our list
+        if (shotAttempts == null) {
+            shotAttempts = new ArrayList<>();
+        }
+
+        if (gearAttempts == null) {
+            gearAttempts = new ArrayList<>();
+        }
     }
 
     @Override
@@ -78,38 +99,58 @@ public class ScoutTeleOpFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnTeleopPeriodObjectCreatedListener) {
+            mListener = (OnTeleopPeriodObjectCreatedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
+    public void onGearAttemptTeleopCreated(GearAttemptTeleop gearAttemptTeleop) {
+        gearAttempts.add(gearAttemptTeleop);
+    }
+
+    @Override
+    public void onShotAttemptTeleopCreated(ShotAttemptTeleop shotAttemptTeleop) {
+        shotAttempts.add(shotAttemptTeleop);
+    }
+
     View.OnClickListener saveTeleop = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                    .getTeleopPeriod().setPlayedDefense(playedDefence.isChecked());
 
-            // TODO: Find a cleaner way to do this
-            if (((ScoutMatchActivity) getActivity())
-                    .getScoutingData()
-                    .getMatchData()
-                    .getTeleopPeriod().getGearAttempts().size() == 0) {
-                GearAttemptTeleop attempt = new GearAttemptTeleop();
+            TeleopPeriod teleopPeriod = new TeleopPeriod();
 
-                ((ScoutMatchActivity) getActivity())
-                            .getScoutingData()
-                            .getMatchData().getTeleopPeriod().getGearAttempts().add(attempt);
-            }
+            teleopPeriod.setShotAttempts(shotAttempts);
+            teleopPeriod.setGearAttempts(gearAttempts);
+            teleopPeriod.setPlayedDefense(playedDefence.isChecked());
 
-            if (((ScoutMatchActivity) getActivity())
-                    .getScoutingData()
-                    .getMatchData()
-                    .getTeleopPeriod().getShotAttempts().size() == 0) {
-                ShotAttemptTeleop attempt = new ShotAttemptTeleop();
-
-                ((ScoutMatchActivity) getActivity())
-                        .getScoutingData()
-                        .getMatchData().getTeleopPeriod().getShotAttempts().add(attempt);
+            if (mListener != null) {
+                mListener.onTeleopPeriodObjectCreated(teleopPeriod);
             }
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(3);
         }
     };
+
+    /**
+     * Passes the autonomous period data object up to whoever is listening. Activities that contian
+     * this fragment should implement this.
+     */
+    public interface OnTeleopPeriodObjectCreatedListener {
+        void onTeleopPeriodObjectCreated(TeleopPeriod teleopPeriod);
+    }
 }

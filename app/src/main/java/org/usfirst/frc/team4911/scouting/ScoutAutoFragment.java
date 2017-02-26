@@ -26,8 +26,9 @@ import java.util.List;
  * Use the {@link ScoutAutoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScoutAutoFragment extends Fragment
-    implements  RecordShotAttemptFragment.OnShotAttemptCreatedListener {
+public class ScoutAutoFragment extends Fragment implements
+        RecordShotAttemptFragment.OnShotAttemptCreatedListener,
+        RecordGearAttemptFragment.OnGearAttemptCreatedListener{
 
     OnAutoPeriodObjectCreatedListener mListener;
 
@@ -78,6 +79,15 @@ public class ScoutAutoFragment extends Fragment
                             RecordGearAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
+
+        // We need to make VERY SURE that rotating won't mess up our list
+        if (shotAttempts == null) {
+            shotAttempts = new ArrayList<>();
+        }
+
+        if (gearAttempts == null) {
+            gearAttempts = new ArrayList<>();
+        }
     }
 
     @Override
@@ -88,9 +98,6 @@ public class ScoutAutoFragment extends Fragment
 
         crossedBaseline = (CheckBox) view.findViewById(R.id.chkbx_auto_crossed_baseline);
         loadedFromHopper = (CheckBox) view.findViewById(R.id.chkbx_auto_loaded_from_hopper);
-
-        shotAttempts = new ArrayList<>();
-        gearAttempts = new ArrayList<>();
 
         Button save = (Button) view.findViewById(R.id.button_auto_save);
         save.setOnClickListener(autoSaveButton);
@@ -121,6 +128,11 @@ public class ScoutAutoFragment extends Fragment
         shotAttempts.add(shotAttempt);
     }
 
+    @Override
+    public void onGearAttemptCreated(GearAttempt gearAttempt) {
+        gearAttempts.add(gearAttempt);
+    }
+
     View.OnClickListener autoSaveButton = new View.OnClickListener() {
 
         @Override
@@ -136,6 +148,10 @@ public class ScoutAutoFragment extends Fragment
             if (mListener != null) {
                 mListener.onAutoPeriodObjectCreated(autonomousPeriod);
             }
+
+            // Clear the shot and gear attempt lists
+            shotAttempts.clear();
+            gearAttempts.clear();
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(2);

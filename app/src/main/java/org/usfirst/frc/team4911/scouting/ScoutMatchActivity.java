@@ -9,13 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
-import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
+import org.usfirst.frc.team4911.scouting.datamodel.TeleopPeriod;
 
 // This is the single activity we care about the most.
-public class ScoutMatchActivity extends AppCompatActivity
-        implements ScoutAutoFragment.OnAutoPeriodObjectCreatedListener {
+public class ScoutMatchActivity extends AppCompatActivity implements
+        ScoutAutoFragment.OnAutoPeriodObjectCreatedListener,
+        ScoutTeleOpFragment.OnTeleopPeriodObjectCreatedListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -114,10 +115,19 @@ public class ScoutMatchActivity extends AppCompatActivity
     /**
      * Fragment listener for the scoutautofragment. Adds the auto period to the matchData object
      * when it's created.
-     * @param autonomousPeriod Data model object containing the autonomous period scouting data.
+     * @param autonomousPeriod The autonomous period object to add to the matchdata
      */
+    @Override
     public void onAutoPeriodObjectCreated(AutonomousPeriod autonomousPeriod) {
         scoutingData.getMatchData().setAutonomousPeriod(autonomousPeriod);
+    }
+
+    /** Same thing but for teleop.
+     * @param teleopPeriod The teleop period object to add to matchdata.
+     */
+    @Override
+    public void onTeleopPeriodObjectCreated(TeleopPeriod teleopPeriod) {
+        scoutingData.getMatchData().setTeleopPeriod(teleopPeriod);
     }
 
     /**
