@@ -18,9 +18,12 @@ import android.widget.ImageView;
 
 /**
  * Dialog fragment subclass which displays a given field and records a normalised location
- * where it was pressed.
- * Use the {@link RecordLocationFragment#newInstance} factory method to
+ * where it was pressed. Use the {@link RecordLocationFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ *  Activities that contain this fragment must implement the
+ * {@link RecordLocationFragment.OnRecordLocationMapTouchListener} interface
+ * to handle interaction events.
  */
 public class RecordLocationFragment extends DialogFragment {
 

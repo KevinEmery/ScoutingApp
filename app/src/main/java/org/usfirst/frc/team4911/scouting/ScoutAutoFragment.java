@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,15 +18,24 @@ import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScoutAutoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScoutAutoFragment extends Fragment {
+public class ScoutAutoFragment extends Fragment
+    implements  RecordShotAttemptFragment.OnShotAttemptCreatedListener {
+
+    OnAutoPeriodObjectCreatedListener mListener;
 
     CheckBox crossedBaseline;
     CheckBox loadedFromHopper;
+
+    List<ShotAttempt> shotAttempts;
+    List<GearAttempt> gearAttempts;
 
     public ScoutAutoFragment() {
         // Required empty public constructor
@@ -77,88 +87,63 @@ public class ScoutAutoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_scout_auto, container, false);
 
         crossedBaseline = (CheckBox) view.findViewById(R.id.chkbx_auto_crossed_baseline);
-        crossedBaseline.setOnClickListener(crossedBaselineListener);
-
         loadedFromHopper = (CheckBox) view.findViewById(R.id.chkbx_auto_loaded_from_hopper);
-        loadedFromHopper.setOnClickListener(loadedFromHopperListener);
+
+        shotAttempts = new ArrayList<>();
+        gearAttempts = new ArrayList<>();
 
         Button save = (Button) view.findViewById(R.id.button_auto_save);
-        save.setOnClickListener(saveButton);
+        save.setOnClickListener(autoSaveButton);
 
         return view;
     }
 
-    View.OnClickListener crossedBaselineListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            if(crossedBaseline.isChecked()){
-                ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                        .getAutonomousPeriod().setAutoMobilityPoints(true);
-            }else{
-                ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                        .getAutonomousPeriod().setAutoMobilityPoints(false);
-            }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnAutoPeriodObjectCreatedListener) {
+            mListener = (OnAutoPeriodObjectCreatedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
-    };
+    }
 
-    View.OnClickListener loadedFromHopperListener = new View.OnClickListener() {
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
-        @Override
-        public void onClick(View v) {
-            if(loadedFromHopper.isChecked()){
-                ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                        .getAutonomousPeriod().setLoadedFromHopper(true);
-            }else{
-                ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                        .getAutonomousPeriod().setLoadedFromHopper(false);
-            }
-        }
-    };
+    @Override
+    public void onShotAttemptCreated(ShotAttempt shotAttempt) {
+        // Add it to the list of shot attempts
+        shotAttempts.add(shotAttempt);
+    }
 
-    View.OnClickListener saveButton = new View.OnClickListener() {
+    View.OnClickListener autoSaveButton = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            AutonomousPeriod autonomousPeriod = ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                    .getAutonomousPeriod();
 
+            // Create the autonomous period object and hand it on up to the top level activity
+            AutonomousPeriod autonomousPeriod = new AutonomousPeriod();
             autonomousPeriod.setAutoMobilityPoints(crossedBaseline.isChecked());
             autonomousPeriod.setLoadedFromHopper(loadedFromHopper.isChecked());
-
-            // TODO: Should be able to call shootingEventFragment for the ShotAttempt data.
-            // The instance shoudl maintain the it's own state and not add the ShotAttempt to
-            // the array.
-
-            //ShotAttempt shotapptempt =
-            //autonomousPeriod.getShotAttempts().add()
-
-            // TODO: Find a cleaner way to do this
-            if (((ScoutMatchActivity) getActivity())
-                    .getScoutingData()
-                    .getMatchData()
-                    .getAutonomousPeriod()
-                    .getGearAttempts().size() == 0) {
-                GearAttempt attempt = new GearAttempt();
-
-                ((ScoutMatchActivity) getActivity())
-                        .getScoutingData()
-                        .getMatchData().getAutonomousPeriod().getGearAttempts().add(attempt);
-            }
-
-            if (((ScoutMatchActivity) getActivity())
-                    .getScoutingData()
-                    .getMatchData()
-                    .getAutonomousPeriod().getShotAttempts().size() == 0) {
-                ShotAttempt attempt = new ShotAttempt();
-
-                ((ScoutMatchActivity) getActivity())
-                        .getScoutingData()
-                        .getMatchData().getAutonomousPeriod().getShotAttempts().add(attempt);
-            }
+            autonomousPeriod.setShotAttempts(shotAttempts);
+            autonomousPeriod.setGearAttempts(gearAttempts);
+            mListener.onAutoPeriodObjectCreated(autonomousPeriod);
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(2);
         }
     };
+
+    /**
+     * Passes the autonomous period data object up to whoever is listening. Activities that contian
+     * this fragment should implement this.
+     */
+    public interface OnAutoPeriodObjectCreatedListener {
+        void onAutoPeriodObjectCreated(AutonomousPeriod autonomousPeriod);
+    }
 }

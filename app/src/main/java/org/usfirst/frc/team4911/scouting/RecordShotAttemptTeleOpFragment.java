@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.FuelAmount;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAccuracy;
+import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotMode;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
@@ -28,7 +29,10 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
  * Use the {@link RecordShotAttemptTeleOpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordShotAttemptTeleOpFragment extends Fragment {
+public class RecordShotAttemptTeleOpFragment extends Fragment
+    implements RecordShotAttemptFragment.OnShotAttemptCreatedListener {
+
+    OnShotAttemptTeleopCreatedListener mListener;
 
     public RecordShotAttemptTeleOpFragment() {
         // Required empty public constructor
@@ -47,7 +51,9 @@ public class RecordShotAttemptTeleOpFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onAttachToParentFragment(getParentFragment());
 
+        // This is what it looks like when I try to do composition with fragments.
         RecordShotAttemptFragment recordShotAttemptFragment =
                 (RecordShotAttemptFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_container_shot_attempt_teleop);
@@ -61,14 +67,38 @@ public class RecordShotAttemptTeleOpFragment extends Fragment {
         }
     }
 
+    public void onAttachToParentFragment(Fragment fragment)
+    {
+        try
+        {
+            mListener = (OnShotAttemptTeleopCreatedListener)fragment;
+        }
+        catch (ClassCastException e)
+        {
+            throw new ClassCastException(
+                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_record_shot_attempt_tele_op, container, false);
+        return inflater.inflate(R.layout.fragment_record_shot_attempt_tele_op, container, false);
+    }
 
-        // I'm going for composition here so we're adding a auto shot attempt fragment and hoping
-        // that works
-        return view;
+    @Override
+    public void onShotAttemptCreated(ShotAttempt shotAttempt) {
+        // Create a teleop shot event based on this and pass it on up.
+        ShotAttemptTeleop shotAttemptTeleop = new ShotAttemptTeleop(shotAttempt);
+        mListener.onShotAttemptTeleopCreated(shotAttemptTeleop);
+    }
+
+    /**
+     * Callback method invoked in the parent activity or fragment when a new teleop shot attempt is
+     * created.
+     */
+    public interface OnShotAttemptTeleopCreatedListener {
+        void onShotAttemptTeleopCreated(ShotAttemptTeleop shotAttemptTeleop);
     }
 }
