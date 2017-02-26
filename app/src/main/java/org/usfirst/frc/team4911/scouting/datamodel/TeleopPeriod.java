@@ -47,11 +47,7 @@ public class TeleopPeriod {
 
     public void setGearAttempts(List<GearAttemptTeleop> gearAttempts) {
         this.gearAttempts = gearAttempts;
-    }
-
-    public void addGearAttempt(GearAttemptTeleop gearAttemptTeleop) {
-        gearAttempts.add(gearAttemptTeleop);
-        setGearAttemptCount(gearAttempts.size());
+        this.setGearAttemptCount(gearAttempts.size());
     }
 
     public void setPlayedDefense(boolean playedDefense) {
@@ -72,11 +68,7 @@ public class TeleopPeriod {
 
     public void setShotAttempts(List<ShotAttemptTeleop> shotAttempts) {
         this.shotAttempts = shotAttempts;
-    }
-
-    public void addShotAttempt(ShotAttemptTeleop shotAttemptTeleop) {
-        shotAttempts.add(shotAttemptTeleop);
-        setShotAttemptCount(shotAttempts.size());
+        this.setShotAttemptCount(shotAttempts.size());
     }
 }
 

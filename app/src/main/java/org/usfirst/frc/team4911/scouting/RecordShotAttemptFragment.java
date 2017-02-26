@@ -19,21 +19,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.usfirst.frc.team4911.scouting.datamodel.FuelAmount;
-import org.usfirst.frc.team4911.scouting.datamodel.ShotAccuracy;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotMode;
-import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
 
 /**
  * A simple {@link Fragment} subclass.
  * Contains all data interfaces necessary to collect information about a shooting event.
- * Intended for use in auto and teleop scouting events.
  * Use the {@link RecordShotAttemptFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ *  Activities that contain this fragment must implement the
+ * {@link RecordShotAttemptFragment.OnShotAttemptCreatedListener} interface
+ * to handle interaction events.
  */
 public class RecordShotAttemptFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
+    private OnShotAttemptCreatedListener mListener;
+
     private ShotAttempt shotAttempt;
 
     private SeekBar seekBar_shotsMade;
@@ -42,7 +44,6 @@ public class RecordShotAttemptFragment extends Fragment
     private TextView textView_shotsMissed;
     private Spinner spinnerShotMode;
     private TextView locationMessage;
-    private TextView countMessage;
 
     // Parameters for the chronometer
     private Chronometer chronometerShotTime;
@@ -67,6 +68,20 @@ public class RecordShotAttemptFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onAttachToParentFragment(getParentFragment());
+    }
+
+    public void onAttachToParentFragment(Fragment fragment)
+    {
+        try
+        {
+            mListener = (OnShotAttemptCreatedListener)fragment;
+        }
+        catch (ClassCastException e)
+        {
+            throw new ClassCastException(
+                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+        }
     }
 
     @Override
@@ -77,7 +92,6 @@ public class RecordShotAttemptFragment extends Fragment
 
         shotAttempt = new ShotAttempt();
         locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_location);
-        countMessage = (TextView) view.findViewById(R.id.text_view_record_shot_count);
 
         spinnerShotMode = (Spinner) view.findViewById(R.id.spinner_shot_attempt_mode);
         spinnerShotMode.setAdapter(new ArrayAdapter<>(getContext(),
@@ -243,12 +257,10 @@ public class RecordShotAttemptFragment extends Fragment
             shotAttempt.setShotMode(shotMode);
             shotAttempt.setShotDurationInSeconds(durationSeconds);
 
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
-                    .getAutonomousPeriod().getShotAttempts().add(shotAttempt);
-
-            String message = "Attempts recorded: " + ((ScoutMatchActivity) getActivity())
-                    .getScoutingData().getMatchData().getAutonomousPeriod().getShotAttempts().size();
-            countMessage.setText(message);
+            // Pass the shot event up to whoever is listening for it
+            if (mListener != null) {
+                mListener.onShotAttemptCreated(shotAttempt);
+            }
 
             restoreDefaults();
         }
@@ -261,5 +273,13 @@ public class RecordShotAttemptFragment extends Fragment
         shotAttempt = new ShotAttempt();
         String message = "Location: ";
         locationMessage.setText(message);
+    }
+
+    /**
+     * Callback method invoked in the parent activity or fragment when a new shot attempt is
+     * created.
+     */
+    public interface OnShotAttemptCreatedListener {
+        void onShotAttemptCreated(ShotAttempt shotAttempt);
     }
 }

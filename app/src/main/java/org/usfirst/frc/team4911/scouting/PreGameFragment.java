@@ -32,15 +32,16 @@ import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
  */
 public class PreGameFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
+
+    OnStartClickedListener mListener;
+
     private EditText etxtMatchNum;
     private EditText etxtTeamNum;
     private CheckBox chkbxHasGear;
     private CheckBox chkbxHasFuel;
     private CheckBox chbxUsesOwnRope;
     private CheckBox chbxHasPilot;
-    private Spinner spnrFuelQuantity;
     private TouchPadPosition ropePosition = TouchPadPosition.None;
-    private Button button_robot_location;
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -97,7 +98,7 @@ public class PreGameFragment extends Fragment
 
         // Initialise the start game button
         Button btnSaveData = (Button) view.findViewById(R.id.btn_pre_game_start_game);
-        btnSaveData.setOnClickListener(initScoutingData);
+        btnSaveData.setOnClickListener(startGame);
 
         return view;
     }
@@ -112,6 +113,23 @@ public class PreGameFragment extends Fragment
         // I leave the mapping in your hands :)
         String text = "X: " + event.getX() + "Y: " + event.getY();
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnStartClickedListener) {
+            mListener = (OnStartClickedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     /**
@@ -137,39 +155,32 @@ public class PreGameFragment extends Fragment
     /**
      * OnClickListener for the button that initialises the scouting data object.
      */
-    private View.OnClickListener initScoutingData = new View.OnClickListener() {
+    private View.OnClickListener startGame = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ScoutingData scoutingData = createNewScoutingData();
-            PreGame preGame = scoutingData.getMatchData().getPreGame();
+            int matchNumber = Integer.parseInt(etxtMatchNum.getText().toString());
+            int teamNumber = Integer.parseInt(etxtTeamNum.getText().toString());
 
-            ((ScoutMatchActivity) getActivity()).setScoutingData(scoutingData);
-
-            // Now that we've initialised the scouting data we can add the pre-match data
+            PreGame preGame = new PreGame();
             preGame.setHasFuel(chkbxHasFuel.isChecked());
             preGame.setHasGear(chkbxHasGear.isChecked());
             preGame.setHasPilot(chbxHasPilot.isChecked());
             preGame.setUsesOwnRope(chbxUsesOwnRope.isChecked());
             preGame.setRopeTouchPadPosition(ropePosition);
 
+            if (mListener != null) {
+                mListener.onStartClicked(matchNumber, teamNumber, preGame);
+            }
+
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(1);
         }
     };
 
-    private ScoutingData createNewScoutingData() {
-        SharedPreferences sharedpreferences = getActivity().getApplicationContext().getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-
-        String eventCode = sharedpreferences.getString(SetupActivity.EventCode, "DEMO");
-        String scoutName = sharedpreferences.getString(SetupActivity.ScoutName, "Anne Gwynne-Robson");
-        String scoutingTeamName = sharedpreferences.getString(SetupActivity.ScoutTeam, "ScoutingTeamName");
-        String drive_Station = sharedpreferences.getString(SetupActivity.DriveStation, "");
-        DriveStation station = !drive_Station.equals("") ? DriveStation.valueOf(drive_Station) : DriveStation.Blue1;
-        String deviceId = sharedpreferences.getString(SetupActivity.AppInstanceId, "testKindle");
-
-        int matchNumber = Integer.parseInt(etxtMatchNum.getText().toString());
-        int teamNumber = Integer.parseInt(etxtTeamNum.getText().toString());
-
-        return new ScoutingData(eventCode, matchNumber, station, teamNumber, deviceId, scoutName, scoutingTeamName);
+    /**
+     * Passes the necessary parameters up to the scoutmatchactivity.
+     */
+    public interface OnStartClickedListener {
+        void onStartClicked(int matchNumber, int teamNumber, PreGame preGame);
     }
 }

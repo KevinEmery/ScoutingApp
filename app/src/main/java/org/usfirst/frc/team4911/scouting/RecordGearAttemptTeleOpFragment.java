@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
 import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
@@ -28,12 +30,12 @@ import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
  * create an instance of this fragment.
  */
 public class RecordGearAttemptTeleOpFragment extends Fragment
-        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
-    private Spinner gearResult;
+        implements RecordGearAttemptFragment.OnGearAttemptCreatedListener {
+
+    OnGearAttemptTeleopCreatedListener mListener;
+
     private CheckBox wasDefended;
-    private TextView locationMessage;
-    private TextView countMessage;
-    private GearPegPosition location;
+    private Spinner spinnerGearResult;
 
     public RecordGearAttemptTeleOpFragment() {
         // Required empty public constructor
@@ -52,6 +54,34 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        onAttachToParentFragment(getParentFragment());
+
+        // This is what it looks like when I try to do composition with fragments.
+        RecordGearAttemptFragment recordGearAttemptFragment =
+                (RecordGearAttemptFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.fragment_container_gear_attempt_teleop);
+
+        if (recordGearAttemptFragment == null) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container_shot_attempt_teleop,
+                            RecordShotAttemptFragment.newInstance());
+            fragmentTransaction.commit();
+        }
+    }
+
+    public void onAttachToParentFragment(Fragment fragment)
+    {
+        try
+        {
+            mListener = (OnGearAttemptTeleopCreatedListener)fragment;
+        }
+        catch (ClassCastException e)
+        {
+            throw new ClassCastException(
+                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+        }
     }
 
     @Override
@@ -60,78 +90,32 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_gear_attempt_tele_op, container, false);
 
-        gearResult = (Spinner) view.findViewById(R.id.spinner_gear_attempt_telop_result);
-        gearResult.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, GearResult.values()));
-
         wasDefended = (CheckBox) view.findViewById(R.id.checkbox_gear_attempt_tele_op_defended);
-        locationMessage = (TextView) view.findViewById(R.id.text_gear_attempt_tele_op_location);
-        countMessage = (TextView) view.findViewById(R.id.text_view_record_gear_teleop_count);
-
-        Button location = (Button) view.findViewById(R.id.button_gear_attempt_tele_op_location);
-        location.setOnClickListener(recordLocation);
-
-        Button save = (Button) view.findViewById(R.id.button_gear_attempt_tele_op_save);
-        save.setOnClickListener(saveGearResult);
+        spinnerGearResult = (Spinner) view.findViewById(R.id.spinner_gear_attempt_telop_result);
+        spinnerGearResult.setAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, GearResult.values()));
 
         return view;
     }
 
-    /**
-     * Handles touch events on the location map.
-     */
     @Override
-    public void onRecordLocationMapTouch(MotionEvent event) {
-        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
-        // it does is show a toast containing the X and Y coordinates of the touch point.
-        // I leave the mapping in your hands :)
-        String text = "X: " + event.getX() + "Y: " + event.getY();
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    public void onGearAttemptCreated(GearAttempt gearAttempt) {
+        GearResult result = GearResult.valueOf(spinnerGearResult.getSelectedItem().toString());
+
+        // We need to override the result with what we saw here and set the was defended flag
+        GearAttemptTeleop gearAttemptTeleop = new GearAttemptTeleop(gearAttempt);
+        gearAttemptTeleop.setGearResult(result);
+        gearAttemptTeleop.setWasDefended(wasDefended.isChecked());
+
+        if (mListener != null) {
+            mListener.onGearAttemptTeleopCreated(gearAttemptTeleop);
+        }
     }
 
-    private View.OnClickListener recordLocation = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            SharedPreferences sharedpreferences = getActivity().getApplicationContext()
-                    .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-
-            String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
-
-            int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
-                    R.drawable.airship_red : R.drawable.airship_blue;
-
-            FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
-            fieldMapFragment.show(fragmentManager, "DialogFragment");
-        }
-    };
-
-    private View.OnClickListener saveGearResult = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            GearAttemptTeleop gearAttemptTeleop = new GearAttemptTeleop();
-            gearAttemptTeleop.setGearPegPosition(location);
-            gearAttemptTeleop.setWasDefended(wasDefended.isChecked());
-            gearAttemptTeleop.setGearResult(
-                    GearResult.valueOf(gearResult.getSelectedItem().toString()));
-
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getTeleopPeriod()
-                    .addGearAttempt(gearAttemptTeleop);
-
-            String message = "Attempts recorded: " + ((ScoutMatchActivity) getActivity())
-                    .getScoutingData().getMatchData().getTeleopPeriod().getGearAttempts().size();
-            countMessage.setText(message);
-
-            restoreDefaults();
-        }
-    };
-
-    private void restoreDefaults() {
-        wasDefended.setChecked(false);
-        location = GearPegPosition.None;
-        String message = "Location: ";
-        locationMessage.setText(message);
+    /**
+     * All activities containing this fragment must implement this interface.
+     */
+    public interface OnGearAttemptTeleopCreatedListener {
+        void onGearAttemptTeleopCreated(GearAttemptTeleop gearAttemptTeleop);
     }
 }

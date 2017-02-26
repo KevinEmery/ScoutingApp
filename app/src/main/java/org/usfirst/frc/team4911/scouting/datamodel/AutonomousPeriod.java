@@ -46,19 +46,15 @@ public class AutonomousPeriod {
         return gearAttempts;
     }
 
-    private void setGearAttempts(List<GearAttempt> gGearAttempts) {
+    public void setGearAttempts(List<GearAttempt> gGearAttempts) {
         this.gearAttempts = gGearAttempts;
     }
 
-     public List<ShotAttempt> getShotAttempts() {
+    public List<ShotAttempt> getShotAttempts() {
         return shotAttempts;
     }
 
-    private void setShotAttempts(List<ShotAttempt> shotAttempts) {
+    public void setShotAttempts(List<ShotAttempt> shotAttempts) {
         this.shotAttempts = shotAttempts;
-    }
-
-    private void AddShotAttempt(ShotAttempt shotAttempt) {
-        this.shotAttempts.add(shotAttempt);
     }
 }

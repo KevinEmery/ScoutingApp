@@ -1,5 +1,8 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -7,14 +10,31 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
-import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
+import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
+import org.usfirst.frc.team4911.scouting.datamodel.EndGame;
 import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
+import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
+import org.usfirst.frc.team4911.scouting.datamodel.TeleopPeriod;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Locale;
 
 // This is the single activity we care about the most.
-public class ScoutMatchActivity extends AppCompatActivity
-        implements RecordGearAttemptFragment.OnRecordGearAttemptFragmentInteractionListener {
+public class ScoutMatchActivity extends AppCompatActivity implements
+        PreGameFragment.OnStartClickedListener,
+        ScoutAutoFragment.OnAutoPeriodObjectCreatedListener,
+        ScoutTeleOpFragment.OnTeleopPeriodObjectCreatedListener,
+        EndGameFragment.OnSaveAndClearClickedListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -32,7 +52,7 @@ public class ScoutMatchActivity extends AppCompatActivity
     private ViewPager mViewPager;
 
     /**
-     * The {@link MatchData} object that stores all scouted data collected from this match.
+     * The {@link ScoutingData} object that stores all scouted data collected from this match.
      */
     private ScoutingData scoutingData;
 
@@ -111,26 +131,119 @@ public class ScoutMatchActivity extends AppCompatActivity
     }
 
     /**
-     * Interaction listener for the fragment that records gear attempts in auto
-     * @param gearAttempt The attempt to add the the master list of all attempts.
+     * Method that gets called when a match is started.
+     * @param matchNumber the match number of the match that's starting.
+     * @param teamNumber Team number of the team being scouted in this match.
+     * @param preGame The pre-game data object for this team for this match.
      */
-    public void onRecordGearAttemptFragmentInteraction(GearAttempt gearAttempt) {
-        scoutingData.getMatchData().getAutonomousPeriod().getGearAttempts().add(gearAttempt);
+    @Override public void onStartClicked(int matchNumber, int teamNumber, PreGame preGame) {
+        // Create the new scouting data object
+        SharedPreferences sharedpreferences = getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+
+        String eventCode = sharedpreferences.getString(SetupActivity.EventCode, "DEMO");
+        String scoutName = sharedpreferences.getString(SetupActivity.ScoutName, "Anne Gwynne-Robson");
+        String scoutingTeamName = sharedpreferences.getString(SetupActivity.ScoutTeam, "ScoutingTeamName");
+        String drive_Station = sharedpreferences.getString(SetupActivity.DriveStation, "");
+        DriveStation station = !drive_Station.equals("") ? DriveStation.valueOf(drive_Station) : DriveStation.Blue1;
+        String deviceId = sharedpreferences.getString(SetupActivity.AppInstanceId, "testKindle");
+
+        this.scoutingData = new ScoutingData(eventCode, matchNumber, station, teamNumber, deviceId, scoutName, scoutingTeamName);
+        this.scoutingData.getMatchData().setPreGame(preGame);
     }
 
     /**
-     * Getter for the {@link MatchData} object associated with this class.
-     * @return The matchdata object associated with this class.
+     * Fragment listener for the scoutautofragment. Adds the auto period to the matchData object
+     * when it's created.
+     * @param autonomousPeriod The autonomous period object to add to the matchdata
      */
-    public ScoutingData getScoutingData() {
-        return this.scoutingData;
+    @Override
+    public void onAutoPeriodObjectCreated(AutonomousPeriod autonomousPeriod) {
+        scoutingData.getMatchData().setAutonomousPeriod(autonomousPeriod);
+    }
+
+    /** Same thing but for teleop.
+     * @param teleopPeriod The teleop period object to add to matchdata.
+     */
+    @Override
+    public void onTeleopPeriodObjectCreated(TeleopPeriod teleopPeriod) {
+        scoutingData.getMatchData().setTeleopPeriod(teleopPeriod);
+    }
+
+    @Override
+    public void onSaveAndClearClicked(EndGame endGame) {
+        scoutingData.getMatchData().setEndGame(endGame);
+
+        // Serialise the scouting data object and save it to a file
+        Gson gson = new GsonBuilder().create();
+        String serialisedScoutingData = gson.toJson(scoutingData);
+
+        String fileName = String.format(Locale.getDefault(),
+                "%1$s_%2$d_%3$s_%4$s_%5$d_%6$s_%7$s_%8$s.json",
+                scoutingData.getEventCode(),
+                scoutingData.getMatchNumber(),
+                scoutingData.getTournamentLevel(),
+                scoutingData.getStation(),
+                scoutingData.getTeamNumber(),
+                scoutingData.getScoutName(),
+                scoutingData.getScoutingTeamName(),
+                scoutingData.getDeviceId());
+
+        SaveDataToFile(fileName, serialisedScoutingData);
     }
 
     /**
-     * Setter for the {@link MatchData} object associated with this class.
-     * @param scoutingData The matchdata object to set matchdata to.
+     * Actually does the work of saving the data to a file.
+     * @param fileName The name of the file to save to.
+     * @param data The data to save.
      */
-    public void setScoutingData(ScoutingData scoutingData) {
-        this.scoutingData = scoutingData;
+    private void SaveDataToFile(String fileName, String data) {
+        CharSequence text;
+
+        if (this.isExternalStorageWritable()) {
+            try {
+                File directory = getScoutingDataStorageDir();
+                File dataFileHandle = new File(directory, fileName);
+
+                FileOutputStream outputStream = new FileOutputStream(dataFileHandle);
+                outputStream.write(data.getBytes());
+                outputStream.close();
+
+                text = "File written: " + dataFileHandle.getPath();
+            } catch (IOException e) {
+                text = "unable to write file because of an exception: " + e.toString();
+            }
+        }
+        else {
+            text = "External storage not writeable";
+        }
+
+        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    /**
+     * Checks if external storage is available for read and write
+     * @return True if the external storage is writeable, false otherwise.
+     */
+    private boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    /**
+     * Gets the directory where the scouting app will store its output files.
+     * @return The path to the directory where scouting data is stored.
+     */
+    public static File getScoutingDataStorageDir() {
+        File directoryPath = new File(Environment.getExternalStorageDirectory(),
+                "ScoutingData");
+
+        if (!directoryPath.exists()) {
+            if (!directoryPath.mkdirs()) {
+                // Figure out something to do here someday
+            }
+        }
+
+        return directoryPath;
     }
 }

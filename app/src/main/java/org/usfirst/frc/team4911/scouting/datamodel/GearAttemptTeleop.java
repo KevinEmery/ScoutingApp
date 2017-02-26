@@ -13,8 +13,16 @@ public class GearAttemptTeleop extends GearAttempt {
     @SerializedName("TimeStamp") private String timeStamp = "";
 
     public GearAttemptTeleop() {
-        this.timeStamp = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
-                .getTime());
+        this.setTimeStamp(java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
+                .getTime()));
+    }
+
+
+    public GearAttemptTeleop(GearAttempt gearAttempt) {
+        this.setTimeStamp(java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
+                .getTime()));
+        this.setGearPegPosition(gearAttempt.getGearPegPosition());
+        this.setGearResult(gearAttempt.getGearResult());
     }
 
     public boolean getWasDefended() {

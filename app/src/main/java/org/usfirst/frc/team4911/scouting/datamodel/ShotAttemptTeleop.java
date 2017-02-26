@@ -14,8 +14,18 @@ public class ShotAttemptTeleop extends ShotAttempt {
     @SerializedName("TimeStamp") String timeStamp = "";
 
     public ShotAttemptTeleop() {
-        this.timeStamp = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
-                .getTime());
+        this.setTimeStamp(java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
+                .getTime()));
+    }
+
+    public ShotAttemptTeleop(ShotAttempt shotAttempt) {
+        this.setTimeStamp(java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance()
+                .getTime()));
+        this.setShotsMade(shotAttempt.getShotsMade());
+        this.setShotsMissed(shotAttempt.getShotsMissed());
+        this.setShotLocation(shotAttempt.getShotLocation());
+        this.setShotMode(shotAttempt.getShotMode());
+        this.setShotDurationInSeconds(shotAttempt.getShotDurationInSeconds());
     }
 
     public boolean getWasDefended() {
