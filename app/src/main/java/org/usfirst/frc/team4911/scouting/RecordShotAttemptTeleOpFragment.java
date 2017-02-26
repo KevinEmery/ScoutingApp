@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,15 +28,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
  * Use the {@link RecordShotAttemptTeleOpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordShotAttemptTeleOpFragment extends Fragment
-        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
-
-    private SeekBar seekBar_shotsMade;
-    private SeekBar seekBar_shotsMissed;
-    private Spinner spinnerShotMode;
-    private TextView locationMessage;
-    private TextView countMessage;
-    private CheckBox wasDefended;
+public class RecordShotAttemptTeleOpFragment extends Fragment {
 
     public RecordShotAttemptTeleOpFragment() {
         // Required empty public constructor
@@ -54,6 +47,18 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RecordShotAttemptFragment recordShotAttemptFragment =
+                (RecordShotAttemptFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.fragment_container_shot_attempt_teleop);
+
+        if (recordShotAttemptFragment == null) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container_shot_attempt_teleop,
+                            RecordShotAttemptFragment.newInstance());
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
@@ -62,91 +67,8 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_shot_attempt_tele_op, container, false);
 
-        locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_tele_op_location);
-        countMessage = (TextView) view.findViewById(R.id.text_view_record_shot_tele_op_count);
-
-        seekBar_shotsMade = (SeekBar) view.findViewById(R.id.seekbar_shots_made);
-        seekBar_shotsMissed = (SeekBar) view.findViewById(R.id.seekbar_shots_missed);
-
-        spinnerShotMode = (Spinner) view.findViewById(R.id.spinner_shot_attempt_tele_op_mode);
-        spinnerShotMode.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, ShotMode.values()));
-
-        wasDefended = (CheckBox) view.findViewById(R.id.checkbox_shot_attempt_tele_op_defended);
-
-        Button location = (Button) view.findViewById(R.id.button_shot_attempt_tele_op_location);
-        location.setOnClickListener(recordLocation);
-
-        Button save = (Button) view.findViewById(R.id.button_shot_attempt_tele_op_save);
-        save.setOnClickListener(saveShotAttempt);
-
+        // I'm going for composition here so we're adding a auto shot attempt fragment and hoping
+        // that works
         return view;
-    }
-
-    /**
-     * Handles touch events on the location map.
-     */
-    @Override
-    public void onRecordLocationMapTouch(MotionEvent event) {
-        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
-        // it does is show a toast containing the X and Y coordinates of the touch point.
-        // I leave the mapping in your hands :)
-        String text = "X: " + event.getX() + "Y: " + event.getY();
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * OnTouchListener for the location button which invites the user to note down the location
-     * of a shooting event.
-     */
-    private View.OnClickListener recordLocation = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            FragmentManager fragmentManager = getChildFragmentManager();
-            // TODO: Alliance awareness
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
-            fieldMapFragment.show(fragmentManager, "DialogFragment");
-        }
-    };
-
-    /**
-     * OnTouchListener for the save button.
-     */
-    private View.OnClickListener saveShotAttempt = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-
-            ShotAttemptTeleop shotAttemptTeleop = new ShotAttemptTeleop();
-
-            // Scrape the data model and restore all defaults
-            int shotsMade = seekBar_shotsMade.getProgress();
-            int shotsMissed = seekBar_shotsMissed.getProgress();
-            ShotMode shotMode = ShotMode.valueOf(spinnerShotMode.getSelectedItem().toString());
-
-            shotAttemptTeleop.setShotsMade(shotsMade);
-            shotAttemptTeleop.setShotsMissed(shotsMissed);
-            shotAttemptTeleop.setShotMode(shotMode);
-            shotAttemptTeleop.setWasDefended(wasDefended.isChecked());
-
-            ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getTeleopPeriod()
-                    .addShotAttempt(shotAttemptTeleop);
-
-            String message = "Attempts recorded: " + ((ScoutMatchActivity) getActivity())
-                    .getScoutingData().getMatchData().getTeleopPeriod().getShotAttempts().size();
-            countMessage.setText(message);
-
-            restoreDefaults();
-        }
-    };
-
-    /**
-     * Restores the default values of all fields
-     */
-    private void restoreDefaults() {
-        String message = "Location: ";
-        locationMessage.setText(message);
-        wasDefended.setChecked(false);
     }
 }

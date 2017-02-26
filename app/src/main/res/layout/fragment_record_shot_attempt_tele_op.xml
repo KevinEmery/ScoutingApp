@@ -5,115 +5,15 @@
     android:orientation="vertical"
     tools:context="org.usfirst.frc.team4911.scouting.RecordShotAttemptTeleOpFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Record Shot Attempt"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-    <TextView
-        android:id="@+id/text_view_record_shot_tele_op_count"
-        android:text="Attempts recorded: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:text="Fuel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="Shot speed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/spinner_shot_attempt_tele_op_speed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="Shot accuracy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/spinner_shot_attempt_tele_op_accuracy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="Fuel amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/spinner_shot_attempt_tele_op_fuel_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/text_shot_attempt_tele_op_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="location: "/>
-
-        <Button
-            android:id="@+id/button_shot_attempt_tele_op_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shot Mode: " />
-
-        <Spinner
-            android:id="@+id/spinner_shot_attempt_tele_op_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
     <CheckBox
-        android:id="@+id/checkbox_shot_attempt_tele_op_defended"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Defended"/>
-
-    <Button
-        android:id="@+id/button_shot_attempt_tele_op_save"
+        android:id="@+id/checkbox_shot_attempt_teleop_defended"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:text="Was Defended"/>
 
+    <!--This is the fragmentcontainer for the shooting event collection fragment-->
+    <FrameLayout
+        android:id="@+id/fragment_container_shot_attempt_teleop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
