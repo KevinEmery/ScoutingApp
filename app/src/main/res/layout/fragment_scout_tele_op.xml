@@ -14,13 +14,13 @@
     <!--This is the fragmentcontainer for the shooting event collection fragment-->
     <FrameLayout
         android:id="@+id/teleop_shooting_fragment_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <!--This is the fragmentcontainer for the shooting event collection fragment-->
     <FrameLayout
         android:id="@+id/teleop_gear_fragment_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <CheckBox
