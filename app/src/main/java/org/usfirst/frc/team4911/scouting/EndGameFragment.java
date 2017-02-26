@@ -13,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
-import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,8 +35,11 @@ import com.google.gson.GsonBuilder;
 public class EndGameFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
     TextView locationMessage;
-    CheckBox attempted;
-    CheckBox succeeded;
+    CheckBox checkBox_attempted;
+    CheckBox checkBox_noattempt;
+    CheckBox checkBox_Succeeded;
+    CheckBox checkBox_Failed;
+
 
     public EndGameFragment() {
         // Required empty public constructor
@@ -64,8 +67,46 @@ public class EndGameFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_end_game, container, false);
 
         locationMessage = (TextView) view.findViewById(R.id.text_view_end_game_location);
-        attempted = (CheckBox) view.findViewById(R.id.checkbox_end_game_attempt);
-        succeeded = (CheckBox) view.findViewById(R.id.checkbox_end_game_success);
+        checkBox_attempted = (CheckBox) view.findViewById(R.id.checkbox_end_game_attempt);
+        checkBox_noattempt = (CheckBox) view.findViewById(R.id.checkbox_end_game_noattempt);
+        checkBox_Succeeded = (CheckBox) view.findViewById(R.id.checkbox_end_game_success);
+        checkBox_Failed = (CheckBox) view.findViewById(R.id.checkbox_end_game_failed);
+
+        checkBox_Succeeded.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && checkBox_Failed.isChecked()) {
+                    checkBox_Failed.setChecked(!isChecked);
+                }
+            }
+        });
+
+        checkBox_Failed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && checkBox_Succeeded.isChecked()) {
+                    checkBox_Succeeded.setChecked(!isChecked);
+                }
+            }
+        });
+
+        checkBox_attempted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && checkBox_noattempt.isChecked()) {
+                    checkBox_noattempt.setChecked(!isChecked);
+                }
+            }
+        });
+
+        checkBox_noattempt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && checkBox_attempted.isChecked()) {
+                    checkBox_attempted.setChecked(!isChecked);
+                }
+            }
+        });
 
         Button location = (Button) view.findViewById(R.id.btn_climbing_location);
         location.setOnClickListener(recordLocation);
@@ -142,14 +183,14 @@ public class EndGameFragment extends Fragment
     private void saveAndClearEndGameData() {
         // Save the data
         ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getEndGame()
-                .setAttempted(attempted.isChecked());
+                .setAttempted(checkBox_attempted.isChecked());
 
         ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData().getEndGame()
-                .setSucceeded(succeeded.isChecked());
+                .setSucceeded(checkBox_Succeeded.isChecked());
 
         // and clear it
-        attempted.setChecked(false);
-        succeeded.setChecked(false);
+        checkBox_attempted.setChecked(false);
+        checkBox_Succeeded.setChecked(false);
         String message = "Location: ";
         locationMessage.setText(message);
     }
