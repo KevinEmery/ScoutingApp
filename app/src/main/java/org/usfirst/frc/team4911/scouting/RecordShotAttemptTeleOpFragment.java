@@ -91,7 +91,10 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
     public void onShotAttemptCreated(ShotAttempt shotAttempt) {
         // Create a teleop shot event based on this and pass it on up.
         ShotAttemptTeleop shotAttemptTeleop = new ShotAttemptTeleop(shotAttempt);
-        mListener.onShotAttemptTeleopCreated(shotAttemptTeleop);
+
+        if (mListener != null) {
+            mListener.onShotAttemptTeleopCreated(shotAttemptTeleop);
+        }
     }
 
     /**

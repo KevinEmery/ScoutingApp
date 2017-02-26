@@ -132,7 +132,10 @@ public class ScoutAutoFragment extends Fragment
             autonomousPeriod.setLoadedFromHopper(loadedFromHopper.isChecked());
             autonomousPeriod.setShotAttempts(shotAttempts);
             autonomousPeriod.setGearAttempts(gearAttempts);
-            mListener.onAutoPeriodObjectCreated(autonomousPeriod);
+
+            if (mListener != null) {
+                mListener.onAutoPeriodObjectCreated(autonomousPeriod);
+            }
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(2);

@@ -258,7 +258,10 @@ public class RecordShotAttemptFragment extends Fragment
             shotAttempt.setShotDurationInSeconds(durationSeconds);
 
             // Pass the shot event up to whoever is listening for it
-            mListener.onShotAttemptCreated(shotAttempt);
+            if (mListener != null) {
+                mListener.onShotAttemptCreated(shotAttempt);
+            }
+
             restoreDefaults();
         }
     };
