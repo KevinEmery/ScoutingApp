@@ -13,7 +13,6 @@ public class ShotAttempt {
     @SerializedName("ShotMode") ShotMode shotMode = ShotMode.Low;
     @SerializedName("ShotDuration") int shotDurationInSeconds = 0;
 
-
     public int getShotsMissed() {
         return shotsMissed;
     }
