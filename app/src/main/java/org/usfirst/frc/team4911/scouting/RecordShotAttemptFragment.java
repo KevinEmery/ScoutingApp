@@ -12,8 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +34,10 @@ public class RecordShotAttemptFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
     private ShotAttempt shotAttempt;
 
-    private Spinner spinnerSpeed;
-    private Spinner spinnerAccuracy;
-    private Spinner spinnerFuelAmount;
+    private SeekBar seekBar_shotsMade;
+    private TextView textView_shotsMade;
+    private SeekBar seekBar_shotsMissed;
+    private TextView textView_shotsMissed;
     private Spinner spinnerShotMode;
     private TextView locationMessage;
     private TextView countMessage;
@@ -70,21 +70,51 @@ public class RecordShotAttemptFragment extends Fragment
         locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_location);
         countMessage = (TextView) view.findViewById(R.id.text_view_record_shot_count);
 
-        spinnerSpeed = (Spinner) view.findViewById(R.id.spinner_shot_attempt_speed);
-        spinnerSpeed.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, ShotSpeed.values()));
-
-        spinnerAccuracy = (Spinner) view.findViewById(R.id.spinner_shot_attempt_accuracy);
-        spinnerAccuracy.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, ShotAccuracy.values()));
-
-        spinnerFuelAmount = (Spinner) view.findViewById(R.id.spinner_shot_attempt_fuel_amount);
-        spinnerFuelAmount.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, FuelAmount.values()));
-
         spinnerShotMode = (Spinner) view.findViewById(R.id.spinner_shot_attempt_mode);
         spinnerShotMode.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, ShotMode.values()));
+
+        seekBar_shotsMade = (SeekBar) view.findViewById(R.id.seekbar_shots_made);
+        textView_shotsMade = (TextView) view.findViewById(R.id.textview_shotsmade);
+        textView_shotsMade.setText("0");
+
+        seekBar_shotsMissed = (SeekBar) view.findViewById(R.id.seekbar_shots_missed);
+        textView_shotsMissed = (TextView) view.findViewById(R.id.textview_shotsmissed);
+        textView_shotsMissed.setText("0");
+
+        seekBar_shotsMade.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textView_shotsMade.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        seekBar_shotsMissed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textView_shotsMissed.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         Button location = (Button) view.findViewById(R.id.button_shot_attempt_location);
         location.setOnClickListener(recordLocation);
@@ -137,16 +167,12 @@ public class RecordShotAttemptFragment extends Fragment
         @Override
         public void onClick(View v) {
             // Scrape the data model and restore all defaults
-            ShotSpeed shotSpeed = ShotSpeed.valueOf(spinnerSpeed.getSelectedItem().toString());
-            ShotAccuracy shotAccuracy =
-                    ShotAccuracy.valueOf(spinnerAccuracy.getSelectedItem().toString());
-            FuelAmount fuelAmount =
-                    FuelAmount.valueOf(spinnerFuelAmount.getSelectedItem().toString());
+            int shotsMade = seekBar_shotsMade.getProgress();
+            int shotsMissed = seekBar_shotsMissed.getProgress();
             ShotMode shotMode = ShotMode.valueOf(spinnerShotMode.getSelectedItem().toString());
 
-            shotAttempt.setShotSpeed(shotSpeed);
-            shotAttempt.setShotAccuracy(shotAccuracy);
-            shotAttempt.setFuelAmount(fuelAmount);
+            shotAttempt.setShotsMade(shotsMade);
+            shotAttempt.setShotsMissed(shotsMissed);
             shotAttempt.setShotMode(shotMode);
 
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()

@@ -1,8 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+
     tools:context="org.usfirst.frc.team4911.scouting.RecordShotAttemptFragment">
 
     <TextView
@@ -17,61 +22,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:text="Fuel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <TextView
-            android:text="Shot speed"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_weight="10">
+            <TextView
+                android:id="@+id/text_shot_made"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shots made"/>
 
-        <Spinner
-            android:id="@+id/spinner_shot_attempt_speed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekbar_shots_made"
+                android:layout_weight="10"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textview_shotsmade" />
+        </TableRow>
 
-        <TextView
-            android:text="Shot accuracy"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_weight="10">
+            <TextView
+                android:id="@+id/text_shot_missed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shots missed"/>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekbar_shots_missed"
+                android:layout_weight="10" />
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textview_shotsmissed" />
+        </TableRow>
+    </TableLayout>
 
-        <Spinner
-            android:id="@+id/spinner_shot_attempt_accuracy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="Fuel amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:id="@+id/spinner_shot_attempt_fuel_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+     <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -82,14 +82,14 @@
             android:text="location: "/>
 
         <Button
-            android:id="@+id/button_shot_attempt_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location" />
+         android:id="@+id/button_shot_attempt_location"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Location" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -105,8 +105,18 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/button_shot_attempt_startstop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start" />
+
+    <Button
         android:id="@+id/button_shot_attempt_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:text="Save"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+
 </LinearLayout>

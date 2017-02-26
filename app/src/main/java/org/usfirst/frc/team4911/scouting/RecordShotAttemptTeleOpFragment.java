@@ -1,8 +1,5 @@
 package org.usfirst.frc.team4911.scouting;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -14,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.FuelAmount;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAccuracy;
-import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotMode;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
@@ -33,9 +30,8 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
 public class RecordShotAttemptTeleOpFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
 
-    private Spinner spinnerSpeed;
-    private Spinner spinnerAccuracy;
-    private Spinner spinnerFuelAmount;
+    private SeekBar seekBar_shotsMade;
+    private SeekBar seekBar_shotsMissed;
     private Spinner spinnerShotMode;
     private TextView locationMessage;
     private TextView countMessage;
@@ -69,17 +65,8 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
         locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_tele_op_location);
         countMessage = (TextView) view.findViewById(R.id.text_view_record_shot_tele_op_count);
 
-        spinnerSpeed = (Spinner) view.findViewById(R.id.spinner_shot_attempt_tele_op_speed);
-        spinnerSpeed.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, ShotSpeed.values()));
-
-        spinnerAccuracy = (Spinner) view.findViewById(R.id.spinner_shot_attempt_tele_op_accuracy);
-        spinnerAccuracy.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, ShotAccuracy.values()));
-
-        spinnerFuelAmount = (Spinner) view.findViewById(R.id.spinner_shot_attempt_tele_op_fuel_amount);
-        spinnerFuelAmount.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, FuelAmount.values()));
+        seekBar_shotsMade = (SeekBar) view.findViewById(R.id.seekbar_shots_made);
+        seekBar_shotsMissed = (SeekBar) view.findViewById(R.id.seekbar_shots_missed);
 
         spinnerShotMode = (Spinner) view.findViewById(R.id.spinner_shot_attempt_tele_op_mode);
         spinnerShotMode.setAdapter(new ArrayAdapter<>(getContext(),
@@ -116,16 +103,9 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
 
         @Override
         public void onClick(View v) {
-            SharedPreferences sharedpreferences = getActivity().getApplicationContext()
-                    .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-
-            String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
-
-            int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
-                    R.drawable.shootingzone_red : R.drawable.shootingzone_blue;
-
             FragmentManager fragmentManager = getChildFragmentManager();
-            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
+            // TODO: Alliance awareness
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(R.drawable.airship_blue);
             fieldMapFragment.show(fragmentManager, "DialogFragment");
         }
     };
@@ -141,16 +121,12 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
             ShotAttemptTeleop shotAttemptTeleop = new ShotAttemptTeleop();
 
             // Scrape the data model and restore all defaults
-            ShotSpeed shotSpeed = ShotSpeed.valueOf(spinnerSpeed.getSelectedItem().toString());
-            ShotAccuracy shotAccuracy =
-                    ShotAccuracy.valueOf(spinnerAccuracy.getSelectedItem().toString());
-            FuelAmount fuelAmount =
-                    FuelAmount.valueOf(spinnerFuelAmount.getSelectedItem().toString());
+            int shotsMade = seekBar_shotsMade.getProgress();
+            int shotsMissed = seekBar_shotsMissed.getProgress();
             ShotMode shotMode = ShotMode.valueOf(spinnerShotMode.getSelectedItem().toString());
 
-            shotAttemptTeleop.setShotSpeed(shotSpeed);
-            shotAttemptTeleop.setShotAccuracy(shotAccuracy);
-            shotAttemptTeleop.setFuelAmount(fuelAmount);
+            shotAttemptTeleop.setShotsMade(shotsMade);
+            shotAttemptTeleop.setShotsMissed(shotsMissed);
             shotAttemptTeleop.setShotMode(shotMode);
             shotAttemptTeleop.setWasDefended(wasDefended.isChecked());
 

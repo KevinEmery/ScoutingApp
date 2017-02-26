@@ -46,9 +46,8 @@ public class DataModelTests {
 
         ShotAttempt shotAttempt = new ShotAttempt();
         shotAttempt.setShotMode(ShotMode.High);
-        shotAttempt.setFuelAmount(FuelAmount.Small);
-        shotAttempt.setShotSpeed(ShotSpeed.Average);
-        shotAttempt.setShotAccuracy(ShotAccuracy.Average);
+        shotAttempt.setShotsMade(10);
+        shotAttempt.setShotsMissed(2);
         shotAttempt.setShotLocation("Near");
         autonomousPeriod.getShotAttempts().add(shotAttempt);
 
@@ -76,16 +75,16 @@ public class DataModelTests {
         ShotAttemptTeleop shotAttemptTeleop = new ShotAttemptTeleop();
         shotAttemptTeleop.setWasDefended(false);
         shotAttemptTeleop.setShotLocation("Close");
-        shotAttemptTeleop.setShotSpeed(ShotSpeed.Fast);
+        shotAttemptTeleop.setShotsMade(30);
         shotAttemptTeleop.setShotMode(ShotMode.High);
-        shotAttemptTeleop.setShotAccuracy(ShotAccuracy.Average);
+        shotAttemptTeleop.setShotsMissed(3);
         teleopPeriod.getShotAttempts().add(shotAttemptTeleop);
         shotAttemptTeleop = new ShotAttemptTeleop();
         shotAttemptTeleop.setWasDefended(true);
         shotAttemptTeleop.setShotLocation("Medium");
-        shotAttemptTeleop.setShotSpeed(ShotSpeed.Slow);
+        shotAttemptTeleop.setShotsMade(40);
         shotAttemptTeleop.setShotMode(ShotMode.High);
-        shotAttemptTeleop.setShotAccuracy(ShotAccuracy.Poor);
+        shotAttemptTeleop.setShotsMissed(15);
         teleopPeriod.getShotAttempts().add(shotAttemptTeleop);
         teleopPeriod.setShotAttemptCount(teleopPeriod.getShotAttempts().size());
 

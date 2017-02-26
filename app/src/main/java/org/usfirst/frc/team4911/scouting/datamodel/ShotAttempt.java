@@ -7,49 +7,46 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ShotAttempt {
-    @SerializedName("ShotSpeed") ShotSpeed shotSpeed = ShotSpeed.Slow;
-    @SerializedName("ShotAccuracy") ShotAccuracy shotAccuracy = ShotAccuracy.Failed;
-    @SerializedName("FuelAmount") FuelAmount fuelAmount = FuelAmount.Small;
+    @SerializedName("ShotsMade") int shotsMade = 0;
+    @SerializedName("ShotsMissed") int shotsMissed = 0;
     @SerializedName("ShotLocation") String shotLocation = "";
     @SerializedName("ShotMode") ShotMode shotMode = ShotMode.Low;
+    @SerializedName("ShotDuration") int shotDurationInSeconds = 0;
 
-    public FuelAmount getFuelAmount() {
-        return fuelAmount;
+
+    public int getShotsMissed() {
+        return shotsMissed;
     }
 
-    public ShotAccuracy getShotAccuracy() {
-        return shotAccuracy;
+    public void setShotsMissed(int shotsMissed) {
+        this.shotsMissed = shotsMissed;
     }
 
-    public String getShotLocation() {
-        return shotLocation;
+    public int getShotsMade() {
+        return shotsMade;
     }
-
-    public ShotSpeed getShotSpeed() {
-        return shotSpeed;
+    public void setShotsMade(int shotsMade) {
+        this.shotsMade = shotsMade;
     }
 
     public ShotMode getShotMode() {
         return shotMode;
     }
-
-    public void setFuelAmount(FuelAmount fuelAmount) {
-        this.fuelAmount = fuelAmount;
-    }
-
-    public void setShotAccuracy(ShotAccuracy shotAccuracy) {
-        this.shotAccuracy = shotAccuracy;
-    }
-
-    public void setShotLocation(String shotLocation) {
-        this.shotLocation = shotLocation;
-    }
-
     public void setShotMode(ShotMode shotMode) {
         this.shotMode = shotMode;
     }
 
-    public void setShotSpeed(ShotSpeed shotSpeed) {
-        this.shotSpeed = shotSpeed;
+    public String getShotLocation() {
+        return shotLocation;
+    }
+    public void setShotLocation(String shotLocation) {
+        this.shotLocation = shotLocation;
+    }
+
+    public int getShotDurationInSeconds() {
+        return shotDurationInSeconds;
+    }
+    public void setShotDurationInSeconds(int shotDurationInSeconds) {
+        this.shotDurationInSeconds = shotDurationInSeconds;
     }
 }

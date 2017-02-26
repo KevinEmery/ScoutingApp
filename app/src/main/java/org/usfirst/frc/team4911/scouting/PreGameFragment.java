@@ -143,12 +143,12 @@ public class PreGameFragment extends Fragment
             ((ScoutMatchActivity) getActivity()).setScoutingData(scoutingData);
 
             // Now that we've initialised the scouting data we can add the pre-match data
-            preGame .setHasFuel(chkbxHasFuel.isChecked());
-            preGame .setHasGear(chkbxHasGear.isChecked());
+            preGame.setHasFuel(chkbxHasFuel.isChecked());
+            preGame.setHasGear(chkbxHasGear.isChecked());
 
             int fuelCount = Integer.parseInt(spnrFuelQuantity
                     .getItemAtPosition(spnrFuelQuantity.getSelectedItemPosition()).toString());
-            preGame .setFuelCount(fuelCount);
+            preGame.setFuelCount(fuelCount);
 
             boolean usesOwnRope = chbxUsesOwnRope.isChecked();
             preGame.setUsesOwnRope(usesOwnRope);
