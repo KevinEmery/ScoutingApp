@@ -2,6 +2,7 @@ package org.usfirst.frc.team4911.scouting;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +43,13 @@ public class RecordShotAttemptFragment extends Fragment
     private Spinner spinnerShotMode;
     private TextView locationMessage;
     private TextView countMessage;
+
+    // Parameters for the chronometer
+    private Chronometer chronometerShotTime;
+    private Button buttonStartStopChronometer;
+    private long shotTimeMilliseconds = 0;
+    private boolean isTiming = false;
+    private long startTimeMs;
 
     public RecordShotAttemptFragment() {
         // Required empty public constructor
@@ -75,46 +84,19 @@ public class RecordShotAttemptFragment extends Fragment
                 android.R.layout.simple_spinner_item, ShotMode.values()));
 
         seekBar_shotsMade = (SeekBar) view.findViewById(R.id.seekbar_shots_made);
+        seekBar_shotsMade.setOnSeekBarChangeListener(shotsMadeSeekBarListener);
         textView_shotsMade = (TextView) view.findViewById(R.id.textview_shotsmade);
         textView_shotsMade.setText("0");
 
         seekBar_shotsMissed = (SeekBar) view.findViewById(R.id.seekbar_shots_missed);
+        seekBar_shotsMissed.setOnSeekBarChangeListener(shotsMissedSeekBarListener);
         textView_shotsMissed = (TextView) view.findViewById(R.id.textview_shotsmissed);
         textView_shotsMissed.setText("0");
 
-        seekBar_shotsMade.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                textView_shotsMade.setText(String.valueOf(seekBar.getProgress()));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        seekBar_shotsMissed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                textView_shotsMissed.setText(String.valueOf(seekBar.getProgress()));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+        // Setup for the shot time counter
+        chronometerShotTime = (Chronometer) view.findViewById(R.id.chronometer_shot_attempt_time);
+        buttonStartStopChronometer = (Button) view.findViewById(R.id.button_shot_attempt_startstop);
+        buttonStartStopChronometer.setOnClickListener(startStopButtonListener);
 
         Button location = (Button) view.findViewById(R.id.button_shot_attempt_location);
         location.setOnClickListener(recordLocation);
@@ -135,6 +117,84 @@ public class RecordShotAttemptFragment extends Fragment
         // I leave the mapping in your hands :)
         String text = "X: " + event.getX() + "Y: " + event.getY();
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * OnChangeListener for the shots made seekbar.
+     */
+    private SeekBar.OnSeekBarChangeListener shotsMadeSeekBarListener =
+            new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            textView_shotsMade.setText(String.valueOf(seekBar.getProgress()));
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+    private SeekBar.OnSeekBarChangeListener shotsMissedSeekBarListener =
+            new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            textView_shotsMissed.setText(String.valueOf(seekBar.getProgress()));
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+
+    /**
+     * Interaction listener for the chronometer button.
+     */
+    private View.OnClickListener startStopButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (!isTiming) {
+                startShotTimer();
+            } else {
+                stopShotTimer();
+            }
+        }
+    };
+
+    /**
+     * Starts the shot timer. I have this sneaky feeling that this logic should live in some kind
+     * of custom view or something like that.
+     */
+    private void startShotTimer() {
+        startTimeMs = System.currentTimeMillis();
+        chronometerShotTime.setBase(SystemClock.elapsedRealtime());
+        chronometerShotTime.start();
+        buttonStartStopChronometer.setText("Stop");
+        isTiming = true;
+    }
+
+    /**
+     * Stops the shot timer. Again, is this something that should be a custom view that I see
+     * before me.
+     */
+    private void stopShotTimer() {
+        shotTimeMilliseconds = System.currentTimeMillis() - startTimeMs;
+        chronometerShotTime.setBase(SystemClock.elapsedRealtime());
+        chronometerShotTime.stop();
+        buttonStartStopChronometer.setText("Start");
+        isTiming = false;
     }
 
     /**
@@ -171,9 +231,17 @@ public class RecordShotAttemptFragment extends Fragment
             int shotsMissed = seekBar_shotsMissed.getProgress();
             ShotMode shotMode = ShotMode.valueOf(spinnerShotMode.getSelectedItem().toString());
 
+            // Here to handle the case where the user presses save without stopping the timer first.
+            if (isTiming) {
+                stopShotTimer();
+            }
+
+            int durationSeconds = (int) shotTimeMilliseconds / 1000;
+
             shotAttempt.setShotsMade(shotsMade);
             shotAttempt.setShotsMissed(shotsMissed);
             shotAttempt.setShotMode(shotMode);
+            shotAttempt.setShotDurationInSeconds(durationSeconds);
 
             ((ScoutMatchActivity) getActivity()).getScoutingData().getMatchData()
                     .getAutonomousPeriod().getShotAttempts().add(shotAttempt);

@@ -107,19 +107,26 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_shot_attempt_startstop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_shot_attempt_startstop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start" />
+
+        <Chronometer
+            android:id="@+id/chronometer_shot_attempt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_shot_attempt_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"/>
-
-
 </LinearLayout>
