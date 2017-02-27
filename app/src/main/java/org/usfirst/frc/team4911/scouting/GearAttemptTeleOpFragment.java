@@ -16,18 +16,18 @@ import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RecordGearAttemptTeleOpFragment#newInstance} factory method to
+ * Use the {@link GearAttemptTeleOpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordGearAttemptTeleOpFragment extends Fragment
-        implements RecordGearAttemptFragment.OnGearAttemptCreatedListener {
+public class GearAttemptTeleOpFragment extends Fragment
+        implements GearAttemptFragment.OnGearAttemptCreatedListener {
 
     OnGearAttemptTeleopCreatedListener mListener;
 
     private CheckBox wasDefended;
     private Spinner spinnerGearResult;
 
-    public RecordGearAttemptTeleOpFragment() {
+    public GearAttemptTeleOpFragment() {
         // Required empty public constructor
     }
 
@@ -35,10 +35,10 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment RecordGearAttemptTeleOpFragment.
+     * @return A new instance of fragment GearAttemptTeleOpFragment.
      */
-    public static RecordGearAttemptTeleOpFragment newInstance() {
-        return new RecordGearAttemptTeleOpFragment();
+    public static GearAttemptTeleOpFragment newInstance() {
+        return new GearAttemptTeleOpFragment();
     }
 
     @Override
@@ -47,15 +47,15 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
         onAttachToParentFragment(getParentFragment());
 
         // This is what it looks like when I try to do composition with fragments.
-        RecordGearAttemptFragment recordGearAttemptFragment =
-                (RecordGearAttemptFragment) getChildFragmentManager()
+        GearAttemptFragment gearAttemptFragment =
+                (GearAttemptFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_container_gear_attempt_teleop);
 
-        if (recordGearAttemptFragment == null) {
+        if (gearAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container_gear_attempt_teleop,
-                            RecordGearAttemptFragment.newInstance());
+                            GearAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
     }
@@ -77,7 +77,7 @@ public class RecordGearAttemptTeleOpFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_record_gear_attempt_tele_op, container, false);
+        View view = inflater.inflate(R.layout.fragment_gear_attempt_tele_op, container, false);
 
         wasDefended = (CheckBox) view.findViewById(R.id.checkbox_gear_attempt_tele_op_defended);
         spinnerGearResult = (Spinner) view.findViewById(R.id.spinner_gear_attempt_telop_result);

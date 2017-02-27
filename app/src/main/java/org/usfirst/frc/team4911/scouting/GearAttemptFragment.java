@@ -15,17 +15,16 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
 import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 
 /**
  * Code for the fragment which handles recording gear events.
- * Use the {@link RecordGearAttemptFragment#newInstance} factory method to
+ * Use the {@link GearAttemptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordGearAttemptFragment extends Fragment
+public class GearAttemptFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
 
     private OnGearAttemptCreatedListener mListener;
@@ -35,7 +34,7 @@ public class RecordGearAttemptFragment extends Fragment
 
     private TextView locationMessage;
 
-    public RecordGearAttemptFragment() {
+    public GearAttemptFragment() {
         // Required empty public constructor
     }
 
@@ -43,10 +42,10 @@ public class RecordGearAttemptFragment extends Fragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment RecordGearAttemptFragment.
+     * @return A new instance of fragment GearAttemptFragment.
      */
-    public static RecordGearAttemptFragment newInstance() {
-        return new RecordGearAttemptFragment();
+    public static GearAttemptFragment newInstance() {
+        return new GearAttemptFragment();
     }
 
     @Override
@@ -72,7 +71,7 @@ public class RecordGearAttemptFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_record_gear_attempt, container, false);
+        View view = inflater.inflate(R.layout.fragment_gear_attempt, container, false);
 
         locationMessage = (TextView) view.findViewById(R.id.txt_gear_record_auto_location);
         placedGear = (CheckBox) view.findViewById(R.id.checkbox_record_gear_success);

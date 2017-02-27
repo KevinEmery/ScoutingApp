@@ -25,8 +25,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ScoutTeleOpFragment extends Fragment implements
-        RecordGearAttemptTeleOpFragment.OnGearAttemptTeleopCreatedListener,
-        RecordShotAttemptTeleOpFragment.OnShotAttemptTeleopCreatedListener,
+        GearAttemptTeleOpFragment.OnGearAttemptTeleopCreatedListener,
+        ShotAttemptTeleOpFragment.OnShotAttemptTeleopCreatedListener,
         HopperAttemptFragment.OnHopperAttemptCreatedListener {
 
     OnTeleopPeriodObjectCreatedListener mListener;
@@ -55,27 +55,27 @@ public class ScoutTeleOpFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RecordShotAttemptTeleOpFragment shotAttemptFragment =
-                (RecordShotAttemptTeleOpFragment) getChildFragmentManager()
+        ShotAttemptTeleOpFragment shotAttemptFragment =
+                (ShotAttemptTeleOpFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_container_tele_op_shooting);
 
         if (shotAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container_tele_op_shooting,
-                            RecordShotAttemptTeleOpFragment.newInstance());
+                            ShotAttemptTeleOpFragment.newInstance());
             fragmentTransaction.commit();
         }
 
-        RecordGearAttemptTeleOpFragment gearAttemptTeleOpFragment =
-                (RecordGearAttemptTeleOpFragment) getChildFragmentManager()
+        GearAttemptTeleOpFragment gearAttemptTeleOpFragment =
+                (GearAttemptTeleOpFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_container_tele_op_gear);
 
         if (gearAttemptTeleOpFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container_tele_op_gear,
-                            RecordGearAttemptTeleOpFragment.newInstance());
+                            GearAttemptTeleOpFragment.newInstance());
             fragmentTransaction.commit();
         }
 

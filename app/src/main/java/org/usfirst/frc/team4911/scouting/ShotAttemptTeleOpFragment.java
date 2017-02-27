@@ -13,17 +13,17 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotAttemptTeleop;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RecordShotAttemptTeleOpFragment#newInstance} factory method to
+ * Use the {@link ShotAttemptTeleOpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordShotAttemptTeleOpFragment extends Fragment
-    implements RecordShotAttemptFragment.OnShotAttemptCreatedListener {
+public class ShotAttemptTeleOpFragment extends Fragment
+    implements ShotAttemptFragment.OnShotAttemptCreatedListener {
 
     OnShotAttemptTeleopCreatedListener mListener;
 
     private CheckBox wasDefended;
 
-    public RecordShotAttemptTeleOpFragment() {
+    public ShotAttemptTeleOpFragment() {
         // Required empty public constructor
     }
 
@@ -31,10 +31,10 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment RecordShotAttemptTeleOpFragment.
+     * @return A new instance of fragment ShotAttemptTeleOpFragment.
      */
-    public static RecordShotAttemptTeleOpFragment newInstance() {
-        return new RecordShotAttemptTeleOpFragment();
+    public static ShotAttemptTeleOpFragment newInstance() {
+        return new ShotAttemptTeleOpFragment();
     }
 
     @Override
@@ -43,15 +43,15 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
         onAttachToParentFragment(getParentFragment());
 
         // This is what it looks like when I try to do composition with fragments.
-        RecordShotAttemptFragment recordShotAttemptFragment =
-                (RecordShotAttemptFragment) getChildFragmentManager()
+        ShotAttemptFragment shotAttemptFragment =
+                (ShotAttemptFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_container_shot_attempt_teleop);
 
-        if (recordShotAttemptFragment == null) {
+        if (shotAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container_shot_attempt_teleop,
-                            RecordShotAttemptFragment.newInstance());
+                            ShotAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
     }
@@ -73,7 +73,7 @@ public class RecordShotAttemptTeleOpFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_record_shot_attempt_tele_op, container, false);
+        View view = inflater.inflate(R.layout.fragment_shot_attempt_tele_op, container, false);
         wasDefended = (CheckBox) view.findViewById(R.id.checkbox_shot_attempt_teleop_defended);
         return view;
     }

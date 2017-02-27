@@ -25,14 +25,14 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotMode;
 /**
  * A simple {@link Fragment} subclass.
  * Contains all data interfaces necessary to collect information about a shooting event.
- * Use the {@link RecordShotAttemptFragment#newInstance} factory method to
+ * Use the {@link ShotAttemptFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  *  Activities that contain this fragment must implement the
- * {@link RecordShotAttemptFragment.OnShotAttemptCreatedListener} interface
+ * {@link ShotAttemptFragment.OnShotAttemptCreatedListener} interface
  * to handle interaction events.
  */
-public class RecordShotAttemptFragment extends Fragment
+public class ShotAttemptFragment extends Fragment
         implements RecordLocationFragment.OnRecordLocationMapTouchListener {
     private OnShotAttemptCreatedListener mListener;
 
@@ -52,17 +52,17 @@ public class RecordShotAttemptFragment extends Fragment
     private boolean isTiming = false;
     private long startTimeMs;
 
-    public RecordShotAttemptFragment() {
+    public ShotAttemptFragment() {
         // Required empty public constructor
     }
 
     /**
      * Use this factory method to create a new instance of this fragment.
      *
-     * @return A new instance of fragment RecordShotAttemptFragment.
+     * @return A new instance of fragment ShotAttemptFragment.
      */
-    public static RecordShotAttemptFragment newInstance() {
-        return new RecordShotAttemptFragment();
+    public static ShotAttemptFragment newInstance() {
+        return new ShotAttemptFragment();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class RecordShotAttemptFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_record_shot_attempt, container, false);
+        View view = inflater.inflate(R.layout.fragment_shot_attempt, container, false);
 
         shotAttempt = new ShotAttempt();
         locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_location);

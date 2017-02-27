@@ -13,10 +13,7 @@ import android.widget.CheckBox;
 
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
-import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 import org.usfirst.frc.team4911.scouting.datamodel.HopperAttempt;
-import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
-import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
 
 import java.util.ArrayList;
@@ -28,8 +25,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ScoutAutoFragment extends Fragment implements
-        RecordShotAttemptFragment.OnShotAttemptCreatedListener,
-        RecordGearAttemptFragment.OnGearAttemptCreatedListener,
+        ShotAttemptFragment.OnShotAttemptCreatedListener,
+        GearAttemptFragment.OnGearAttemptCreatedListener,
         HopperAttemptFragment.OnHopperAttemptCreatedListener {
 
     OnAutoPeriodObjectCreatedListener mListener;
@@ -58,27 +55,27 @@ public class ScoutAutoFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RecordShotAttemptFragment recordShotAttemptFragment =
-                (RecordShotAttemptFragment) getChildFragmentManager()
+        ShotAttemptFragment shotAttemptFragment =
+                (ShotAttemptFragment) getChildFragmentManager()
                         .findFragmentById(R.id.fragment_container_auto_shooting);
 
-        if (recordShotAttemptFragment == null) {
+        if (shotAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container_auto_shooting,
-                            RecordShotAttemptFragment.newInstance());
+                            ShotAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
 
-        RecordGearAttemptFragment recordGearAttemptFragment =
-                (RecordGearAttemptFragment) getChildFragmentManager()
+        GearAttemptFragment gearAttemptFragment =
+                (GearAttemptFragment) getChildFragmentManager()
                 .findFragmentById(R.id.fragment_container_auto_gear);
 
-        if (recordGearAttemptFragment == null) {
+        if (gearAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container_auto_gear,
-                            RecordGearAttemptFragment.newInstance());
+                            GearAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
 
