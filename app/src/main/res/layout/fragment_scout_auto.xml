@@ -22,6 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Record Shot Attempt"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
         <!--This is the fragmentcontainer for the shooting event collection fragment-->
         <FrameLayout
             android:id="@+id/auto_gear_fragment_container"
