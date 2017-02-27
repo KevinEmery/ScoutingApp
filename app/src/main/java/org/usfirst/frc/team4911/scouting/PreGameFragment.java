@@ -235,6 +235,22 @@ public class PreGameFragment extends Fragment
                 return;
             }
 
+            if (toggleButtonUsesOwnRope.isChecked() && robotPosition.isEmpty())
+            {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                dlgAlert.setMessage("Please select the rope position.");
+                dlgAlert.setTitle("Invalid Rope Position");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.setCancelable(true);
+                dlgAlert.create().show();
+                return;
+            }
+
             PreGame preGame = new PreGame();
             preGame.setHasGear(toggleButtonHasGear.isChecked());
             preGame.setHasFuel(toggleButtonHasFuel.isChecked());
