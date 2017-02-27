@@ -34,6 +34,10 @@ public class ScoutTeleOpFragment extends Fragment implements
 
     CheckBox playedDefence;
 
+    TextView shotAttemptLabel;
+    TextView gearAttemptLabel;
+    TextView hopperAttemptLabel;
+
     List<ShotAttemptTeleop> shotAttempts;
     List<GearAttemptTeleop> gearAttempts;
     List<HopperAttempt> hopperAttempts;
@@ -112,6 +116,10 @@ public class ScoutTeleOpFragment extends Fragment implements
         // See note in OnCreateView of PreGameFragment
         View view = inflater.inflate(R.layout.fragment_scout_tele_op, container, false);
 
+        shotAttemptLabel = (TextView) view.findViewById(R.id.label_shots_attempted_teleop);
+        gearAttemptLabel = (TextView) view.findViewById(R.id.label_gears_attempted_teleop);
+        hopperAttemptLabel = (TextView) view.findViewById(R.id.label_hoppers_activated_teleop);
+
         playedDefence = (CheckBox) view.findViewById(R.id.checkbox_tele_op_played_defence);
         Button save = (Button) view.findViewById(R.id.button_tele_op_save);
         save.setOnClickListener(saveTeleop);
@@ -139,17 +147,22 @@ public class ScoutTeleOpFragment extends Fragment implements
     @Override
     public void onGearAttemptTeleopCreated(GearAttemptTeleop gearAttemptTeleop) {
         gearAttempts.add(gearAttemptTeleop);
-
+        String newLabel = getString(R.string.label_attempts_recorded) + gearAttempts.size();
+        gearAttemptLabel.setText(newLabel);
     }
 
     @Override
     public void onShotAttemptTeleopCreated(ShotAttemptTeleop shotAttemptTeleop) {
         shotAttempts.add(shotAttemptTeleop);
+        String newLabel = getString(R.string.label_attempts_recorded) + shotAttempts.size();
+        shotAttemptLabel.setText(newLabel);
     }
 
     @Override
     public void onHopperAttemptCreated(HopperAttempt hopperAttempt) {
         hopperAttempts.add(hopperAttempt);
+        String newLabel = getString(R.string.label_attempts_recorded) + hopperAttempts.size();
+        hopperAttemptLabel.setText(newLabel);
     }
 
     View.OnClickListener saveTeleop = new View.OnClickListener() {

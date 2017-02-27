@@ -5,6 +5,7 @@
     <string name="button_label_location">Location</string>
     <string name="button_label_record_attempt">Record Attempt</string>
     <string name="button_label_save_auto">Save auto data</string>
+    <string name="button_label_save_teleop">Save teleop data</string>
     <string name="button_label_start">Start</string>
 
     <string name="header_autonomous">Autonomous</string>
@@ -19,6 +20,7 @@
     <string name="label_attempts_recorded">Attempts recorded: </string>
     <string name="label_crossed_baseline">Crossed baseline</string>
     <string name="label_location">Location: </string>
+    <string name="label_played_defence">Played defence</string>
     <string name="label_shots_made">Shots made</string>
     <string name="label_shots_missed">Shots missed</string>
     <string name="label_shot_mode">Shot mode: </string>

@@ -13,54 +13,76 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TeleOp"
+            android:text="@string/header_teleop"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
+        <!--TeleOp shot attempt stuff-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Record Shot Attempt"
+            android:text="@string/header_shot_attempt"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <!--This is the fragmentcontainer for the shooting event collection fragment-->
+        <TextView
+            android:id="@+id/label_shots_attempted_teleop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_attempts_recorded"/>
+
         <FrameLayout
             android:id="@+id/fragment_container_tele_op_shooting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <!--End teleop shot attempt stuff-->
 
+        <!--Teleop gear attempt stuff-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Record Gear Attempt"
+            android:text="@string/header_gear_attempt"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <!--This is the fragmentcontainer for the shooting event collection fragment-->
+        <TextView
+            android:id="@+id/label_gears_attempted_teleop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_attempts_recorded"/>
+
         <FrameLayout
             android:id="@+id/fragment_container_tele_op_gear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <!--End teleop gear attempt stuff-->
 
+        <!--Teleop hopper stuff-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Record Hopper Attempt"
+            android:text="@string/header_hopper_attempt"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/label_hoppers_activated_teleop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_attempts_recorded"/>
 
         <FrameLayout
             android:id="@+id/fragment_container_tele_op_hopper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <!--End teleop hopper stuff-->
 
         <CheckBox
             android:id="@+id/checkbox_tele_op_played_defence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Played defence"/>
+            android:text="@string/label_played_defence"/>
 
         <Button
             android:id="@+id/button_tele_op_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:text="@string/button_label_save_teleop" />
     </LinearLayout>
 </ScrollView>
