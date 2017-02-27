@@ -21,15 +21,11 @@ public class MatchData
     // The end game period is typically the last 30s
     @SerializedName("EndGame")  EndGame endGame;
 
-    // Get what hoppers this robot emptied.
-    @SerializedName("Hoppers") Hoppers hoppers;
-
-    public MatchData(){
+    public MatchData() {
         this.setPreGame(new PreGame());
         this.setAutonomousPeriod(new AutonomousPeriod());
         this.setTeleopPeriod(new TeleopPeriod());
         this.setEndGame(new EndGame());
-        this.hoppers = new Hoppers();
     }
 
     public EndGame getEndGame() {
@@ -62,9 +58,5 @@ public class MatchData
 
     public void setTeleopPeriod(TeleopPeriod teleopPeriod) {
         this.teleopPeriod = teleopPeriod;
-    }
-
-    public Hoppers getHoppers() {
-        return hoppers;
     }
 }

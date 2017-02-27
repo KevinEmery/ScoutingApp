@@ -14,39 +14,34 @@ public class AutonomousPeriod {
     // Does robot cross baseline by t=0 for 5 points?
     @SerializedName("AutoMobilityPoints") private boolean autoMobilityPoints = false;
 
-    // Did robot get fuel from hoppers?
-    @SerializedName("LoadedFromHopper") private boolean loadedFromHopper = false;
-
+    // Records the attempts to load a gear.
     @SerializedName("GearAttempts") private List<GearAttempt> gearAttempts;
 
+    // Records the attempts to shot fuel.
     @SerializedName("ShotAttempts") private List<ShotAttempt> shotAttempts;
+
+    // Records any attempts to activate a hopper.
+    @SerializedName("HopperAttempts") private List<HopperAttempt> hopperAttempts;
 
     public AutonomousPeriod() {
         this.setGearAttempts(new ArrayList<GearAttempt>());
         this.setShotAttempts(new ArrayList<ShotAttempt>());
+        this.setHopperAttempts(new ArrayList<HopperAttempt>());
     }
 
     public boolean getAutoMobilityPoints() {
         return autoMobilityPoints;
     }
 
-    public boolean getsLoadedFromHopper() {
-        return loadedFromHopper;
-    }
-
-     public void setAutoMobilityPoints(boolean autoMobilityPoints) {
+    public void setAutoMobilityPoints(boolean autoMobilityPoints) {
         this.autoMobilityPoints = autoMobilityPoints;
-    }
-
-    public void setLoadedFromHopper(boolean loadedFromHopper) {
-        this.loadedFromHopper = loadedFromHopper;
     }
 
     public List<GearAttempt> getGearAttempts() {
         return gearAttempts;
     }
 
-    public void setGearAttempts(List<GearAttempt> gGearAttempts) {
+    private void setGearAttempts(List<GearAttempt> gGearAttempts) {
         this.gearAttempts = gGearAttempts;
     }
 
@@ -56,5 +51,17 @@ public class AutonomousPeriod {
 
     public void setShotAttempts(List<ShotAttempt> shotAttempts) {
         this.shotAttempts = shotAttempts;
+    }
+
+    private void AddShotAttempt(ShotAttempt shotAttempt) {
+        this.shotAttempts.add(shotAttempt);
+    }
+
+    public List<HopperAttempt> getHopperAttempts() {
+        return hopperAttempts;
+    }
+
+    private void setHopperAttempts(List<HopperAttempt> hopperAttempts) {
+        this.hopperAttempts = hopperAttempts;
     }
 }

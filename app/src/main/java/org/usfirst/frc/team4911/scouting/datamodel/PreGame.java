@@ -24,10 +24,12 @@ public class PreGame {
     @SerializedName("RopeTouchPadPosition") private TouchPadPosition ropeTouchPadPosition =
             TouchPadPosition.None;
 
+    // What touch pad position is rope place at?
+    @SerializedName("RobotPosition") private String robotPosition  = "";
+
     public boolean getHasGear() {
         return hasGear;
     }
-
     public void setHasGear(boolean hasGear) {
         this.hasGear = hasGear;
     }
@@ -35,11 +37,9 @@ public class PreGame {
     public boolean getHasFuel() {
         return hasFuel;
     }
-
     public void setHasFuel(boolean hasFuel) {
         this.hasFuel = hasFuel;
     }
-
 
     public boolean getUsesOwnRope() {
         return usesOwnRope;
@@ -48,18 +48,18 @@ public class PreGame {
         this.usesOwnRope = usesOwnRope;
     }
 
-    public void setHasPilot(boolean hasPilot) {
-        this.hasPilot= hasPilot;
-    }
-
     public boolean getHasPilot() {
         return hasPilot;
+    }
+    public void setHasPilot(boolean hasPilot) {
+        this.hasPilot= hasPilot;
     }
 
     public TouchPadPosition getRopeTouchPadPosition() {
         return ropeTouchPadPosition;
     }
-    public void setRopeTouchPadPosition(TouchPadPosition ropeTouchPadPosition) {
-        this.ropeTouchPadPosition = ropeTouchPadPosition;
-    }
+    public void setRopeTouchPadPosition(TouchPadPosition ropeTouchPadPosition) { this.ropeTouchPadPosition = ropeTouchPadPosition;     }
+
+    public String getRobotPosition() { return robotPosition; }
+    public void setRobotPosition(String robotPosition) { this.robotPosition = robotPosition; }
 }

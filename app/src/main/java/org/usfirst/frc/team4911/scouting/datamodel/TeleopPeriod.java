@@ -23,11 +23,13 @@ public class TeleopPeriod {
 
     @SerializedName("ShotAttempts") private List<ShotAttemptTeleop> shotAttempts;
 
+    @SerializedName("HopperAttempts") private List<HopperAttempt> hopperAttempts;
+
     public TeleopPeriod() {
         this.setGearAttempts(new ArrayList<GearAttemptTeleop>());
         this.setShotAttempts(new ArrayList<ShotAttemptTeleop>());
+        this.setHopperAttempts(new ArrayList<HopperAttempt>());
     }
-
 
     public List<GearAttemptTeleop> getGearAttempts() {
         return gearAttempts;
@@ -66,9 +68,17 @@ public class TeleopPeriod {
         return ShotAttemptCount;
     }
 
-    public void setShotAttempts(List<ShotAttemptTeleop> shotAttempts) {
+    private void setShotAttempts(List<ShotAttemptTeleop> shotAttempts) {
         this.shotAttempts = shotAttempts;
         this.setShotAttemptCount(shotAttempts.size());
+    }
+
+    public List<HopperAttempt> getHopperAttempts() {
+        return hopperAttempts;
+    }
+
+    private void setHopperAttempts(List<HopperAttempt> hopperAttempts) {
+        this.hopperAttempts = hopperAttempts;
     }
 }
 

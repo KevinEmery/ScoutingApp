@@ -133,13 +133,18 @@ public class ScoutTeleOpFragment extends Fragment implements
 
             TeleopPeriod teleopPeriod = new TeleopPeriod();
 
-            teleopPeriod.setShotAttempts(shotAttempts);
-            teleopPeriod.setGearAttempts(gearAttempts);
+            // Add to existing collection - don't replace
+            teleopPeriod.getShotAttempts().addAll(shotAttempts);
+            teleopPeriod.getGearAttempts().addAll(gearAttempts);
             teleopPeriod.setPlayedDefense(playedDefence.isChecked());
 
             if (mListener != null) {
                 mListener.onTeleopPeriodObjectCreated(teleopPeriod);
             }
+
+            // Clear the shot and gear attempt lists
+            shotAttempts.clear();
+            gearAttempts.clear();
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(3);

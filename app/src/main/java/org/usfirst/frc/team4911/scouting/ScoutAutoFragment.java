@@ -33,7 +33,6 @@ public class ScoutAutoFragment extends Fragment implements
     OnAutoPeriodObjectCreatedListener mListener;
 
     CheckBox crossedBaseline;
-    CheckBox loadedFromHopper;
 
     List<ShotAttempt> shotAttempts;
     List<GearAttempt> gearAttempts;
@@ -97,7 +96,6 @@ public class ScoutAutoFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_scout_auto, container, false);
 
         crossedBaseline = (CheckBox) view.findViewById(R.id.chkbx_auto_crossed_baseline);
-        loadedFromHopper = (CheckBox) view.findViewById(R.id.chkbx_auto_loaded_from_hopper);
 
         Button save = (Button) view.findViewById(R.id.button_auto_save);
         save.setOnClickListener(autoSaveButton);
@@ -141,9 +139,10 @@ public class ScoutAutoFragment extends Fragment implements
             // Create the autonomous period object and hand it on up to the top level activity
             AutonomousPeriod autonomousPeriod = new AutonomousPeriod();
             autonomousPeriod.setAutoMobilityPoints(crossedBaseline.isChecked());
-            autonomousPeriod.setLoadedFromHopper(loadedFromHopper.isChecked());
-            autonomousPeriod.setShotAttempts(shotAttempts);
-            autonomousPeriod.setGearAttempts(gearAttempts);
+
+            // Add to existing collection - don't replace
+            autonomousPeriod.getShotAttempts().addAll(shotAttempts);
+            autonomousPeriod.getGearAttempts().addAll(gearAttempts);
 
             if (mListener != null) {
                 mListener.onAutoPeriodObjectCreated(autonomousPeriod);

@@ -34,13 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Crossed baseline" />
 
-        <CheckBox
-            android:id="@+id/chkbx_auto_loaded_from_hopper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Loaded from hopper" />
-
-        <Button
+         <Button
             android:id="@+id/button_auto_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
