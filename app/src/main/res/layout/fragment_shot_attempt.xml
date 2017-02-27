@@ -11,12 +11,6 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="org.usfirst.frc.team4911.scouting.ShotAttemptFragment">
 
-    <TextView
-        android:id="@+id/text_view_record_shot_count"
-        android:text="Attempts recorded: 0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +23,7 @@
                 android:id="@+id/text_shot_made"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shots made"/>
+                android:text="@string/label_shots_made"/>
 
             <SeekBar
                 android:layout_width="match_parent"
@@ -52,7 +46,7 @@
                 android:id="@+id/text_shot_missed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shots missed"/>
+                android:text="@string/label_shots_missed"/>
             <SeekBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,13 +69,13 @@
            android:id="@+id/text_shot_attempt_location"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="location: "/>
+           android:text="@string/label_location"/>
 
        <Button
         android:id="@+id/button_shot_attempt_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Location" />
+        android:text="@string/button_label_location" />
    </LinearLayout>
 
     <LinearLayout
@@ -92,7 +86,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shot Mode: " />
+            android:text="@string/label_shot_mode" />
 
         <Spinner
             android:id="@+id/spinner_shot_attempt_mode"
@@ -108,7 +102,7 @@
             android:id="@+id/button_shot_attempt_startstop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start" />
+            android:text="@string/button_label_start" />
 
         <Chronometer
             android:id="@+id/chronometer_shot_attempt_time"
@@ -120,6 +114,6 @@
         android:id="@+id/button_shot_attempt_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/button_label_record_attempt"
         android:layout_marginTop="50dp"/>
 </LinearLayout>

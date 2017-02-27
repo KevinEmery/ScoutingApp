@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
@@ -32,6 +33,10 @@ public class ScoutAutoFragment extends Fragment implements
     OnAutoPeriodObjectCreatedListener mListener;
 
     CheckBox crossedBaseline;
+
+    TextView shotAttemptLabel;
+    TextView gearAttemptLabel;
+    TextView hopperAttemptLabel;
 
     List<ShotAttempt> shotAttempts;
     List<GearAttempt> gearAttempts;
@@ -112,6 +117,9 @@ public class ScoutAutoFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_scout_auto, container, false);
 
         crossedBaseline = (CheckBox) view.findViewById(R.id.chkbx_auto_crossed_baseline);
+        shotAttemptLabel = (TextView) view.findViewById(R.id.label_shots_attempted_auto);
+        gearAttemptLabel = (TextView) view.findViewById(R.id.label_gears_attempted_auto);
+        hopperAttemptLabel = (TextView) view.findViewById(R.id.label_hoppers_activated_auto);
 
         Button save = (Button) view.findViewById(R.id.button_auto_save);
         save.setOnClickListener(autoSaveButton);
@@ -139,16 +147,22 @@ public class ScoutAutoFragment extends Fragment implements
     @Override
     public void onShotAttemptCreated(ShotAttempt shotAttempt) {
         shotAttempts.add(shotAttempt);
+        String newLabel = getString(R.string.label_attempts_recorded) + shotAttempts.size();
+        shotAttemptLabel.setText(newLabel);
     }
 
     @Override
     public void onGearAttemptCreated(GearAttempt gearAttempt) {
         gearAttempts.add(gearAttempt);
+        String newLabel = getString(R.string.label_attempts_recorded) + gearAttempts.size();
+        gearAttemptLabel.setText(newLabel);
     }
 
     @Override
     public void onHopperAttemptCreated(HopperAttempt hopperAttempt) {
         hopperAttempts.add(hopperAttempt);
+        String newLabel = getString(R.string.label_attempts_recorded) + hopperAttempts.size();
+        hopperAttemptLabel.setText(newLabel);
     }
 
     View.OnClickListener autoSaveButton = new View.OnClickListener() {

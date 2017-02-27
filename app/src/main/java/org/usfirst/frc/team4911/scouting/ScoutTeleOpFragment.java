@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.HopperAttempt;
@@ -138,6 +139,7 @@ public class ScoutTeleOpFragment extends Fragment implements
     @Override
     public void onGearAttemptTeleopCreated(GearAttemptTeleop gearAttemptTeleop) {
         gearAttempts.add(gearAttemptTeleop);
+
     }
 
     @Override

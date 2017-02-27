@@ -5,28 +5,11 @@
     android:orientation="vertical"
     tools:context="org.usfirst.frc.team4911.scouting.GearAttemptFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Record Gear Attempt"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-    <TextView
-        android:id="@+id/text_view_record_gear_count"
-        android:text="Attempts recorded: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:text="Gear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <CheckBox
         android:id="@+id/checkbox_record_gear_success"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Success"/>
+        android:text="@string/label_success"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -37,18 +20,18 @@
             android:id="@+id/txt_gear_record_auto_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="locatiion: "/>
+            android:text="@string/label_location"/>
 
         <Button
             android:id="@+id/btn_gear_record_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"/>
+            android:text="@string/button_label_location"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_gear_record_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"/>
+        android:text="@string/button_label_record_attempt"/>
 </LinearLayout>

@@ -6,61 +6,83 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context="org.usfirst.frc.team4911.scouting.ScoutAutoFragment">
 
+        <!--Start of auto shot stuff-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Autonomous"
+            android:text="@string/header_autonomous"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Record Shot Attempt"
+            android:text="@string/header_shot_attempt"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <!--This is the fragmentcontainer for the shooting event collection fragment-->
+        <TextView
+            android:id="@+id/label_shots_attempted_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_attempts_recorded"/>
+
         <FrameLayout
             android:id="@+id/fragment_container_auto_shooting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <!--End auto shot stuff-->
 
+        <!-- Start auto gear stuff-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Record Gear Attempt"
+            android:text="@string/header_gear_attempt"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <!--This is the fragmentcontainer for the shooting event collection fragment-->
+        <TextView
+            android:id="@+id/label_gears_attempted_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_attempts_recorded"/>
+
         <FrameLayout
             android:id="@+id/fragment_container_auto_gear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <!--End auto gear stuff-->
 
+        <!--Start auto hopper stuff-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Record Hopper Attempt"
+            android:text="@string/header_hopper_attempt"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/label_hoppers_activated_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_attempts_recorded"/>
 
         <FrameLayout
             android:id="@+id/fragment_container_auto_hopper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <!--End auto hopper stuff-->
 
         <CheckBox
             android:id="@+id/chkbx_auto_crossed_baseline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crossed baseline" />
+            android:text="@string/label_crossed_baseline" />
 
          <Button
             android:id="@+id/button_auto_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save"/>
+            android:text="@string/button_label_save_auto"/>
     </LinearLayout>
  </ScrollView>
