@@ -105,7 +105,7 @@
                     android:id="@+id/toggleButton_pre_game_has_gear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="GEAR (X)"
+                    android:textOn="GEAR [X]"
                     android:textOff="GEAR"
                     android:layout_weight="1"/>
 
@@ -113,7 +113,7 @@
                     android:id="@+id/toggleButton_pre_game_has_fuel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="FUEL (X)"
+                    android:textOn="FUEL [X]"
                     android:textOff="FUEL"
                     android:layout_weight="1" />
             </LinearLayout>
@@ -132,7 +132,7 @@
                     android:id="@+id/toggleButton_pre_game_uses_own_rope"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="ROPE (X)"
+                    android:textOn="ROPE [X]"
                     android:textOff="ROPE"
                     android:layout_weight="1"/>
 
@@ -140,7 +140,7 @@
                     android:id="@+id/toggleButton_pre_game_has_pilot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="PILOT (X)"
+                    android:textOn="PILOT [X]"
                     android:textOff="PILOT"
                     android:layout_weight="1" />
                 </LinearLayout>

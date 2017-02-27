@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotMode;
@@ -38,11 +40,12 @@ public class ShotAttemptFragment extends Fragment
 
     private ShotAttempt shotAttempt;
 
+    private ToggleButton toggleButton_shotLow;
+    private ToggleButton toggleButton_shotHigh;
     private SeekBar seekBar_shotsMade;
     private TextView textView_shotsMade;
     private SeekBar seekBar_shotsMissed;
     private TextView textView_shotsMissed;
-    private Spinner spinnerShotMode;
     private TextView locationMessage;
 
     // Parameters for the chronometer
@@ -91,11 +94,11 @@ public class ShotAttemptFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_shot_attempt, container, false);
 
         shotAttempt = new ShotAttempt();
-        locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_location);
 
-        spinnerShotMode = (Spinner) view.findViewById(R.id.spinner_shot_attempt_mode);
-        spinnerShotMode.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, ShotMode.values()));
+        toggleButton_shotLow = (ToggleButton) view.findViewById(R.id.togglebutton_shot_low);
+        toggleButton_shotHigh = (ToggleButton) view.findViewById(R.id.togglebutton_shot_high);
+
+        locationMessage = (TextView) view.findViewById(R.id.text_shot_attempt_location);
 
         seekBar_shotsMade = (SeekBar) view.findViewById(R.id.seekbar_shots_made);
         seekBar_shotsMade.setOnSeekBarChangeListener(shotsMadeSeekBarListener);
@@ -111,6 +114,24 @@ public class ShotAttemptFragment extends Fragment
         chronometerShotTime = (Chronometer) view.findViewById(R.id.chronometer_shot_attempt_time);
         buttonStartStopChronometer = (Button) view.findViewById(R.id.button_shot_attempt_startstop);
         buttonStartStopChronometer.setOnClickListener(startStopButtonListener);
+
+        toggleButton_shotLow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && toggleButton_shotHigh.isChecked()) {
+                    toggleButton_shotHigh.setChecked(!isChecked);
+                }
+            }
+        });
+
+        toggleButton_shotHigh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && toggleButton_shotLow.isChecked()) {
+                    toggleButton_shotLow.setChecked(!isChecked);
+                }
+            }
+        });
 
         Button location = (Button) view.findViewById(R.id.button_shot_attempt_location);
         location.setOnClickListener(recordLocation);
@@ -243,7 +264,7 @@ public class ShotAttemptFragment extends Fragment
             // Scrape the data model and restore all defaults
             int shotsMade = seekBar_shotsMade.getProgress();
             int shotsMissed = seekBar_shotsMissed.getProgress();
-            ShotMode shotMode = ShotMode.valueOf(spinnerShotMode.getSelectedItem().toString());
+            boolean shotHigh = toggleButton_shotHigh.isChecked();
 
             // Here to handle the case where the user presses save without stopping the timer first.
             if (isTiming) {
@@ -254,8 +275,8 @@ public class ShotAttemptFragment extends Fragment
 
             shotAttempt.setShotsMade(shotsMade);
             shotAttempt.setShotsMissed(shotsMissed);
-            shotAttempt.setShotMode(shotMode);
             shotAttempt.setShotDurationInSeconds(durationSeconds);
+            shotAttempt.setShotMode(shotHigh ? ShotMode.High : ShotMode.Low);
 
             // Pass the shot event up to whoever is listening for it
             if (mListener != null) {
