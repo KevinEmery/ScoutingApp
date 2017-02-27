@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
+import org.usfirst.frc.team4911.scouting.datamodel.HopperAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
@@ -28,7 +29,8 @@ import java.util.List;
  */
 public class ScoutAutoFragment extends Fragment implements
         RecordShotAttemptFragment.OnShotAttemptCreatedListener,
-        RecordGearAttemptFragment.OnGearAttemptCreatedListener{
+        RecordGearAttemptFragment.OnGearAttemptCreatedListener,
+        HopperAttemptFragment.OnHopperAttemptCreatedListener {
 
     OnAutoPeriodObjectCreatedListener mListener;
 
@@ -36,6 +38,7 @@ public class ScoutAutoFragment extends Fragment implements
 
     List<ShotAttempt> shotAttempts;
     List<GearAttempt> gearAttempts;
+    List<HopperAttempt> hopperAttempts;
 
     public ScoutAutoFragment() {
         // Required empty public constructor
@@ -57,25 +60,37 @@ public class ScoutAutoFragment extends Fragment implements
 
         RecordShotAttemptFragment recordShotAttemptFragment =
                 (RecordShotAttemptFragment) getChildFragmentManager()
-                        .findFragmentById(R.id.auto_shooting_fragment_container);
+                        .findFragmentById(R.id.fragment_container_auto_shooting);
 
         if (recordShotAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.auto_shooting_fragment_container,
+                    .add(R.id.fragment_container_auto_shooting,
                             RecordShotAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
 
         RecordGearAttemptFragment recordGearAttemptFragment =
                 (RecordGearAttemptFragment) getChildFragmentManager()
-                .findFragmentById(R.id.auto_gear_fragment_container);
+                .findFragmentById(R.id.fragment_container_auto_gear);
 
         if (recordGearAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.auto_gear_fragment_container,
+                    .add(R.id.fragment_container_auto_gear,
                             RecordGearAttemptFragment.newInstance());
+            fragmentTransaction.commit();
+        }
+
+        HopperAttemptFragment hopperAttemptFragment =
+                (HopperAttemptFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.fragment_container_auto_hopper);
+
+        if (hopperAttemptFragment == null) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container_auto_hopper,
+                            HopperAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
 
@@ -86,6 +101,10 @@ public class ScoutAutoFragment extends Fragment implements
 
         if (gearAttempts == null) {
             gearAttempts = new ArrayList<>();
+        }
+
+        if (hopperAttempts == null) {
+            hopperAttempts = new ArrayList<>();
         }
     }
 
@@ -122,13 +141,17 @@ public class ScoutAutoFragment extends Fragment implements
 
     @Override
     public void onShotAttemptCreated(ShotAttempt shotAttempt) {
-        // Add it to the list of shot attempts
         shotAttempts.add(shotAttempt);
     }
 
     @Override
     public void onGearAttemptCreated(GearAttempt gearAttempt) {
         gearAttempts.add(gearAttempt);
+    }
+
+    @Override
+    public void onHopperAttemptCreated(HopperAttempt hopperAttempt) {
+        hopperAttempts.add(hopperAttempt);
     }
 
     View.OnClickListener autoSaveButton = new View.OnClickListener() {
@@ -141,8 +164,9 @@ public class ScoutAutoFragment extends Fragment implements
             autonomousPeriod.setAutoMobilityPoints(crossedBaseline.isChecked());
 
             // Add to existing collection - don't replace
-            autonomousPeriod.getShotAttempts().addAll(shotAttempts);
             autonomousPeriod.getGearAttempts().addAll(gearAttempts);
+            autonomousPeriod.getShotAttempts().addAll(shotAttempts);
+            autonomousPeriod.getHopperAttempts().addAll(hopperAttempts);
 
             if (mListener != null) {
                 mListener.onAutoPeriodObjectCreated(autonomousPeriod);
@@ -151,6 +175,7 @@ public class ScoutAutoFragment extends Fragment implements
             // Clear the shot and gear attempt lists
             shotAttempts.clear();
             gearAttempts.clear();
+            hopperAttempts.clear();
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(2);

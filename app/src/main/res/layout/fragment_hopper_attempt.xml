@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.usfirst.frc.team4911.scouting.HopperAttemptFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/checkbox_hopper_attempt_activated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hopper activated"/>
+
+        <Button
+            android:id="@+id/button_hopper_attempt_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_hopper_attempt_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"/>
+</LinearLayout>

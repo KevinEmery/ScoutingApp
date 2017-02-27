@@ -16,12 +16,6 @@
             android:text="Autonomous"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-        <!--This is the fragmentcontainer for the shooting event collection fragment-->
-        <FrameLayout
-            android:id="@+id/auto_shooting_fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +24,30 @@
 
         <!--This is the fragmentcontainer for the shooting event collection fragment-->
         <FrameLayout
-            android:id="@+id/auto_gear_fragment_container"
+            android:id="@+id/fragment_container_auto_shooting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Record Gear Attempt"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <!--This is the fragmentcontainer for the shooting event collection fragment-->
+        <FrameLayout
+            android:id="@+id/fragment_container_auto_gear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Record Hopper Attempt"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container_auto_hopper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

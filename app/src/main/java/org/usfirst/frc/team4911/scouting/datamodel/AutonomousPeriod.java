@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Created by johansu on 2/19/2017.
+ *
+ * Data model for the autonomous period.
  */
 
 public class AutonomousPeriod {
@@ -49,14 +51,10 @@ public class AutonomousPeriod {
         return shotAttempts;
     }
 
-    public void setShotAttempts(List<ShotAttempt> shotAttempts) {
+    private void setShotAttempts(List<ShotAttempt> shotAttempts) {
         this.shotAttempts = shotAttempts;
     }
-
-    private void AddShotAttempt(ShotAttempt shotAttempt) {
-        this.shotAttempts.add(shotAttempt);
-    }
-
+    
     public List<HopperAttempt> getHopperAttempts() {
         return hopperAttempts;
     }
