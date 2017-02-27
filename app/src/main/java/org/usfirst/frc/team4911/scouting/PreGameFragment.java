@@ -41,7 +41,14 @@ public class PreGameFragment extends Fragment
     private CheckBox chkbxHasFuel;
     private CheckBox chbxUsesOwnRope;
     private CheckBox chbxHasPilot;
+
     private TouchPadPosition ropePosition = TouchPadPosition.None;
+    private String robotPosition = "";
+
+    // This is the system I'm using to keep track of which kind of location is being recorded.
+    // Let me know if you have any thoughts on a better way to do this.
+    private boolean isRecordingRobotPosition = false;
+    private boolean isRecordingRopePosition = false;
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -89,30 +96,18 @@ public class PreGameFragment extends Fragment
         chbxUsesOwnRope = (CheckBox) view.findViewById(R.id.chkbx_pre_game_uses_own_rope);
         chbxHasPilot = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_pilot);
 
-        Button robotLocation = (Button) view.findViewById(R.id.btn_pre_game_own_robot_location);
-        // TODO:  Hook up a onClickListener.
-
         // Initialise the rope location button
         Button btnRopeLocation = (Button) view.findViewById(R.id.btn_pre_game_own_rope_location);
-        btnRopeLocation.setOnClickListener(recordLocation);
+        btnRopeLocation.setOnClickListener(recordRopeLocation);
+
+        Button robotLocation = (Button) view.findViewById(R.id.btn_pre_game_own_robot_location);
+        robotLocation.setOnClickListener(recordRobotLocation);
 
         // Initialise the start game button
         Button btnSaveData = (Button) view.findViewById(R.id.btn_pre_game_start_game);
         btnSaveData.setOnClickListener(startGame);
 
         return view;
-    }
-
-    /**
-     * Handles touch events on the location map. Implements an interface defined in that class.
-     */
-    @Override
-    public void onRecordLocationMapTouch(MotionEvent event) {
-        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
-        // it does is show a toast containing the X and Y coordinates of the touch point.
-        // I leave the mapping in your hands :)
-        String text = "X: " + event.getX() + "Y: " + event.getY();
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -133,9 +128,53 @@ public class PreGameFragment extends Fragment
     }
 
     /**
+     * Handles touch events on the location map. Implements an interface defined in that class.
+     */
+    @Override
+    public void onRecordLocationMapTouch(MotionEvent event) {
+        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
+        // it does is show a toast containing the X and Y coordinates of the touch point.
+        // I leave the mapping in your hands :)
+        String text = "X: " + event.getX() + "Y: " + event.getY();
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+
+        if (isRecordingRobotPosition) {
+            robotPosition = "foo";
+            isRecordingRobotPosition = false;
+        }
+
+        if (isRecordingRopePosition) {
+            ropePosition = TouchPadPosition.Far;
+            isRecordingRopePosition = false;
+        }
+    }
+
+    /**
+     * OnClickListener for the button that records the robot location
+     */
+    private View.OnClickListener recordRobotLocation = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                    .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+
+            String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
+
+            int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
+                    R.drawable.shootingzone_red : R.drawable.shootingzone_blue;
+
+            isRecordingRopePosition = true;
+
+            FragmentManager fragmentManager = getChildFragmentManager();
+            DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
+            fieldMapFragment.show(fragmentManager, "DialogFragment");
+        }
+    };
+
+    /**
      * OnClickListener for the button that records the rope location.
      */
-    private View.OnClickListener recordLocation = new View.OnClickListener() {
+    private View.OnClickListener recordRopeLocation = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             SharedPreferences sharedpreferences = getActivity().getApplicationContext()
@@ -145,6 +184,8 @@ public class PreGameFragment extends Fragment
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
                     R.drawable.airship_red : R.drawable.airship_blue;
+
+            isRecordingRopePosition = true;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
@@ -162,11 +203,12 @@ public class PreGameFragment extends Fragment
             int teamNumber = Integer.parseInt(etxtTeamNum.getText().toString());
 
             PreGame preGame = new PreGame();
-            preGame.setHasFuel(chkbxHasFuel.isChecked());
             preGame.setHasGear(chkbxHasGear.isChecked());
+            preGame.setHasFuel(chkbxHasFuel.isChecked());
             preGame.setHasPilot(chbxHasPilot.isChecked());
             preGame.setUsesOwnRope(chbxUsesOwnRope.isChecked());
             preGame.setRopeTouchPadPosition(ropePosition);
+            preGame.setRobotPosition(robotPosition);
 
             if (mListener != null) {
                 mListener.onStartClicked(matchNumber, teamNumber, preGame);
