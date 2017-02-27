@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
+import org.usfirst.frc.team4911.scouting.datamodel.HopperAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.TeleopPeriod;
 
@@ -25,7 +26,8 @@ import java.util.List;
  */
 public class ScoutTeleOpFragment extends Fragment implements
         RecordGearAttemptTeleOpFragment.OnGearAttemptTeleopCreatedListener,
-        RecordShotAttemptTeleOpFragment.OnShotAttemptTeleopCreatedListener {
+        RecordShotAttemptTeleOpFragment.OnShotAttemptTeleopCreatedListener,
+        HopperAttemptFragment.OnHopperAttemptCreatedListener {
 
     OnTeleopPeriodObjectCreatedListener mListener;
 
@@ -33,6 +35,7 @@ public class ScoutTeleOpFragment extends Fragment implements
 
     List<ShotAttemptTeleop> shotAttempts;
     List<GearAttemptTeleop> gearAttempts;
+    List<HopperAttempt> hopperAttempts;
 
     public ScoutTeleOpFragment() {
         // Required empty public constructor
@@ -54,25 +57,37 @@ public class ScoutTeleOpFragment extends Fragment implements
 
         RecordShotAttemptTeleOpFragment shotAttemptFragment =
                 (RecordShotAttemptTeleOpFragment) getChildFragmentManager()
-                        .findFragmentById(R.id.teleop_shooting_fragment_container);
+                        .findFragmentById(R.id.fragment_container_tele_op_shooting);
 
         if (shotAttemptFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.teleop_shooting_fragment_container,
+                    .add(R.id.fragment_container_tele_op_shooting,
                             RecordShotAttemptTeleOpFragment.newInstance());
             fragmentTransaction.commit();
         }
 
         RecordGearAttemptTeleOpFragment gearAttemptTeleOpFragment =
                 (RecordGearAttemptTeleOpFragment) getChildFragmentManager()
-                        .findFragmentById(R.id.teleop_gear_fragment_container);
+                        .findFragmentById(R.id.fragment_container_tele_op_gear);
 
         if (gearAttemptTeleOpFragment == null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.teleop_gear_fragment_container,
+                    .add(R.id.fragment_container_tele_op_gear,
                             RecordGearAttemptTeleOpFragment.newInstance());
+            fragmentTransaction.commit();
+        }
+
+        HopperAttemptFragment hopperAttemptFragment =
+                (HopperAttemptFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.fragment_container_tele_op_hopper);
+
+        if (hopperAttemptFragment == null) {
+            FragmentTransaction fragmentTransaction = getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container_tele_op_hopper,
+                            HopperAttemptFragment.newInstance());
             fragmentTransaction.commit();
         }
 
@@ -83,6 +98,10 @@ public class ScoutTeleOpFragment extends Fragment implements
 
         if (gearAttempts == null) {
             gearAttempts = new ArrayList<>();
+        }
+
+        if (hopperAttempts == null) {
+            hopperAttempts = new ArrayList<>();
         }
     }
 
@@ -126,6 +145,11 @@ public class ScoutTeleOpFragment extends Fragment implements
         shotAttempts.add(shotAttemptTeleop);
     }
 
+    @Override
+    public void onHopperAttemptCreated(HopperAttempt hopperAttempt) {
+        hopperAttempts.add(hopperAttempt);
+    }
+
     View.OnClickListener saveTeleop = new View.OnClickListener() {
 
         @Override
@@ -136,6 +160,7 @@ public class ScoutTeleOpFragment extends Fragment implements
             // Add to existing collection - don't replace
             teleopPeriod.getShotAttempts().addAll(shotAttempts);
             teleopPeriod.getGearAttempts().addAll(gearAttempts);
+            teleopPeriod.getHopperAttempts().addAll(hopperAttempts);
             teleopPeriod.setPlayedDefense(playedDefence.isChecked());
 
             if (mListener != null) {
@@ -145,6 +170,7 @@ public class ScoutTeleOpFragment extends Fragment implements
             // Clear the shot and gear attempt lists
             shotAttempts.clear();
             gearAttempts.clear();
+            hopperAttempts.clear();
 
             ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
             viewPager.setCurrentItem(3);
