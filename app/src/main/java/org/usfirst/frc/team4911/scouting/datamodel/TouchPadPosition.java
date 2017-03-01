@@ -6,7 +6,7 @@ package org.usfirst.frc.team4911.scouting.datamodel;
 
 public enum TouchPadPosition {
     None,
-    Near,
-    Middle,
-    Far
+    T1,
+    T2,
+    T3
 }

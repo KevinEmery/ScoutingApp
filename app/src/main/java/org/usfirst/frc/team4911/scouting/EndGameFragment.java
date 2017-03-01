@@ -143,11 +143,16 @@ public class EndGameFragment extends Fragment
      */
     @Override
     public void onRecordLocationMapTouch(MotionEvent event) {
-        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
-        // it does is show a toast containing the X and Y coordinates of the touch point.
-        // I leave the mapping in your hands :)
-        String text = "X: " + event.getX() + "Y: " + event.getY();
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+
+        SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
+        boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
+
+        climbPosition = LocationMappingHelpers.GetTouchPadPosition((int)event.getX(),
+                (int)event.getY(), isBlueAlliance);
+        String message = "Bot climbed at touchpad " + climbPosition.toString();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -160,9 +165,7 @@ public class EndGameFragment extends Fragment
         public void onClick(View v) {
             SharedPreferences sharedpreferences = getActivity().getApplicationContext()
                     .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-
             String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
-
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
                     R.drawable.touchpad_locations_red : R.drawable.touchpad_locations_blue;
 

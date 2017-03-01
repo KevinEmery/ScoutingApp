@@ -160,11 +160,21 @@ public class GearAttemptFragment extends Fragment
      */
     @Override
     public void onRecordLocationMapTouch(MotionEvent event) {
-        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
-        // it does is show a toast containing the X and Y coordinates of the touch point.
-        // I leave the mapping in your hands :)
-        String text = "X: " + event.getX() + "Y: " + event.getY();
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+
+        // Here we determine the alliance we're scouting for so we can display the correct map
+        SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+
+        String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
+
+        boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
+
+        gearPegPosition = LocationMappingHelpers.GetGearPegPosition((int) event.getX(),
+                (int) event.getY(), isBlueAlliance);
+
+        String message = "Gear peg " + gearPegPosition.toString() + " selected.";
+
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     /**

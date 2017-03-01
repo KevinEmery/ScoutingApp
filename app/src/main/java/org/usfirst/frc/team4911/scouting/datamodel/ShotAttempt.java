@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ShotAttempt {
-    @SerializedName("ShotsMade") int shotsMade = 0;
-    @SerializedName("ShotsMissed") int shotsMissed = 0;
-    @SerializedName("ShotLocation") String shotLocation = "";
-    @SerializedName("ShotMode") ShotMode shotMode = ShotMode.Low;
-    @SerializedName("ShotDuration") int shotDurationInSeconds = 0;
+    @SerializedName("ShotsMade") private int shotsMade = 0;
+    @SerializedName("ShotsMissed") private int shotsMissed = 0;
+    @SerializedName("ShotLocation") private String shotLocation = "";
+    @SerializedName("ShotMode") private ShotMode shotMode = ShotMode.Low;
+    @SerializedName("ShotDuration") private int shotDurationInSeconds = 0;
 
     public int getShotsMissed() {
         return shotsMissed;

@@ -6,7 +6,7 @@ package org.usfirst.frc.team4911.scouting.datamodel;
 
 public enum GearPegPosition {
     None,
-    Near,
-    Middle,
-    Far
+    G1,
+    G2,
+    G3
 }

@@ -42,13 +42,8 @@ public class PreGameFragment extends Fragment
     private ToggleButton toggleButtonUsesOwnRope;
     private ToggleButton toggleButtonHasPilot;
 
-    private TouchPadPosition ropePosition = TouchPadPosition.None;
+    private TouchPadPosition ropePosition;
     private String robotPosition = "";
-
-    // This is the system I'm using to keep track of which kind of location is being recorded.
-    // Let me know if you have any thoughts on a better way to do this.
-    private boolean isRecordingRobotPosition = false;
-    private boolean isRecordingRopePosition = false;
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -82,11 +77,6 @@ public class PreGameFragment extends Fragment
                              Bundle savedInstanceState) {
         // First we inflate the view. This allows us to access UI items from code.
         View view = inflater.inflate(R.layout.fragment_pre_game, container, false);
-
-        // Fill the number of items spinner
-        Integer[] items = new Integer[]{0,1,2,3,4,5,6,7,8,9,10};
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
-                android.R.layout.simple_spinner_item, items);
 
         etxtMatchNum = (EditText) view.findViewById(R.id.etxt_pre_game_match_num);
         etxtTeamNum = (EditText) view.findViewById(R.id.etxt_pre_game_team_num);
@@ -129,24 +119,22 @@ public class PreGameFragment extends Fragment
 
     /**
      * Handles touch events on the location map. Implements an interface defined in that class.
+     * TODO: Figure out how to handle the two different types of location that we can be dealing
+     * with here. Right now we can only handle ropes >.<
      */
     @Override
     public void onRecordLocationMapTouch(MotionEvent event) {
-        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
-        // it does is show a toast containing the X and Y coordinates of the touch point.
-        // I leave the mapping in your hands :)
-        String text = "X: " + event.getX() + "Y: " + event.getY();
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
 
-        if (isRecordingRobotPosition) {
-            robotPosition = "foo";
-            isRecordingRobotPosition = false;
-        }
+        SharedPreferences sharedpreferences = getActivity().getApplicationContext()
+                .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
+        boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        if (isRecordingRopePosition) {
-            ropePosition = TouchPadPosition.Far;
-            isRecordingRopePosition = false;
-        }
+        ropePosition = LocationMappingHelpers.GetTouchPadPosition((int)event.getX(),
+                (int)event.getY(), isBlueAlliance);
+
+        String message = "Rope placed at position " + ropePosition.toString();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -162,8 +150,6 @@ public class PreGameFragment extends Fragment
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
                     R.drawable.shootingzone_red : R.drawable.shootingzone_blue;
-
-            isRecordingRopePosition = true;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
@@ -184,8 +170,6 @@ public class PreGameFragment extends Fragment
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
                     R.drawable.touchpad_locations_red : R.drawable.touchpad_locations_blue;
-
-            isRecordingRopePosition = true;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);

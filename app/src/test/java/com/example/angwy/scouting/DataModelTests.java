@@ -4,18 +4,15 @@ import org.junit.Test;
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
 import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
 import org.usfirst.frc.team4911.scouting.datamodel.EndGame;
-import org.usfirst.frc.team4911.scouting.datamodel.FuelAmount;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
 import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
 import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
-import org.usfirst.frc.team4911.scouting.datamodel.ShotAccuracy;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotAttemptTeleop;
 import org.usfirst.frc.team4911.scouting.datamodel.ShotMode;
-import org.usfirst.frc.team4911.scouting.datamodel.ShotSpeed;
 import org.usfirst.frc.team4911.scouting.datamodel.TeleopPeriod;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 
@@ -39,7 +36,7 @@ public class DataModelTests {
         pregame.setHasFuel(true);
         pregame.setUsesOwnRope(true);
         pregame.setHasPilot(false);
-        pregame.setRopeTouchPadPosition(TouchPadPosition.Near);
+        pregame.setRopeTouchPadPosition(TouchPadPosition.T1);
 
         AutonomousPeriod autonomousPeriod = data.getMatchData().getAutonomousPeriod();
         data.getMatchData().setAutonomousPeriod(autonomousPeriod);
@@ -53,7 +50,7 @@ public class DataModelTests {
 
         GearAttempt gearAttempt = new GearAttempt();
         gearAttempt.setGearResult(GearResult.Success);
-        gearAttempt.setGearPegPosition(GearPegPosition.Middle);
+        gearAttempt.setGearPegPosition(GearPegPosition.G1);
         autonomousPeriod.getGearAttempts().add(gearAttempt);
 
         TeleopPeriod teleopPeriod = new TeleopPeriod();
@@ -68,7 +65,7 @@ public class DataModelTests {
         gearAttemptTeleop = new GearAttemptTeleop();
         gearAttemptTeleop.setGearResult(GearResult.Success);
         gearAttemptTeleop.setWasDefended(false);
-        gearAttemptTeleop.setGearPegPosition(GearPegPosition.Far);
+        gearAttemptTeleop.setGearPegPosition(GearPegPosition.G1);
         teleopPeriod.getGearAttempts().add(gearAttemptTeleop);
         teleopPeriod.setGearAttemptCount(teleopPeriod.getGearAttempts().size());
 
@@ -93,7 +90,7 @@ public class DataModelTests {
         endGame.setAttempted(true);
         endGame.setSucceeded(true);
         endGame.setTimeInSeconds(17);
-        endGame.setTouchPadPosition(TouchPadPosition.Near);
+        endGame.setTouchPadPosition(TouchPadPosition.T1);
 
         Gson gson = new Gson();
         String json = gson.toJson(data);
