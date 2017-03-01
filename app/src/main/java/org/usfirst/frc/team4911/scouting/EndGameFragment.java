@@ -76,7 +76,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_Failed.isChecked()) {
-                    toggleButton_Failed.setChecked(!isChecked);
+                    toggleButton_Failed.setChecked(false);
                 }
 
                 climbEndedTimeMs = System.currentTimeMillis();
@@ -87,7 +87,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_Succeeded.isChecked()) {
-                    toggleButton_Succeeded.setChecked(!isChecked);
+                    toggleButton_Succeeded.setChecked(false);
                 }
             }
         });
@@ -96,7 +96,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_noattempt.isChecked()) {
-                    toggleButton_noattempt.setChecked(!isChecked);
+                    toggleButton_noattempt.setChecked(false);
                 }
 
                 climbStartedTimeMs = System.currentTimeMillis();
@@ -107,7 +107,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_attempted.isChecked()) {
-                    toggleButton_attempted.setChecked(!isChecked);
+                    toggleButton_attempted.setChecked(false);
                 }
             }
         });
@@ -164,7 +164,7 @@ public class EndGameFragment extends Fragment
             String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
-                    R.drawable.airship_red : R.drawable.airship_blue;
+                    R.drawable.touchpad_locations_red : R.drawable.touchpad_locations_blue;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
