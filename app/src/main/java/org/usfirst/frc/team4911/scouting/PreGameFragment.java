@@ -13,9 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -30,8 +28,9 @@ import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
  * Use the {@link PreGameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PreGameFragment extends Fragment
-        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
+public class PreGameFragment extends Fragment implements
+        RecordLocationFragment.OnRecordLocationMapTouchListener,
+        RecordLocationFragment.OnLocationDoneButtonClickListener{
 
     OnStartClickedListener mListener;
 
@@ -42,8 +41,12 @@ public class PreGameFragment extends Fragment
     private ToggleButton toggleButtonUsesOwnRope;
     private ToggleButton toggleButtonHasPilot;
 
-    private TouchPadPosition ropePosition;
+    private TouchPadPosition ropePosition = TouchPadPosition.None;
     private String robotPosition = "";
+
+    private boolean isRopePosition;
+    private boolean isBotPosition;
+    private boolean isOkToCloseLocationDialog = false;
 
     public PreGameFragment() {
         // Required empty public constructor
@@ -130,11 +133,46 @@ public class PreGameFragment extends Fragment
         String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
         boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        ropePosition = LocationMappingHelpers.GetTouchPadPosition((int)event.getX(),
-                (int)event.getY(), isBlueAlliance);
+        String message = "";
 
-        String message = "Rope placed at position " + ropePosition.toString();
+        if (isRopePosition) {
+            ropePosition = LocationMappingHelpers.GetTouchPadPosition((int) event.getX(),
+                    (int) event.getY(), isBlueAlliance);
+
+            if (ropePosition == TouchPadPosition.None) {
+                message = "Please select a valid touchpad";
+                isOkToCloseLocationDialog = false;
+            } else {
+                message = "Rope placed at position " + ropePosition.toString();
+                isOkToCloseLocationDialog = true;
+            }
+        }
+
+        if (isBotPosition) {
+            robotPosition = LocationMappingHelpers.GetShootingPosition((int) event.getX(),
+                    (int) event.getY(), isBlueAlliance);
+
+            if (robotPosition.equals("")
+                    || robotPosition.equals(LocationMappingHelpers.OUT_OF_BOUNDS)) {
+                message = "Please select a location on the field";
+                isOkToCloseLocationDialog = false;
+            } else {
+                message = "Robot starting position is at " + robotPosition;
+                isOkToCloseLocationDialog = true;
+            }
+        }
+
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onLocationDoneButtonClick() {
+        if (isOkToCloseLocationDialog) {
+            isRopePosition = false;
+            isBotPosition = false;
+        }
+
+        return isOkToCloseLocationDialog;
     }
 
     /**
@@ -150,6 +188,8 @@ public class PreGameFragment extends Fragment
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
                     R.drawable.shootingzone_red : R.drawable.shootingzone_blue;
+
+            isBotPosition = true;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
@@ -170,6 +210,8 @@ public class PreGameFragment extends Fragment
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
                     R.drawable.touchpad_locations_red : R.drawable.touchpad_locations_blue;
+
+            isRopePosition = true;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);

@@ -28,8 +28,9 @@ import org.usfirst.frc.team4911.scouting.datamodel.GearResult;
  * Use the {@link GearAttemptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GearAttemptFragment extends Fragment
-        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
+public class GearAttemptFragment extends Fragment implements
+        RecordLocationFragment.OnRecordLocationMapTouchListener,
+        RecordLocationFragment.OnLocationDoneButtonClickListener {
 
     private OnGearAttemptCreatedListener mListener;
 
@@ -92,7 +93,7 @@ public class GearAttemptFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_gearNotAttempted.isChecked()) {
-                    toggleButton_gearNotAttempted.setChecked(!isChecked);
+                    toggleButton_gearNotAttempted.setChecked(false);
                 }
 
                 if (!isChecked)
@@ -108,7 +109,7 @@ public class GearAttemptFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_gearAttempted.isChecked()) {
-                    toggleButton_gearAttempted.setChecked(!isChecked);
+                    toggleButton_gearAttempted.setChecked(false);
                 }
                 if (isChecked)
                 {
@@ -122,7 +123,7 @@ public class GearAttemptFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && togglebutton_gearFailed.isChecked()) {
-                    togglebutton_gearFailed.setChecked(!isChecked);
+                    togglebutton_gearFailed.setChecked(false);
                 }
 
                 if (isChecked) {
@@ -135,7 +136,7 @@ public class GearAttemptFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && togglebutton_gearSuccess.isChecked()) {
-                    togglebutton_gearSuccess.setChecked(!isChecked);
+                    togglebutton_gearSuccess.setChecked(false);
                 }
 
                 if (isChecked) {
@@ -172,9 +173,23 @@ public class GearAttemptFragment extends Fragment
         gearPegPosition = LocationMappingHelpers.GetGearPegPosition((int) event.getX(),
                 (int) event.getY(), isBlueAlliance);
 
-        String message = "Gear peg " + gearPegPosition.toString() + " selected.";
+        String message;
 
+        if (gearPegPosition == GearPegPosition.None) {
+            message = "Please select a valid gear peg position";
+        } else {
+            message = "Gear peg " + gearPegPosition.toString() + " selected.";
+        }
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Handles presses of the 'done' button on the record location dialog.
+     * @return True if we're cool with the dialog being closed, false otherwise.
+     */
+    @Override
+    public boolean onLocationDoneButtonClick() {
+        return gearPegPosition != GearPegPosition.None;
     }
 
     /**

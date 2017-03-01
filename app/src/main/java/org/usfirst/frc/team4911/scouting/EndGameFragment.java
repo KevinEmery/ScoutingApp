@@ -25,9 +25,9 @@ import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
  * Use the {@link EndGameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EndGameFragment extends Fragment
-        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
-
+public class EndGameFragment extends Fragment implements
+        RecordLocationFragment.OnRecordLocationMapTouchListener,
+        RecordLocationFragment.OnLocationDoneButtonClickListener {
     OnSaveAndClearClickedListener mListener;
 
     TextView locationMessage;
@@ -76,7 +76,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_noattempt.isChecked()) {
-                    toggleButton_noattempt.setChecked(!isChecked);
+                    toggleButton_noattempt.setChecked(false);
                 }
 
                 if (!isChecked)
@@ -91,7 +91,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_attempted.isChecked()) {
-                    toggleButton_attempted.setChecked(!isChecked);
+                    toggleButton_attempted.setChecked(false);
                 }
 
                 if (isChecked)
@@ -106,7 +106,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_Failed.isChecked()) {
-                    toggleButton_Failed.setChecked(!isChecked);
+                    toggleButton_Failed.setChecked(false);
                 }
 
                 if (isChecked) {
@@ -119,7 +119,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_Succeeded.isChecked()) {
-                    toggleButton_Succeeded.setChecked(!isChecked);
+                    toggleButton_Succeeded.setChecked(false);
                 }
 
                 if (isChecked) {
@@ -167,8 +167,25 @@ public class EndGameFragment extends Fragment
 
         climbPosition = LocationMappingHelpers.GetTouchPadPosition((int)event.getX(),
                 (int)event.getY(), isBlueAlliance);
-        String message = "Bot climbed at touchpad " + climbPosition.toString();
+
+        String message;
+
+        if (climbPosition == TouchPadPosition.None) {
+            message = "Please select a touchpad";
+        } else {
+            message = "Bot climbed at touchpad " + climbPosition.toString();
+        }
+
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Handles presses of the 'done' button on the record location dialog.
+     * @return True if we're cool with the dialog being closed, false otherwise.
+     */
+    @Override
+    public boolean onLocationDoneButtonClick() {
+        return climbPosition != TouchPadPosition.None;
     }
 
     /**

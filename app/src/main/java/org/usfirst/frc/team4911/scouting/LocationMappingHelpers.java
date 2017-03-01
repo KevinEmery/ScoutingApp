@@ -11,6 +11,7 @@ import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
  */
 
 class LocationMappingHelpers {
+    static final String OUT_OF_BOUNDS = "OUT OF BOUNDS";
 
     /**
      * Maps raw XY coordinates to a touchpad position.
@@ -104,7 +105,7 @@ class LocationMappingHelpers {
 
             //Check if selection is out of bounds.  Doesn't take into account key and airship areas yet :(
             if (((x < xmin) || (x > xmax)) || ((y < ymin) || (y > ymax))) {
-                return "OUT OF BOUNDS";
+                return OUT_OF_BOUNDS;
             } else {
                 //Convert x coordinate to feet from boiler.
                 //15.44' / (356-48) = .05013
@@ -127,7 +128,7 @@ class LocationMappingHelpers {
             ymax = 650;
             //Check if selection is out of bounds.  Doesn't take into account key and airship areas yet.
             if (((x < xmin) || (x > xmax)) || ((y < ymin) || (y > ymax))) {
-                return "OUT OF BOUNDS";
+                return OUT_OF_BOUNDS;
             } else {
                 //Convert x coordinate to feet from boiler.
                 //15.44' / (400-90) = .04981

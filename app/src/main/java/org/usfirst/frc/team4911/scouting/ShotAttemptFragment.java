@@ -34,8 +34,9 @@ import org.usfirst.frc.team4911.scouting.datamodel.ShotMode;
  * {@link ShotAttemptFragment.OnShotAttemptCreatedListener} interface
  * to handle interaction events.
  */
-public class ShotAttemptFragment extends Fragment
-        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
+public class ShotAttemptFragment extends Fragment implements
+        RecordLocationFragment.OnRecordLocationMapTouchListener,
+        RecordLocationFragment.OnLocationDoneButtonClickListener {
     private OnShotAttemptCreatedListener mListener;
 
     private ShotAttempt shotAttempt;
@@ -120,7 +121,7 @@ public class ShotAttemptFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_shotHigh.isChecked()) {
-                    toggleButton_shotHigh.setChecked(!isChecked);
+                    toggleButton_shotHigh.setChecked(false);
                 }
             }
         });
@@ -129,7 +130,7 @@ public class ShotAttemptFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_shotLow.isChecked()) {
-                    toggleButton_shotLow.setChecked(!isChecked);
+                    toggleButton_shotLow.setChecked(false);
                 }
             }
         });
@@ -158,8 +159,24 @@ public class ShotAttemptFragment extends Fragment
         shotLocation = LocationMappingHelpers.GetShootingPosition((int) event.getX(),
                 (int) event.getY(), isBlueAlliance);
 
-        String message = "Shot location " + shotLocation;
+        String message;
+
+        if (LocationMappingHelpers.OUT_OF_BOUNDS.equals(shotLocation)) {
+            message = "Please select a point in the shooting area";
+        } else {
+            message = "Shot location " + shotLocation;
+        }
+
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Handles presses of the 'done' button on the record location dialog.
+     * @return True if we're cool with the dialog being closed, false otherwise.
+     */
+    @Override
+    public boolean onLocationDoneButtonClick() {
+        return !LocationMappingHelpers.OUT_OF_BOUNDS.equals(shotLocation);
     }
 
     /**

@@ -28,6 +28,7 @@ import android.widget.ImageView;
 public class RecordLocationFragment extends DialogFragment {
 
     OnRecordLocationMapTouchListener mRecordLocationMapTouchListener;
+    OnLocationDoneButtonClickListener mOnLocationDoneButtonClickListener;
 
     // The keys we use to store argument parameters
     private static final String ARG_RESOURCE_ID = "resourceId";
@@ -88,11 +89,14 @@ public class RecordLocationFragment extends DialogFragment {
         try
         {
             mRecordLocationMapTouchListener = (OnRecordLocationMapTouchListener)fragment;
+            mOnLocationDoneButtonClickListener = (OnLocationDoneButtonClickListener)fragment;
         }
         catch (ClassCastException e)
         {
-            throw new ClassCastException(
-                    fragment.toString() + " must implement OnRecordLocationMapTouchListener");
+            throw new ClassCastException(fragment.toString() +
+                    " must implement OnRecordLocationMapTouchListener" +
+                    " and OnLocationDoneButtonClickListener"
+            );
         }
     }
 
@@ -128,7 +132,17 @@ public class RecordLocationFragment extends DialogFragment {
     private View.OnClickListener doneButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            dismiss();
+
+            boolean dismissDialog = false;
+
+            if (mOnLocationDoneButtonClickListener != null)
+            {
+                dismissDialog = mOnLocationDoneButtonClickListener.onLocationDoneButtonClick();
+            }
+
+            if (dismissDialog) {
+                dismiss();
+            }
         }
     };
 
@@ -192,5 +206,14 @@ public class RecordLocationFragment extends DialogFragment {
      */
     public interface OnRecordLocationMapTouchListener {
         void onRecordLocationMapTouch(MotionEvent event);
+    }
+
+    /**
+     * Interface that allows the object that created this fragment to react to the done button being
+     * clicked. Needs to be implemented by all parent fragments of this class. Returns 'true' if
+     * it's OK to close the location dialog, false if it should be kept open.
+     */
+    public interface OnLocationDoneButtonClickListener {
+        boolean onLocationDoneButtonClick();
     }
 }
