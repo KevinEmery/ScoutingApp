@@ -3,7 +3,7 @@
     <string name="title_activity_scout_match">ScoutMatchActivity</string>
 
     <string name="button_label_location">Location</string>
-    <string name="button_label_record_attempt">Record Attempt</string>
+    <string name="button_label_record_shot_attempt">Record Shot Attempt</string>
     <string name="button_label_save_auto">Save auto data</string>
     <string name="button_label_save_teleop">Save teleop data</string>
     <string name="button_label_start">Start</string>
