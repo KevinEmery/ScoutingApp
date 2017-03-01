@@ -1,12 +1,14 @@
 package org.usfirst.frc.team4911.scouting;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -205,7 +207,7 @@ public class ShotAttemptFragment extends Fragment implements
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             textView_shotsMissed.setText(String.valueOf(seekBar.getProgress()));
-        }
+         }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
@@ -291,12 +293,65 @@ public class ShotAttemptFragment extends Fragment implements
             int shotsMissed = seekBar_shotsMissed.getProgress();
             boolean shotHigh = toggleButton_shotHigh.isChecked();
 
+            boolean hasHighOrLowShots = toggleButton_shotHigh.isChecked() || toggleButton_shotLow.isChecked();
+            boolean hasShots = shotsMade + shotsMissed > 0;
+            // TODO: Validate a location was entered.
+            boolean hasLocation = true; // locationMessage.getText().toString().compareTo(Location) == 0;
+
             // Here to handle the case where the user presses save without stopping the timer first.
             if (isTiming) {
                 stopShotTimer();
             }
 
             int durationSeconds = (int) shotTimeMilliseconds / 1000;
+
+            if (!(hasShots && hasHighOrLowShots && hasLocation)) {
+
+                if (!hasHighOrLowShots) {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                    dlgAlert.setMessage("Please record if shots where HIGH or LOW.");
+                    dlgAlert.setTitle("Missing Fuel Target");
+                    dlgAlert.setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //dismiss the dialog
+                                }
+                            });
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.create().show();
+                    return;
+                }
+
+                if (!hasShots) {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                    dlgAlert.setMessage("Please record the number of shots made and missed.");
+                    dlgAlert.setTitle("Missing Shot Counts");
+                    dlgAlert.setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //dismiss the dialog
+                                }
+                            });
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.create().show();
+                    return;
+                }
+
+                if (!hasLocation) {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                    dlgAlert.setMessage("Please record the shooting location.");
+                    dlgAlert.setTitle("Missing Shot Location");
+                    dlgAlert.setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //dismiss the dialog
+                                }
+                            });
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.create().show();
+                    return;
+                }
+            }
 
             shotAttempt.setShotsMade(shotsMade);
             shotAttempt.setShotsMissed(shotsMissed);
@@ -308,6 +363,7 @@ public class ShotAttemptFragment extends Fragment implements
                 mListener.onShotAttemptCreated(shotAttempt);
             }
 
+
             restoreDefaults();
         }
     };
@@ -317,8 +373,11 @@ public class ShotAttemptFragment extends Fragment implements
      */
     private void restoreDefaults() {
         shotAttempt = new ShotAttempt();
-        String message = "Location: ";
-        locationMessage.setText(message);
+        locationMessage.setText(Location);
+        seekBar_shotsMade.setProgress(0);
+        seekBar_shotsMissed.setProgress(0);
+        textView_shotsMade.setText("");
+        textView_shotsMissed.setText("");
     }
 
     /**

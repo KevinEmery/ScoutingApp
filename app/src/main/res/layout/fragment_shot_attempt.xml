@@ -117,7 +117,7 @@
         android:id="@+id/button_shot_attempt_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_label_record_attempt"
+        android:text="@string/button_label_record_shot_attempt"
         android:layout_marginTop="50dp"/>
 
 </LinearLayout>
