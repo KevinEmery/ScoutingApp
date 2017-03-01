@@ -179,6 +179,8 @@ public class GearAttemptFragment extends Fragment implements
             message = "Please select a valid gear peg position";
         } else {
             message = "Gear peg " + gearPegPosition.toString() + " selected.";
+            String locationText = getString(R.string.label_location) + gearPegPosition.toString();
+            locationMessage.setText(locationText);
         }
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
@@ -256,8 +258,7 @@ public class GearAttemptFragment extends Fragment implements
      * Clears the current gearResult object and restores all the appropriate defaults.
      */
     private void restoreDefaults() {
-        String message = "Location: ";
-        locationMessage.setText(message);
+        locationMessage.setText(getString(R.string.label_location));
         toggleButton_gearAttempted.setChecked(false);
         toggleButton_gearNotAttempted.setChecked(false);
         togglebutton_gearSuccess.setChecked(false);

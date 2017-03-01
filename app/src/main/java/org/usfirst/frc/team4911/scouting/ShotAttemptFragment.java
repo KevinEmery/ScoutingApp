@@ -167,6 +167,8 @@ public class ShotAttemptFragment extends Fragment implements
             message = "Please select a point in the shooting area";
         } else {
             message = "Shot location " + shotLocation;
+            String locationText = getString(R.string.label_location) + shotLocation;
+            locationMessage.setText(locationText);
         }
 
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
@@ -373,7 +375,7 @@ public class ShotAttemptFragment extends Fragment implements
      */
     private void restoreDefaults() {
         shotAttempt = new ShotAttempt();
-        locationMessage.setText(Location);
+        locationMessage.setText(getString(R.string.label_location));
         seekBar_shotsMade.setProgress(0);
         seekBar_shotsMissed.setProgress(0);
         textView_shotsMade.setText("");

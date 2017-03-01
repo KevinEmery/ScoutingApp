@@ -57,17 +57,17 @@
        android:layout_height="wrap_content"
        android:orientation="horizontal">
 
+       <Button
+           android:id="@+id/btn_gear_record_location"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/button_label_location"/>
+
         <TextView
             android:id="@+id/txt_gear_record_auto_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_location"/>
-
-        <Button
-            android:id="@+id/btn_gear_record_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_label_location"/>
     </LinearLayout>
 
     <Button

@@ -84,17 +84,17 @@
        android:layout_height="wrap_content"
        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/button_shot_attempt_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_label_location" />
+
        <TextView
            android:id="@+id/text_shot_attempt_location"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="@string/label_location"/>
-
-       <Button
-        android:id="@+id/button_shot_attempt_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_label_location" />
    </LinearLayout>
 
     <LinearLayout
