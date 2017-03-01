@@ -95,7 +95,7 @@ public class HopperAttemptFragment extends Fragment
     private View.OnClickListener recordLocation = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int resourceIdOfMapToDraw = R.drawable.steamworks_field;
+            int resourceIdOfMapToDraw = R.drawable.full_field;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);

@@ -183,7 +183,7 @@ public class PreGameFragment extends Fragment
             String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
-                    R.drawable.airship_red : R.drawable.airship_blue;
+                    R.drawable.touchpad_locations_red : R.drawable.touchpad_locations_blue;
 
             isRecordingRopePosition = true;
 

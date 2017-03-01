@@ -86,7 +86,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && checkBox_Failed.isChecked()) {
-                    checkBox_Failed.setChecked(!isChecked);
+                    checkBox_Failed.setChecked(false);
                 }
 
                 climbEndedTimeMs = System.currentTimeMillis();
@@ -97,7 +97,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && checkBox_Succeeded.isChecked()) {
-                    checkBox_Succeeded.setChecked(!isChecked);
+                    checkBox_Succeeded.setChecked(false);
                 }
             }
         });
@@ -106,7 +106,7 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && checkBox_noattempt.isChecked()) {
-                    checkBox_noattempt.setChecked(!isChecked);
+                    checkBox_noattempt.setChecked(false);
                 }
 
                 climbStartedTimeMs = System.currentTimeMillis();
@@ -117,13 +117,13 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && checkBox_attempted.isChecked()) {
-                    checkBox_attempted.setChecked(!isChecked);
+                    checkBox_attempted.setChecked(false);
                 }
             }
         });
 
         Button location = (Button) view.findViewById(R.id.btn_climbing_location);
-        location.setOnClickListener(recordLocation);
+        location.setOnClickListener(recordClimbLocation);
 
         Button saveToFile = (Button) view.findViewById(R.id.button_end_game_save_data_to_file);
         saveToFile.setOnClickListener(saveAndEndGame);
@@ -161,10 +161,9 @@ public class EndGameFragment extends Fragment
     }
 
     /**
-     * OnTouchListener for the location button which invites the user to note down the location
-     * of a shooting event.
+     * OnTouchListener for the location button which triggers the record of where the robot climbed.
      */
-    private View.OnClickListener recordLocation = new View.OnClickListener() {
+    private View.OnClickListener recordClimbLocation = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -174,7 +173,7 @@ public class EndGameFragment extends Fragment
             String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
-                    R.drawable.airship_red : R.drawable.airship_blue;
+                    R.drawable.touchpad_locations_red : R.drawable.touchpad_locations_blue;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);

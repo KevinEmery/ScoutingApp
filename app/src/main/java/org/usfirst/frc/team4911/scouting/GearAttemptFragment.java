@@ -114,7 +114,7 @@ public class GearAttemptFragment extends Fragment
             String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
-                    R.drawable.airship_red : R.drawable.airship_blue;
+                    R.drawable.gear_locations_red : R.drawable.gear_locations_blue;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
