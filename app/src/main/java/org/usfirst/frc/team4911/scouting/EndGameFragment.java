@@ -72,34 +72,18 @@ public class EndGameFragment extends Fragment
         toggleButton_Succeeded = (ToggleButton) view.findViewById(R.id.togglebutton_end_game_success);
         toggleButton_Failed = (ToggleButton) view.findViewById(R.id.togglebutton_end_game_failed);
 
-        toggleButton_Succeeded.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && toggleButton_Failed.isChecked()) {
-                    toggleButton_Failed.setChecked(false);
-                }
-
-                climbEndedTimeMs = System.currentTimeMillis();
-            }
-        });
-
-        toggleButton_Failed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && toggleButton_Succeeded.isChecked()) {
-                    toggleButton_Succeeded.setChecked(false);
-                }
-            }
-        });
-
         toggleButton_attempted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_noattempt.isChecked()) {
-                    toggleButton_noattempt.setChecked(false);
+                    toggleButton_noattempt.setChecked(!isChecked);
                 }
 
-                climbStartedTimeMs = System.currentTimeMillis();
+                if (!isChecked)
+                {
+                    toggleButton_Succeeded.setChecked(false);
+                    toggleButton_Failed.setChecked(false);
+                }
             }
         });
 
@@ -107,7 +91,39 @@ public class EndGameFragment extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && toggleButton_attempted.isChecked()) {
-                    toggleButton_attempted.setChecked(false);
+                    toggleButton_attempted.setChecked(!isChecked);
+                }
+
+                if (isChecked)
+                {
+                    toggleButton_Succeeded.setChecked(false);
+                    toggleButton_Failed.setChecked(false);
+                }
+            }
+        });
+
+        toggleButton_Succeeded.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && toggleButton_Failed.isChecked()) {
+                    toggleButton_Failed.setChecked(!isChecked);
+                }
+
+                if (isChecked) {
+                    toggleButton_attempted.setChecked(true);
+                }
+            }
+        });
+
+        toggleButton_Failed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && toggleButton_Succeeded.isChecked()) {
+                    toggleButton_Succeeded.setChecked(!isChecked);
+                }
+
+                if (isChecked) {
+                    toggleButton_attempted.setChecked(true);
                 }
             }
         });
