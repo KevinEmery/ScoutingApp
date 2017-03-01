@@ -15,6 +15,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <TableRow>
+            <ToggleButton
+                android:id="@+id/togglebutton_shot_low"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textOn="LOW [X]"
+                android:textOff="LOW"
+                android:layout_weight="1"/>
+
+            />
+            <ToggleButton
+                android:id="@+id/togglebutton_shot_high"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textOn="HIGH [X]"
+                android:textOff="HIGH"
+                android:layout_weight="1"/>
+            />
+        </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_weight="10">
@@ -80,22 +99,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_shot_mode" />
-
-        <Spinner
-            android:id="@+id/spinner_shot_attempt_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
@@ -116,4 +119,5 @@
         android:layout_height="wrap_content"
         android:text="@string/button_label_record_attempt"
         android:layout_marginTop="50dp"/>
+
 </LinearLayout>

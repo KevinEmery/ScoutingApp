@@ -7,6 +7,7 @@
     <string name="button_label_save_auto">Save auto data</string>
     <string name="button_label_save_teleop">Save teleop data</string>
     <string name="button_label_start">Start</string>
+    <string name="button_label_record_gear_attempt">Record Gear Attempt</string>
 
     <string name="header_autonomous">Autonomous</string>
     <string name="header_end_game">End-Game</string>

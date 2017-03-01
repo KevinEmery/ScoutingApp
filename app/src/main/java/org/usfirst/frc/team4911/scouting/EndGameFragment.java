@@ -3,8 +3,6 @@ package org.usfirst.frc.team4911.scouting;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,18 +15,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import org.usfirst.frc.team4911.scouting.datamodel.EndGame;
-import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Locale;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,10 +31,10 @@ public class EndGameFragment extends Fragment
     OnSaveAndClearClickedListener mListener;
 
     TextView locationMessage;
-    CheckBox checkBox_attempted;
-    CheckBox checkBox_noattempt;
-    CheckBox checkBox_Succeeded;
-    CheckBox checkBox_Failed;
+    ToggleButton toggleButton_attempted;
+    ToggleButton toggleButton_noattempt;
+    ToggleButton toggleButton_Succeeded;
+    ToggleButton toggleButton_Failed;
     TouchPadPosition climbPosition = TouchPadPosition.None;
 
     long climbStartedTimeMs = 0;
@@ -77,53 +67,53 @@ public class EndGameFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_end_game, container, false);
 
         locationMessage = (TextView) view.findViewById(R.id.text_view_end_game_location);
-        checkBox_attempted = (CheckBox) view.findViewById(R.id.checkbox_end_game_attempt);
-        checkBox_noattempt = (CheckBox) view.findViewById(R.id.checkbox_end_game_noattempt);
-        checkBox_Succeeded = (CheckBox) view.findViewById(R.id.checkbox_end_game_success);
-        checkBox_Failed = (CheckBox) view.findViewById(R.id.checkbox_end_game_failed);
+        toggleButton_attempted = (ToggleButton) view.findViewById(R.id.togglebutton_end_game_attempt);
+        toggleButton_noattempt = (ToggleButton) view.findViewById(R.id.togglebutton_end_game_noattempt);
+        toggleButton_Succeeded = (ToggleButton) view.findViewById(R.id.togglebutton_end_game_success);
+        toggleButton_Failed = (ToggleButton) view.findViewById(R.id.togglebutton_end_game_failed);
 
-        checkBox_Succeeded.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggleButton_Succeeded.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && checkBox_Failed.isChecked()) {
-                    checkBox_Failed.setChecked(false);
+                if (isChecked && toggleButton_Failed.isChecked()) {
+                    toggleButton_Failed.setChecked(!isChecked);
                 }
 
                 climbEndedTimeMs = System.currentTimeMillis();
             }
         });
 
-        checkBox_Failed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggleButton_Failed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && checkBox_Succeeded.isChecked()) {
-                    checkBox_Succeeded.setChecked(false);
+                if (isChecked && toggleButton_Succeeded.isChecked()) {
+                    toggleButton_Succeeded.setChecked(!isChecked);
                 }
             }
         });
 
-        checkBox_attempted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggleButton_attempted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && checkBox_noattempt.isChecked()) {
-                    checkBox_noattempt.setChecked(false);
+                if (isChecked && toggleButton_noattempt.isChecked()) {
+                    toggleButton_noattempt.setChecked(!isChecked);
                 }
 
                 climbStartedTimeMs = System.currentTimeMillis();
             }
         });
 
-        checkBox_noattempt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggleButton_noattempt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && checkBox_attempted.isChecked()) {
-                    checkBox_attempted.setChecked(false);
+                if (isChecked && toggleButton_attempted.isChecked()) {
+                    toggleButton_attempted.setChecked(!isChecked);
                 }
             }
         });
 
         Button location = (Button) view.findViewById(R.id.btn_climbing_location);
-        location.setOnClickListener(recordClimbLocation);
+        location.setOnClickListener(recordLocation);
 
         Button saveToFile = (Button) view.findViewById(R.id.button_end_game_save_data_to_file);
         saveToFile.setOnClickListener(saveAndEndGame);
@@ -161,9 +151,10 @@ public class EndGameFragment extends Fragment
     }
 
     /**
-     * OnTouchListener for the location button which triggers the record of where the robot climbed.
+     * OnTouchListener for the location button which invites the user to note down the location
+     * of a shooting event.
      */
-    private View.OnClickListener recordClimbLocation = new View.OnClickListener() {
+    private View.OnClickListener recordLocation = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -173,7 +164,7 @@ public class EndGameFragment extends Fragment
             String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
 
             int resourceIdOfMapToDraw = (driveStation.toLowerCase().contains("red")) ?
-                    R.drawable.touchpad_locations_red : R.drawable.touchpad_locations_blue;
+                    R.drawable.airship_red : R.drawable.airship_blue;
 
             FragmentManager fragmentManager = getChildFragmentManager();
             DialogFragment fieldMapFragment = RecordLocationFragment.newInstance(resourceIdOfMapToDraw);
@@ -191,8 +182,8 @@ public class EndGameFragment extends Fragment
         public void onClick(View v) {
             EndGame endGame = new EndGame();
 
-            endGame.setAttempted(checkBox_attempted.isChecked());
-            endGame.setSucceeded(checkBox_Succeeded.isChecked());
+            endGame.setAttempted(toggleButton_attempted.isChecked());
+            endGame.setSucceeded(toggleButton_Succeeded.isChecked());
             endGame.setTimeInSeconds((int)(climbStartedTimeMs - climbEndedTimeMs)/1000);
             endGame.setTouchPadPosition(climbPosition);
 
@@ -208,8 +199,8 @@ public class EndGameFragment extends Fragment
      * Clears the end-game data
      */
     private void clearEndGameData() {
-        checkBox_attempted.setChecked(false);
-        checkBox_Succeeded.setChecked(false);
+        toggleButton_attempted.setChecked(false);
+        toggleButton_Succeeded.setChecked(false);
         String message = "Location: ";
         locationMessage.setText(message);
     }

@@ -1,12 +1,14 @@
 package org.usfirst.frc.team4911.scouting;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,12 +17,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
 import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
-import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 
 
@@ -37,10 +37,10 @@ public class PreGameFragment extends Fragment
 
     private EditText etxtMatchNum;
     private EditText etxtTeamNum;
-    private CheckBox chkbxHasGear;
-    private CheckBox chkbxHasFuel;
-    private CheckBox chbxUsesOwnRope;
-    private CheckBox chbxHasPilot;
+    private ToggleButton toggleButtonHasGear;
+    private ToggleButton toggleButtonHasFuel;
+    private ToggleButton toggleButtonUsesOwnRope;
+    private ToggleButton toggleButtonHasPilot;
 
     private TouchPadPosition ropePosition = TouchPadPosition.None;
     private String robotPosition = "";
@@ -91,10 +91,10 @@ public class PreGameFragment extends Fragment
         etxtMatchNum = (EditText) view.findViewById(R.id.etxt_pre_game_match_num);
         etxtTeamNum = (EditText) view.findViewById(R.id.etxt_pre_game_team_num);
 
-        chkbxHasGear = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_gear);
-        chkbxHasFuel = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_fuel);
-        chbxUsesOwnRope = (CheckBox) view.findViewById(R.id.chkbx_pre_game_uses_own_rope);
-        chbxHasPilot = (CheckBox) view.findViewById(R.id.chkbx_pre_game_has_pilot);
+        toggleButtonHasGear = (ToggleButton) view.findViewById(R.id.toggleButton_pre_game_has_gear);
+        toggleButtonHasFuel = (ToggleButton) view.findViewById(R.id.toggleButton_pre_game_has_fuel);
+        toggleButtonUsesOwnRope = (ToggleButton) view.findViewById(R.id.toggleButton_pre_game_uses_own_rope);
+        toggleButtonHasPilot = (ToggleButton) view.findViewById(R.id.toggleButton_pre_game_has_pilot);
 
         // Initialise the rope location button
         Button btnRopeLocation = (Button) view.findViewById(R.id.btn_pre_game_own_rope_location);
@@ -199,14 +199,63 @@ public class PreGameFragment extends Fragment
     private View.OnClickListener startGame = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int matchNumber = Integer.parseInt(etxtMatchNum.getText().toString());
-            int teamNumber = Integer.parseInt(etxtTeamNum.getText().toString());
+            String teamNum = etxtTeamNum.getText().toString();
+            int teamNumber = teamNum.isEmpty() ? 0 : Integer.parseInt(teamNum);
+
+            if (teamNumber <= 0 || 9999 < teamNumber) {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                dlgAlert.setMessage("Please provide a valid team number.");
+                dlgAlert.setTitle("Invalid Team Number");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.setCancelable(true);
+                dlgAlert.create().show();
+                return;
+            }
+
+            // TODO: Should keep a running counter somewhere.
+            String matchNum = etxtMatchNum.getText().toString();
+            int matchNumber = matchNum.isEmpty() ? 0 : Integer.parseInt(matchNum);
+            if (matchNumber <= 0 || 150 <= matchNumber) {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                dlgAlert.setMessage("Please provide a valid match number.");
+                dlgAlert.setTitle("Invalid Match Number");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.setCancelable(true);
+                dlgAlert.create().show();
+                return;
+            }
+
+            if (toggleButtonUsesOwnRope.isChecked() && robotPosition.isEmpty())
+            {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                dlgAlert.setMessage("Please select the rope position.");
+                dlgAlert.setTitle("Invalid Rope Position");
+                dlgAlert.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //dismiss the dialog
+                            }
+                        });
+                dlgAlert.setCancelable(true);
+                dlgAlert.create().show();
+                return;
+            }
 
             PreGame preGame = new PreGame();
-            preGame.setHasGear(chkbxHasGear.isChecked());
-            preGame.setHasFuel(chkbxHasFuel.isChecked());
-            preGame.setHasPilot(chbxHasPilot.isChecked());
-            preGame.setUsesOwnRope(chbxUsesOwnRope.isChecked());
+            preGame.setHasGear(toggleButtonHasGear.isChecked());
+            preGame.setHasFuel(toggleButtonHasFuel.isChecked());
+            preGame.setHasPilot(toggleButtonHasPilot.isChecked());
+            preGame.setUsesOwnRope(toggleButtonUsesOwnRope.isChecked());
             preGame.setRopeTouchPadPosition(ropePosition);
             preGame.setRobotPosition(robotPosition);
 

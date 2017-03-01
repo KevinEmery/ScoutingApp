@@ -16,23 +16,40 @@
             android:layout_height="wrap_content"
             android:text="Set-Up"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:layout_marginBottom="30dp"/>
-
-
-        <TextView
-            android:text="MATCH INFORMATION"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_vertical_margin" />
+            android:layout_height="30dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:text="MATCH INFORMATION"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_gravity="right"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
 
             <EditText
                 android:id="@+id/etxt_pre_game_team_num"
@@ -41,8 +58,6 @@
                 android:inputType="number"
                 android:hint="TEAM"
                 android:textAlignment="center"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
                 android:layout_weight="1"/>
 
             <EditText
@@ -52,11 +67,13 @@
                 android:inputType="number"
                 android:hint="MATCH"
                 android:textAlignment="center"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
                 android:layout_weight="1"/>
 
         </LinearLayout>
+        <!--Here's all the stuff for who's scouting which match-->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,20 +84,11 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             android:paddingBottom="@dimen/activity_vertical_margin">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-             <!--Here's all the stuff for who's scouting which match-->
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MATCH SETUP"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
             <!--Has gear-->
              <Space
@@ -93,19 +101,21 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <CheckBox
-                    android:id="@+id/chkbx_pre_game_has_gear"
+                <ToggleButton
+                    android:id="@+id/toggleButton_pre_game_has_gear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="GEAR"
+                    android:textOn="GEAR [X]"
+                    android:textOff="GEAR"
                     android:layout_weight="1"/>
 
-                <CheckBox
-                    android:id="@+id/chkbx_pre_game_has_fuel"
+                <ToggleButton
+                    android:id="@+id/toggleButton_pre_game_has_fuel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FUEL"
-                    android:layout_weight="1"/>
+                    android:textOn="FUEL [X]"
+                    android:textOff="FUEL"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <Space
@@ -118,19 +128,22 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <CheckBox
-                    android:id="@+id/chkbx_pre_game_uses_own_rope"
+                <ToggleButton
+                    android:id="@+id/toggleButton_pre_game_uses_own_rope"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ROPE"
+                    android:textOn="ROPE [X]"
+                    android:textOff="ROPE"
                     android:layout_weight="1"/>
-                <CheckBox
-                    android:id="@+id/chkbx_pre_game_has_pilot"
+
+                <ToggleButton
+                    android:id="@+id/toggleButton_pre_game_has_pilot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PILOT"
-                    android:layout_weight="1"/>
-            </LinearLayout>
+                    android:textOn="PILOT [X]"
+                    android:textOff="PILOT"
+                    android:layout_weight="1" />
+                </LinearLayout>
 
             <!--Uses own rope-->
             <LinearLayout
@@ -141,14 +154,14 @@
 
               <Button
                 android:id="@+id/btn_pre_game_own_rope_location"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="ROPE LOCATION"
-                  android:layout_weight="1"/>
+                android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/btn_pre_game_own_robot_location"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="ROBOT LOCATION"
                     android:layout_weight="1"/>

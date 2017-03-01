@@ -46,18 +46,20 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <CheckBox
-                    android:id="@+id/checkbox_end_game_attempt"
-                    android:layout_width="wrap_content"
+                <ToggleButton
+                    android:id="@+id/togglebutton_end_game_attempt"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="ATTEMPT"
+                    android:textOff="ATTEMPT"
+                    android:textOn="ATTEMPT [X]"
                     android:layout_weight="1"/>
 
-                <CheckBox
-                    android:id="@+id/checkbox_end_game_noattempt"
-                    android:layout_width="wrap_content"
+                <ToggleButton
+                    android:id="@+id/togglebutton_end_game_noattempt"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="NO ATTEMPT"
+                    android:textOff="NO ATTEMPT"
+                    android:textOn="NO ATTEMPT [X]"
                     android:layout_weight="1"/>
             </LinearLayout>
 
@@ -67,18 +69,20 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <CheckBox
-                    android:id="@+id/checkbox_end_game_success"
-                    android:layout_width="wrap_content"
+                <ToggleButton
+                    android:id="@+id/togglebutton_end_game_success"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="TOUCHPAD SUCCESS"
+                    android:textOn="TOUCHPAD SUCCESS [X]"
+                    android:textOff="TOUCHPAD SUCCESS"
                     android:layout_weight="1"/>
 
-                <CheckBox
-                    android:id="@+id/checkbox_end_game_failed"
-                    android:layout_width="wrap_content"
+                <ToggleButton
+                    android:id="@+id/togglebutton_end_game_failed"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="TOUCHPAD FAIL"
+                    android:textOff="TOUCHPAD FAIL"
+                    android:textOn="TOUCHPAD FAIL [X]"
                     android:layout_weight="1"/>
             </LinearLayout>
 
@@ -94,15 +98,16 @@
 
              <Button
                  android:id="@+id/btn_climbing_location"
-                 android:layout_width="0dp"
+                 android:layout_width="fill_parent"
                  android:layout_height="wrap_content"
                  android:text="CLIMB LOCATION"
                  android:layout_weight="1"/>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/text_view_end_game_location" />
+                    android:id="@+id/text_view_end_game_location"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <Space
