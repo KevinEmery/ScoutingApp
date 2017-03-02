@@ -42,7 +42,7 @@ public class ShotAttemptFragment extends Fragment implements
     private OnShotAttemptCreatedListener mListener;
 
     private ShotAttempt shotAttempt;
-    private String shotLocation;
+    private String shotLocation = "";
 
     private ToggleButton toggleButton_shotLow;
     private ToggleButton toggleButton_shotHigh;
@@ -297,8 +297,7 @@ public class ShotAttemptFragment extends Fragment implements
 
             boolean hasHighOrLowShots = toggleButton_shotHigh.isChecked() || toggleButton_shotLow.isChecked();
             boolean hasShots = shotsMade + shotsMissed > 0;
-            // TODO: Validate a location was entered.
-            boolean hasLocation = true; // locationMessage.getText().toString().compareTo(Location) == 0;
+            boolean hasLocation = !shotLocation.equals("");
 
             // Here to handle the case where the user presses save without stopping the timer first.
             if (isTiming) {
@@ -355,6 +354,7 @@ public class ShotAttemptFragment extends Fragment implements
                 }
             }
 
+            shotAttempt.setShotLocation(shotLocation);
             shotAttempt.setShotsMade(shotsMade);
             shotAttempt.setShotsMissed(shotsMissed);
             shotAttempt.setShotDurationInSeconds(durationSeconds);
