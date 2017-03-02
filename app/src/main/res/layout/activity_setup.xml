@@ -22,16 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner_event_name" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textCapCharacters"
-        android:ems="10"
-        android:id="@+id/editText_EventCode"
-        android:contentDescription="The FRC Event Code"
-        tools:text="The FRC Event Code for this event." />
-
+    
     <TextView
         android:text="Scout Name"
         android:layout_width="114dp"
