@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -126,41 +127,44 @@ public class PreGameFragment extends Fragment implements
      * with here. Right now we can only handle ropes >.<
      */
     @Override
-    public void onRecordLocationMapTouch(MotionEvent event) {
+    public void onRecordLocationMapTouch(Pair<Float, Float> normalisedTouchPoint) {
 
         SharedPreferences sharedpreferences = getActivity().getApplicationContext()
                 .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
         boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        String message = "";
+        String message = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
 
-        if (isRopePosition) {
-            ropePosition = LocationMappingHelpers.GetTouchPadPosition((int) event.getX(),
-                    (int) event.getY(), isBlueAlliance);
+        //if (isRopePosition) {
+        //    ropePosition = LocationMappingHelpers.GetTouchPadPosition((int) event.getX(),
+        //            (int) event.getY(), isBlueAlliance);
+//
+        //    if (ropePosition == TouchPadPosition.None) {
+        //        message = "Please select a valid touchpad";
+        //        isOkToCloseLocationDialog = false;
+        //    } else {
+        //        message = "Rope placed at position " + ropePosition.toString();
+        //        isOkToCloseLocationDialog = true;
+        //    }
+        //}
+//
+        //if (isBotPosition) {
+        //    robotPosition = LocationMappingHelpers.GetShootingPosition((int) event.getX(),
+        //            (int) event.getY(), isBlueAlliance);
+//
+        //    if (robotPosition.equals("")
+        //            || robotPosition.equals(LocationMappingHelpers.OUT_OF_BOUNDS)) {
+        //        message = "Please select a location on the field";
+        //        isOkToCloseLocationDialog = false;
+        //    } else {
+        //        message = "Robot starting position is at " + robotPosition;
+        //        isOkToCloseLocationDialog = true;
+        //    }
+        //}
 
-            if (ropePosition == TouchPadPosition.None) {
-                message = "Please select a valid touchpad";
-                isOkToCloseLocationDialog = false;
-            } else {
-                message = "Rope placed at position " + ropePosition.toString();
-                isOkToCloseLocationDialog = true;
-            }
-        }
-
-        if (isBotPosition) {
-            robotPosition = LocationMappingHelpers.GetShootingPosition((int) event.getX(),
-                    (int) event.getY(), isBlueAlliance);
-
-            if (robotPosition.equals("")
-                    || robotPosition.equals(LocationMappingHelpers.OUT_OF_BOUNDS)) {
-                message = "Please select a location on the field";
-                isOkToCloseLocationDialog = false;
-            } else {
-                message = "Robot starting position is at " + robotPosition;
-                isOkToCloseLocationDialog = true;
-            }
-        }
+        //TODO: Remove when done debugging map
+        isOkToCloseLocationDialog = true;
 
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }

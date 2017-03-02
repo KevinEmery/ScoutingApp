@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -160,7 +161,7 @@ public class GearAttemptFragment extends Fragment implements
      * Handles touch events on the location map.
      */
     @Override
-    public void onRecordLocationMapTouch(MotionEvent event) {
+    public void onRecordLocationMapTouch(Pair<Float, Float> normalisedTouchPoint) {
 
         // Here we determine the alliance we're scouting for so we can display the correct map
         SharedPreferences sharedpreferences = getActivity().getApplicationContext()
@@ -170,18 +171,17 @@ public class GearAttemptFragment extends Fragment implements
 
         boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        gearPegPosition = LocationMappingHelpers.GetGearPegPosition((int) event.getX(),
-                (int) event.getY(), isBlueAlliance);
+        gearPegPosition = GearPegPosition.None;
 
-        String message;
+        String message = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
 
-        if (gearPegPosition == GearPegPosition.None) {
-            message = "Please select a valid gear peg position";
-        } else {
-            message = "Gear peg " + gearPegPosition.toString() + " selected.";
-            String locationText = getString(R.string.label_location) + gearPegPosition.toString();
-            locationMessage.setText(locationText);
-        }
+        //if (gearPegPosition == GearPegPosition.None) {
+        //    message = "Please select a valid gear peg position";
+        //} else {
+        //    message = "Gear peg " + gearPegPosition.toString() + " selected.";
+        //    String locationText = getString(R.string.label_location) + gearPegPosition.toString();
+        //    locationMessage.setText(locationText);
+        //}
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 

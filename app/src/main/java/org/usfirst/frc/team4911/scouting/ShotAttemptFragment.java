@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -150,7 +151,7 @@ public class ShotAttemptFragment extends Fragment implements
      * Handles touch events on the location map.
      */
     @Override
-    public void onRecordLocationMapTouch(MotionEvent event) {
+    public void onRecordLocationMapTouch(Pair<Float, Float> normalisedTouchPoint) {
         SharedPreferences sharedpreferences = getActivity().getApplicationContext()
                 .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -158,18 +159,17 @@ public class ShotAttemptFragment extends Fragment implements
 
         boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        shotLocation = LocationMappingHelpers.GetShootingPosition((int) event.getX(),
-                (int) event.getY(), isBlueAlliance);
+        shotLocation = "foo";
 
-        String message;
+        String message = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
 
-        if (LocationMappingHelpers.OUT_OF_BOUNDS.equals(shotLocation)) {
-            message = "Please select a point in the shooting area";
-        } else {
-            message = "Shot location " + shotLocation;
-            String locationText = getString(R.string.label_location) + shotLocation;
-            locationMessage.setText(locationText);
-        }
+        //if (LocationMappingHelpers.OUT_OF_BOUNDS.equals(shotLocation)) {
+        //    message = "Please select a point in the shooting area";
+        //} else {
+        //    message = "Shot location " + shotLocation;
+        //    String locationText = getString(R.string.label_location) + shotLocation;
+        //    locationMessage.setText(locationText);
+        //}
 
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
@@ -255,9 +255,8 @@ public class ShotAttemptFragment extends Fragment implements
      */
     private void stopShotTimer() {
         shotTimeMilliseconds = System.currentTimeMillis() - startTimeMs;
-        chronometerShotTime.setBase(SystemClock.elapsedRealtime());
         chronometerShotTime.stop();
-        buttonStartStopChronometer.setText("Start");
+        buttonStartStopChronometer.setText("Restart");
         isTiming = false;
     }
 

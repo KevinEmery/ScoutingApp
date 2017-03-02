@@ -114,9 +114,9 @@ public class RecordLocationFragment extends DialogFragment {
 
                 // This is where we call the map touch event listener in the parent class to pass
                 // the data back to it.
-                if (mRecordLocationMapTouchListener != null)
-                {
-                    mRecordLocationMapTouchListener.onRecordLocationMapTouch(event);
+                if (mRecordLocationMapTouchListener != null) {
+                    mRecordLocationMapTouchListener.onRecordLocationMapTouch(
+                            getNormalisedCoordinates(event.getX(), event.getY()));
                 }
 
                 return true;
@@ -201,11 +201,28 @@ public class RecordLocationFragment extends DialogFragment {
     }
 
     /**
+     * Gets the touchpoint X and Y coordinates normalised against the size of the image.
+     * This means we don't have to worry about image size when working out what important location
+     * on our image the touched point corresponds to.
+     * @param x raw X coordinate of the touched point.
+     * @param y raw Y coordinate of the touched point.
+     * @return A pair containing the X and Y coordinates of the touched point normalised against the
+     * size of the image.
+     */
+    private Pair<Float, Float> getNormalisedCoordinates(float x, float y) {
+        float normX = x/map.getWidth();
+        float normY = y/map.getHeight();
+
+        return new Pair<>(normX, normY);
+    }
+
+
+    /**
      * Interface that allows the object that created this fragment to react to events where
      * the map got clicked. Needs to be implemented by all parent fragments of this class.
      */
     public interface OnRecordLocationMapTouchListener {
-        void onRecordLocationMapTouch(MotionEvent event);
+        void onRecordLocationMapTouch(Pair<Float, Float> normalisedTouchPoint);
     }
 
     /**

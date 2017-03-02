@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -158,23 +159,22 @@ public class EndGameFragment extends Fragment implements
      * Handles touch events on the location map.
      */
     @Override
-    public void onRecordLocationMapTouch(MotionEvent event) {
+    public void onRecordLocationMapTouch(Pair<Float, Float> normalisedTouchPoint) {
 
         SharedPreferences sharedpreferences = getActivity().getApplicationContext()
                 .getSharedPreferences(SetupActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
         boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        climbPosition = LocationMappingHelpers.GetTouchPadPosition((int)event.getX(),
-                (int)event.getY(), isBlueAlliance);
+        climbPosition = TouchPadPosition.None;
 
-        String message;
+        String message = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
 
-        if (climbPosition == TouchPadPosition.None) {
-            message = "Please select a touchpad";
-        } else {
-            message = "Bot climbed at touchpad " + climbPosition.toString();
-        }
+        //if (climbPosition == TouchPadPosition.None) {
+        //    message = "Please select a touchpad";
+        //} else {
+        //    message = "Bot climbed at touchpad " + climbPosition.toString();
+        //}
 
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,8 +24,9 @@ import org.usfirst.frc.team4911.scouting.datamodel.HopperAttempt;
  * Use the {@link HopperAttemptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HopperAttemptFragment extends Fragment
-        implements RecordLocationFragment.OnRecordLocationMapTouchListener {
+public class HopperAttemptFragment extends Fragment implements
+        RecordLocationFragment.OnRecordLocationMapTouchListener,
+        RecordLocationFragment.OnLocationDoneButtonClickListener {
 
     private OnHopperAttemptCreatedListener mListener;
 
@@ -82,14 +84,20 @@ public class HopperAttemptFragment extends Fragment
     }
 
     @Override
-    public void onRecordLocationMapTouch(MotionEvent event) {
-        //TODO: Hi Scott! This is where the code that handles touch events should go. Right now all
-        // it does is show a toast containing the X and Y coordinates of the touch point.
-        // I leave the mapping in your hands :)
-        String text = "X: " + event.getX() + "Y: " + event.getY();
+    public void onRecordLocationMapTouch(Pair<Float, Float> normalisedTouchPoint) {
+        String text = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-
         hopperLocation = "foo";
+    }
+
+    /**
+     * Handles presses of the 'done' button on the record location dialog.
+     * @return True if we're cool with the dialog being closed, false otherwise.
+     */
+    @Override
+    public boolean onLocationDoneButtonClick() {
+        // We're gonna want to beef this out once we've added a hopper number class.
+        return true;
     }
 
     private View.OnClickListener recordLocation = new View.OnClickListener() {
