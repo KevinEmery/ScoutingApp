@@ -10,7 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.View;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -19,7 +20,6 @@ import com.google.gson.GsonBuilder;
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
 import org.usfirst.frc.team4911.scouting.datamodel.DriveStation;
 import org.usfirst.frc.team4911.scouting.datamodel.EndGame;
-import org.usfirst.frc.team4911.scouting.datamodel.MatchData;
 import org.usfirst.frc.team4911.scouting.datamodel.PreGame;
 import org.usfirst.frc.team4911.scouting.datamodel.ScoutingData;
 import org.usfirst.frc.team4911.scouting.datamodel.TeleopPeriod;
@@ -37,19 +37,9 @@ public class ScoutMatchActivity extends AppCompatActivity implements
         EndGameFragment.OnSaveAndClearClickedListener {
 
     /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    public CustomViewPager mViewPager;
 
     /**
      * The {@link ScoutingData} object that stores all scouted data collected from this match.
@@ -67,10 +57,11 @@ public class ScoutMatchActivity extends AppCompatActivity implements
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter =
+                new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (CustomViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
@@ -149,6 +140,8 @@ public class ScoutMatchActivity extends AppCompatActivity implements
 
         this.scoutingData = new ScoutingData(eventCode, matchNumber, station, teamNumber, deviceId, scoutName, scoutingTeamName);
         this.scoutingData.getMatchData().setPreGame(preGame);
+
+        mViewPager.setPagingEnabled(true);
     }
 
     /**
@@ -239,9 +232,7 @@ public class ScoutMatchActivity extends AppCompatActivity implements
                 "ScoutingData");
 
         if (!directoryPath.exists()) {
-            if (!directoryPath.mkdirs()) {
-                // Figure out something to do here someday
-            }
+            directoryPath.mkdirs();
         }
 
         return directoryPath;
