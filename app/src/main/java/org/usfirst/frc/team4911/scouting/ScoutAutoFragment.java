@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import org.usfirst.frc.team4911.scouting.datamodel.AutonomousPeriod;
 import org.usfirst.frc.team4911.scouting.datamodel.GearAttempt;
@@ -32,7 +33,7 @@ public class ScoutAutoFragment extends Fragment implements
 
     OnAutoPeriodObjectCreatedListener mListener;
 
-    CheckBox crossedBaseline;
+    ToggleButton crossedBaseline;
 
     TextView shotAttemptLabel;
     TextView gearAttemptLabel;
@@ -116,7 +117,7 @@ public class ScoutAutoFragment extends Fragment implements
         // See note in the OnCreateView method of PreGameFragment
         View view = inflater.inflate(R.layout.fragment_scout_auto, container, false);
 
-        crossedBaseline = (CheckBox) view.findViewById(R.id.chkbx_auto_crossed_baseline);
+        crossedBaseline = (ToggleButton) view.findViewById(R.id.toggle_button_auto_crossed_baseline);
         shotAttemptLabel = (TextView) view.findViewById(R.id.label_shots_attempted_auto);
         gearAttemptLabel = (TextView) view.findViewById(R.id.label_gears_attempted_auto);
         hopperAttemptLabel = (TextView) view.findViewById(R.id.label_hoppers_activated_auto);

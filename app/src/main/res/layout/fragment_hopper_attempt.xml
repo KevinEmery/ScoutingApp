@@ -9,11 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/checkbox_hopper_attempt_activated"
+        <ToggleButton
+            android:id="@+id/toggle_button_hopper_attempt_activated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hopper activated"/>
+            android:textOn="Hopper activated [X]"
+            android:textOff="Hopper activated" />
 
         <Button
             android:id="@+id/button_hopper_attempt_location"
@@ -24,7 +25,9 @@
 
     <Button
         android:id="@+id/button_hopper_attempt_save"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"/>
+        android:layout_gravity="right"
+        android:backgroundTint="#FFD700"
+        android:text="Record hopper attempt"/>
 </LinearLayout>

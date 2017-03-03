@@ -83,6 +83,7 @@
             android:id="@+id/button_tele_op_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#32CD32"
             android:text="@string/button_label_save_teleop" />
     </LinearLayout>
 </ScrollView>

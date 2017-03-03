@@ -73,16 +73,19 @@
             android:layout_height="wrap_content" />
         <!--End auto hopper stuff-->
 
-        <CheckBox
-            android:id="@+id/chkbx_auto_crossed_baseline"
+        <ToggleButton
+            android:id="@+id/toggle_button_auto_crossed_baseline"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_crossed_baseline" />
+            android:layout_height="0dp"
+            android:textOn="Crossed Baseline [X]"
+            android:textOff="Crossed Baseline"
+            android:layout_weight="1"/>
 
          <Button
             android:id="@+id/button_auto_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#32CD32"
             android:text="@string/button_label_save_auto"/>
     </LinearLayout>
  </ScrollView>

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import org.usfirst.frc.team4911.scouting.datamodel.HopperAttempt;
 import org.usfirst.frc.team4911.scouting.datamodel.HopperPosition;
@@ -31,7 +32,7 @@ public class HopperAttemptFragment extends Fragment implements
 
     private OnHopperAttemptCreatedListener mListener;
 
-    CheckBox hopperActivated;
+    ToggleButton hopperActivated;
     HopperPosition hopperPosition;
 
     public HopperAttemptFragment() {
@@ -73,7 +74,7 @@ public class HopperAttemptFragment extends Fragment implements
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_hopper_attempt, container, false);
 
-        hopperActivated = (CheckBox) view.findViewById(R.id.checkbox_hopper_attempt_activated);
+        hopperActivated = (ToggleButton) view.findViewById(R.id.toggle_button_hopper_attempt_activated);
 
         Button location = (Button) view.findViewById(R.id.button_hopper_attempt_location);
         location.setOnClickListener(recordLocation);
