@@ -23,9 +23,12 @@ class LocationMappingHelpers {
     private static final TouchZone blueTouchpad3 =
             new TouchZone(0.031907413, 0.604721, 0.17467958, 0.6877766);
 
-    private static final TouchZone redTouchpad1 = new TouchZone(0,0,0,0);
-    private static final TouchZone redTouchpad2 = new TouchZone(0,0,0,0);
-    private static final TouchZone redTouchpad3 = new TouchZone(0,0,0,0);
+    private static final TouchZone redTouchpad1 =
+            new TouchZone(0.858688, 0.3579271, 0.9508409, 0.42437163);
+    private static final TouchZone redTouchpad2 =
+            new TouchZone(0.50175756, 0.49081612, 0.5730721, 0.54539555);
+    private static final TouchZone redTouchpad3 =
+            new TouchZone(0.84960246, 0.6142131, 0.9261803, 0.6782845);
 
 
     // All the gear peg positions by alliance
@@ -36,9 +39,12 @@ class LocationMappingHelpers {
     private static final TouchZone blueGearPeg3 =
             new TouchZone(0.3161538, 0.6165861, 0.40441293, 0.6664194);
 
-    private static final TouchZone redGearPeg1 = new TouchZone(0,0,0,0);
-    private static final TouchZone redGearPeg2 = new TouchZone(0,0,0,0);
-    private static final TouchZone redGearPeg3 = new TouchZone(0,0,0,0);
+    private static final TouchZone redGearPeg1 =
+            new TouchZone(0.6120815, 0.3531811, 0.69385105, 0.41725257);
+    private static final TouchZone redGearPeg2 =
+            new TouchZone(0.48748034, 0.49081612, 0.56924987, 0.5620066);
+    private static final TouchZone redGearPeg3 =
+            new TouchZone(0.5796333, 0.60946697, 0.69514894, 0.6735385);
 
     // All the hopper positions
     private static final TouchZone hopper1 = new TouchZone(0,0,0,0);
@@ -50,7 +56,8 @@ class LocationMappingHelpers {
     // The shooting zone bounds
     private static final TouchZone blueShootingZone =
             new TouchZone(0.11587928, 0.08642042, 0.81196254, 0.9179594);
-    private static final TouchZone redShootingZone = new TouchZone(0,0,0,0);
+    private static final TouchZone redShootingZone =
+            new TouchZone(0.1811692, 0.12537135, 0.92098856, 0.9203324);
 
     /**
      * Maps raw XY coordinates to a touchpad position.
