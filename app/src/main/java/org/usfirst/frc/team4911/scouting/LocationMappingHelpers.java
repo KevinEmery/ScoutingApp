@@ -3,6 +3,7 @@ package org.usfirst.frc.team4911.scouting;
 import android.support.v4.util.Pair;
 
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
+import org.usfirst.frc.team4911.scouting.datamodel.HopperPosition;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 
 /**
@@ -47,11 +48,16 @@ class LocationMappingHelpers {
             new TouchZone(0.5796333, 0.60946697, 0.69514894, 0.6735385);
 
     // All the hopper positions
-    private static final TouchZone hopper1 = new TouchZone(0,0,0,0);
-    private static final TouchZone hopper2 = new TouchZone(0,0,0,0);
-    private static final TouchZone hopper3 = new TouchZone(0,0,0,0);
-    private static final TouchZone hopper4 = new TouchZone(0,0,0,0);
-    private static final TouchZone hopper5 = new TouchZone(0,0,0,0);
+    private static final TouchZone hopper1 =
+            new TouchZone(0.3029268, 0.033713926, 0.40699184, 0.13676797);
+    private static final TouchZone hopper2 =
+            new TouchZone(0.6034146, 0.033713926, 0.71788615, 0.13676797);
+    private static final TouchZone hopper3 =
+            new TouchZone(0.162439, 0.87188673, 0.29902437, 0.96807075);
+    private static final TouchZone hopper4 =
+            new TouchZone(0.4590244, 0.8856275, 0.56569105, 0.95432997);
+    private static final TouchZone hopper5 =
+            new TouchZone(0.7217886, 0.8993678, 0.844065, 0.9749409);
 
     // The shooting zone bounds
     private static final TouchZone blueShootingZone =
@@ -113,28 +119,34 @@ class LocationMappingHelpers {
         return GearPegPosition.None;
     }
 
-    static String GetHopper(Pair<Float, Float> touchPoint) {
+    /**
+     * Calculates the hopper that a normalised touchpoint corresponds to.
+     * @param touchPoint Pair containing the X and Y coordinates of the touched point
+     *                   normalised against the size of the image they're in.
+     * @return The hopper the point corresponds to.
+     */
+    static HopperPosition GetHopperPosition(Pair<Float, Float> touchPoint) {
         if (hopper1.containsPoint(touchPoint)) {
-            return "1";
+            return HopperPosition.One;
         }
 
         if (hopper2.containsPoint(touchPoint)) {
-            return  "2";
+            return  HopperPosition.Two;
         }
 
         if (hopper3.containsPoint(touchPoint)) {
-            return  "3";
+            return  HopperPosition.Three;
         }
 
         if (hopper4.containsPoint(touchPoint)) {
-            return  "4";
+            return  HopperPosition.Four;
         }
 
         if (hopper5.containsPoint(touchPoint)) {
-            return  "5";
+            return  HopperPosition.Five;
         }
 
-        return "None";
+        return HopperPosition.None;
     }
 
     /**

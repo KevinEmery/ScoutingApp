@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import org.usfirst.frc.team4911.scouting.datamodel.HopperAttempt;
+import org.usfirst.frc.team4911.scouting.datamodel.HopperPosition;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +32,7 @@ public class HopperAttemptFragment extends Fragment implements
     private OnHopperAttemptCreatedListener mListener;
 
     CheckBox hopperActivated;
-    String hopperLocation;
+    HopperPosition hopperPosition;
 
     public HopperAttemptFragment() {
         // Required empty public constructor
@@ -85,9 +86,17 @@ public class HopperAttemptFragment extends Fragment implements
 
     @Override
     public void onRecordLocationMapTouch(Pair<Float, Float> normalisedTouchPoint) {
-        String text = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-        hopperLocation = "foo";
+        String message;
+
+        hopperPosition = LocationMappingHelpers.GetHopperPosition(normalisedTouchPoint);
+
+        if (hopperPosition == HopperPosition.None) {
+            message = "Please select a hopper";
+        } else {
+            message = "Activated hopper: " + hopperPosition;
+        }
+
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -96,8 +105,7 @@ public class HopperAttemptFragment extends Fragment implements
      */
     @Override
     public boolean onLocationDoneButtonClick() {
-        // We're gonna want to beef this out once we've added a hopper number class.
-        return true;
+        return hopperPosition != HopperPosition.None;
     }
 
     private View.OnClickListener recordLocation = new View.OnClickListener() {
