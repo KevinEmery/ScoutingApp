@@ -265,7 +265,7 @@ public class PreGameFragment extends Fragment implements
                 return;
             }
 
-            if (toggleButtonUsesOwnRope.isChecked() && robotPosition.isEmpty())
+            if (toggleButtonUsesOwnRope.isChecked() && ropePosition == TouchPadPosition.None)
             {
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
                 dlgAlert.setMessage("Please select the rope position.");
