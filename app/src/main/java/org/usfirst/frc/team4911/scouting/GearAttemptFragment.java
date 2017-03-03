@@ -35,7 +35,7 @@ public class GearAttemptFragment extends Fragment implements
 
     private OnGearAttemptCreatedListener mListener;
 
-    GearPegPosition gearPegPosition;
+    GearPegPosition gearPegPosition = GearPegPosition.None;
     private ToggleButton toggleButton_gearAttempted;
     private ToggleButton toggleButton_gearNotAttempted;
 
@@ -232,19 +232,55 @@ public class GearAttemptFragment extends Fragment implements
             gearAttempt.setGearResult(result);
             gearAttempt.setGearPegPosition(gearPegPosition);
 
-            if (!(toggleButton_gearAttempted.isChecked() || toggleButton_gearNotAttempted.isChecked())) {
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
-                dlgAlert.setMessage("No attempt to load gears was recorded.");
-                dlgAlert.setTitle("Gears");
-                dlgAlert.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                //dismiss the dialog
-                            }
-                        });
-                dlgAlert.setCancelable(true);
-                dlgAlert.create().show();
-                return;
+            boolean hasAttempt = toggleButton_gearAttempted.isChecked() || toggleButton_gearNotAttempted.isChecked();
+            boolean hasResult = togglebutton_gearSuccess.isChecked() || togglebutton_gearFailed.isChecked();
+            boolean hasLocation = gearPegPosition != GearPegPosition.None;
+
+            if (!(hasAttempt && hasResult && hasLocation)) {
+                if (!hasAttempt) {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                    dlgAlert.setMessage("No attempt to load gears was recorded.");
+                    dlgAlert.setTitle("Gears");
+                    dlgAlert.setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //dismiss the dialog
+                                }
+                            });
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.create().show();
+                    return;
+                }
+
+                if (!hasResult) {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                    dlgAlert.setMessage("Did attempt succeed or fail?");
+                    dlgAlert.setTitle("Gear Result");
+                    dlgAlert.setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //dismiss the dialog
+                                }
+                            });
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.create().show();
+                    return;
+                }
+
+                if (!hasLocation && togglebutton_gearSuccess.isChecked()) {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(v.getContext());
+                    dlgAlert.setMessage("What loaction was gear delivered at?");
+                    dlgAlert.setTitle("Gear Location");
+                    dlgAlert.setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //dismiss the dialog
+                                }
+                            });
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.create().show();
+                    return;
+                }
             }
 
             // Call the parent activity and pass it the gear attempt
@@ -265,6 +301,7 @@ public class GearAttemptFragment extends Fragment implements
         toggleButton_gearNotAttempted.setChecked(false);
         togglebutton_gearSuccess.setChecked(false);
         togglebutton_gearFailed.setChecked(false);
+        gearPegPosition = GearPegPosition.None;
     }
 
     /**

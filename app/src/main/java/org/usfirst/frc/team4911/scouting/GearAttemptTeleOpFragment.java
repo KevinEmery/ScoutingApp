@@ -25,7 +25,6 @@ public class GearAttemptTeleOpFragment extends Fragment
     OnGearAttemptTeleopCreatedListener mListener;
 
     private CheckBox wasDefended;
-    private Spinner spinnerGearResult;
 
     public GearAttemptTeleOpFragment() {
         // Required empty public constructor
@@ -80,20 +79,15 @@ public class GearAttemptTeleOpFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_gear_attempt_tele_op, container, false);
 
         wasDefended = (CheckBox) view.findViewById(R.id.checkbox_gear_attempt_tele_op_defended);
-        spinnerGearResult = (Spinner) view.findViewById(R.id.spinner_gear_attempt_telop_result);
-        spinnerGearResult.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, GearResult.values()));
 
         return view;
     }
 
     @Override
     public void onGearAttemptCreated(GearAttempt gearAttempt) {
-        GearResult result = GearResult.valueOf(spinnerGearResult.getSelectedItem().toString());
 
         // We need to override the result with what we saw here and set the was defended flag
         GearAttemptTeleop gearAttemptTeleop = new GearAttemptTeleop(gearAttempt);
-        gearAttemptTeleop.setGearResult(result);
         gearAttemptTeleop.setWasDefended(wasDefended.isChecked());
 
         if (mListener != null) {
