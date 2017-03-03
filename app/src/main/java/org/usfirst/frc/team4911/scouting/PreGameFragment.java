@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -163,10 +164,9 @@ public class PreGameFragment extends Fragment implements
             }
         }
 
-        //TODO: Remove when done debugging map
-        isOkToCloseLocationDialog = true;
-
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
     @Override

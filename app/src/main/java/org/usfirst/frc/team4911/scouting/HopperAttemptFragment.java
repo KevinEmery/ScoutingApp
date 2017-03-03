@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -97,7 +98,9 @@ public class HopperAttemptFragment extends Fragment implements
             message = "Activated hopper: " + hopperPosition;
         }
 
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
     /**
