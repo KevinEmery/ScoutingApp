@@ -166,15 +166,16 @@ public class EndGameFragment extends Fragment implements
         String driveStation = sharedpreferences.getString(SetupActivity.DriveStation, "");
         boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        climbPosition = TouchPadPosition.None;
+        climbPosition = LocationMappingHelpers.GetTouchPadPosition(normalisedTouchPoint,
+                isBlueAlliance);
 
-        String message = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
+        String message;
 
-        //if (climbPosition == TouchPadPosition.None) {
-        //    message = "Please select a touchpad";
-        //} else {
-        //    message = "Bot climbed at touchpad " + climbPosition.toString();
-        //}
+        if (climbPosition == TouchPadPosition.None) {
+            message = "Please select a touchpad";
+        } else {
+            message = "Bot climbed at touchpad " + climbPosition.toString();
+        }
 
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }

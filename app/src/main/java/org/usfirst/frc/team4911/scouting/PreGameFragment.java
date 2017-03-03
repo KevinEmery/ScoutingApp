@@ -136,32 +136,32 @@ public class PreGameFragment extends Fragment implements
 
         String message = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
 
-        //if (isRopePosition) {
-        //    ropePosition = LocationMappingHelpers.GetTouchPadPosition((int) event.getX(),
-        //            (int) event.getY(), isBlueAlliance);
-//
-        //    if (ropePosition == TouchPadPosition.None) {
-        //        message = "Please select a valid touchpad";
-        //        isOkToCloseLocationDialog = false;
-        //    } else {
-        //        message = "Rope placed at position " + ropePosition.toString();
-        //        isOkToCloseLocationDialog = true;
-        //    }
-        //}
-//
-        //if (isBotPosition) {
-        //    robotPosition = LocationMappingHelpers.GetShootingPosition((int) event.getX(),
-        //            (int) event.getY(), isBlueAlliance);
-//
-        //    if (robotPosition.equals("")
-        //            || robotPosition.equals(LocationMappingHelpers.OUT_OF_BOUNDS)) {
-        //        message = "Please select a location on the field";
-        //        isOkToCloseLocationDialog = false;
-        //    } else {
-        //        message = "Robot starting position is at " + robotPosition;
-        //        isOkToCloseLocationDialog = true;
-        //    }
-        //}
+        if (isRopePosition) {
+            ropePosition = LocationMappingHelpers.GetTouchPadPosition(normalisedTouchPoint,
+                    isBlueAlliance);
+
+            if (ropePosition == TouchPadPosition.None) {
+                message = "Please select a valid touchpad";
+                isOkToCloseLocationDialog = false;
+            } else {
+                message = "Rope placed at position " + ropePosition.toString();
+                isOkToCloseLocationDialog = true;
+            }
+        }
+
+        if (isBotPosition) {
+            robotPosition = LocationMappingHelpers.GetShootingPosition(normalisedTouchPoint,
+                    isBlueAlliance);
+
+            if (robotPosition.equals("")
+                    || robotPosition.equals(LocationMappingHelpers.OUT_OF_BOUNDS)) {
+                message = "Please select a location on the field";
+                isOkToCloseLocationDialog = false;
+            } else {
+                message = "Robot starting position is at " + robotPosition;
+                isOkToCloseLocationDialog = true;
+            }
+        }
 
         //TODO: Remove when done debugging map
         isOkToCloseLocationDialog = true;

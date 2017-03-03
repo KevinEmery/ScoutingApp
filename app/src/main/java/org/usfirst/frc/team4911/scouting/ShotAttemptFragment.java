@@ -159,17 +159,18 @@ public class ShotAttemptFragment extends Fragment implements
 
         boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        shotLocation = "foo";
+        shotLocation = LocationMappingHelpers.GetShootingPosition(normalisedTouchPoint,
+                isBlueAlliance);
 
-        String message = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
+        String message;
 
-        //if (LocationMappingHelpers.OUT_OF_BOUNDS.equals(shotLocation)) {
-        //    message = "Please select a point in the shooting area";
-        //} else {
-        //    message = "Shot location " + shotLocation;
-        //    String locationText = getString(R.string.label_location) + shotLocation;
-        //    locationMessage.setText(locationText);
-        //}
+        if (LocationMappingHelpers.OUT_OF_BOUNDS.equals(shotLocation)) {
+            message = "Please select a point in the shooting area";
+        } else {
+            message = "Shot location " + shotLocation;
+            String locationText = getString(R.string.label_location) + shotLocation;
+            locationMessage.setText(locationText);
+        }
 
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }

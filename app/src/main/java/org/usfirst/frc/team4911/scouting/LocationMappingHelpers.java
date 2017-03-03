@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4911.scouting;
 
+import android.support.v4.util.Pair;
+
 import org.usfirst.frc.team4911.scouting.datamodel.GearPegPosition;
 import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 
@@ -13,136 +15,203 @@ import org.usfirst.frc.team4911.scouting.datamodel.TouchPadPosition;
 class LocationMappingHelpers {
     static final String OUT_OF_BOUNDS = "OUT OF BOUNDS";
 
+    // All the touchpads by alliance
+    private static final TouchZone blueTouchpad1 =
+            new TouchZone(0.04358876, 0.34606203, 0.1902547, 0.42674464);
+    private static final TouchZone blueTouchpad2 =
+            new TouchZone(0.3940295, 0.46471292, 0.5445892, 0.5596337);
+    private static final TouchZone blueTouchpad3 =
+            new TouchZone(0.031907413, 0.604721, 0.17467958, 0.6877766);
+
+    private static final TouchZone redTouchpad1 = new TouchZone(0,0,0,0);
+    private static final TouchZone redTouchpad2 = new TouchZone(0,0,0,0);
+    private static final TouchZone redTouchpad3 = new TouchZone(0,0,0,0);
+
+
+    // All the gear peg positions by alliance
+    private static final TouchZone blueGearPeg1 =
+            new TouchZone(0.30057865, 0.3555541, 0.38364607, 0.4101335);
+    private static final TouchZone blueGearPeg2 =
+            new TouchZone(0.41998807, 0.49081612, 0.51343894, 0.54539555);
+    private static final TouchZone blueGearPeg3 =
+            new TouchZone(0.3161538, 0.6165861, 0.40441293, 0.6664194);
+
+    private static final TouchZone redGearPeg1 = new TouchZone(0,0,0,0);
+    private static final TouchZone redGearPeg2 = new TouchZone(0,0,0,0);
+    private static final TouchZone redGearPeg3 = new TouchZone(0,0,0,0);
+
+    // All the hopper positions
+    private static final TouchZone hopper1 = new TouchZone(0,0,0,0);
+    private static final TouchZone hopper2 = new TouchZone(0,0,0,0);
+    private static final TouchZone hopper3 = new TouchZone(0,0,0,0);
+    private static final TouchZone hopper4 = new TouchZone(0,0,0,0);
+    private static final TouchZone hopper5 = new TouchZone(0,0,0,0);
+
+    // The shooting zone bounds
+    private static final TouchZone blueShootingZone =
+            new TouchZone(0.11587928, 0.08642042, 0.81196254, 0.9179594);
+    private static final TouchZone redShootingZone = new TouchZone(0,0,0,0);
+
     /**
      * Maps raw XY coordinates to a touchpad position.
-     * @param x The X coordinate of the point to map
-     * @param y The Y coordinate of the point to map
+     * @param touchPoint Pair containing the X and Y coordinates of the touched point
+     *                   normalised against the size of the image they're in.
      * @param isBlueAlliance True if the bot belongs to the blue alliance (false if red).
      * @return The touchpad position the given point corresponds to.
      */
-    static TouchPadPosition GetTouchPadPosition(int x, int y, boolean isBlueAlliance) {
-
-        int t1xmin, t1ymin, t1xmax, t1ymax;
-        int t2xmin, t2ymin, t2xmax, t2ymax;
-        int t3xmin, t3ymin, t3xmax, t3ymax;
-
-        if (isBlueAlliance) {
-            //Blue variables.
-
-            t1xmin = 20; t1ymin = 250; t1xmax = 75; t1ymax = 310;
-            t2xmin = 190; t2ymin = 340; t2xmax = 230; t2ymax = 410;
-            t3xmin = 20; t3ymin = 430; t3xmax = 75; t3ymax = 495;
-        } else {
-            //Must be red.
-            t1xmin = 380; t1ymin = 245; t1xmax = 425; t1ymax = 310;
-            t2xmin = 210; t2ymin = 330; t2xmax = 265; t2ymax = 410;
-            t3xmin = 385; t3ymin = 425; t3xmax = 430; t3ymax = 490;
-        }
-        if ((x > t1xmin) && (x < t1xmax) && (y > t1ymin) && (y < t1ymax)) {
+    static TouchPadPosition GetTouchPadPosition(Pair<Float, Float> touchPoint,
+                                                boolean isBlueAlliance) {
+        if ((isBlueAlliance && blueTouchpad1.containsPoint(touchPoint))
+                || (!isBlueAlliance && redTouchpad1.containsPoint(touchPoint))) {
             return TouchPadPosition.T1;
-        } else if ((x > t2xmin) && (x < t2xmax) && (y > t2ymin) && (y < t2ymax)) {
-            return TouchPadPosition.T2;
-        } else if ((x > t3xmin) && (x < t3xmax) && (y > t3ymin) && (y < t3ymax)) {
-            return TouchPadPosition.T3;
-        } else {
-            return TouchPadPosition.None;
         }
+
+        if ((isBlueAlliance && blueTouchpad2.containsPoint(touchPoint))
+                || (!isBlueAlliance && redTouchpad2.containsPoint(touchPoint))) {
+            return TouchPadPosition.T2;
+        }
+
+        if ((isBlueAlliance && blueTouchpad3.containsPoint(touchPoint))
+                || (!isBlueAlliance && redTouchpad3.containsPoint(touchPoint))) {
+            return TouchPadPosition.T3;
+        }
+
+        return TouchPadPosition.None;
     }
 
     /**
      * Calculates the gear peg position that a given point on the screen corresponds to.
-     * @param x The x coordinate of the given point
-     * @param y The y coordinate of the given point
+     * @param touchPoint Pair containing the X and Y coordinates of the touched point
+     *                   normalised against the size of the image they're in.
      * @param isBlueAlliance True if the bot is from the blue alliance, false if red.
      * @return The gear peg position corresponding to the touched point.
      */
-    static GearPegPosition GetGearPegPosition(int x, int y, boolean isBlueAlliance) {
-
-        int g1xmin, g1ymin, g1xmax, g1ymax;
-        int g2xmin, g2ymin, g2xmax, g2ymax;
-        int g3xmin, g3ymin, g3xmax, g3ymax;
-
-        if (isBlueAlliance) {
-            //Blue variables.
-            g1xmin = 125; g1ymin = 245; g1xmax = 175; g1ymax = 295;
-            g2xmin = 185; g2ymin = 340; g2xmax = 240; g2ymax = 410;
-            g3xmin = 140; g3ymin = 425; g3xmax = 195; g3ymax = 490;
-        } else {
-            //Must be red.
-            g1xmin = 265; g1ymin = 240; g1xmax = 320; g1ymax = 310;
-            g2xmin = 210; g2ymin = 330; g2xmax = 265; g2ymax = 410;
-            g3xmin = 260; g3ymin = 430; g3xmax = 315; g3ymax = 490;
-        }
-        if ((x > g1xmin) && (x < g1xmax) && (y > g1ymin) && (y < g1ymax)) {
+    static GearPegPosition GetGearPegPosition(Pair<Float, Float> touchPoint,
+                                              boolean isBlueAlliance) {
+        if ((isBlueAlliance && blueGearPeg1.containsPoint(touchPoint))
+                || (!isBlueAlliance && redGearPeg1.containsPoint(touchPoint))) {
             return GearPegPosition.G1;
-        } else if ((x > g2xmin) && (x < g2xmax) && (y > g2ymin) && (y < g2ymax)) {
-            return GearPegPosition.G2;
-        } else if ((x > g3xmin) && (x < g3xmax) && (y > g3ymin) && (y < g3ymax)) {
-            return GearPegPosition.G3;
-        } else {
-            return GearPegPosition.None;
         }
+
+        if ((isBlueAlliance && blueGearPeg2.containsPoint(touchPoint))
+                || (!isBlueAlliance && redGearPeg2.containsPoint(touchPoint))) {
+            return GearPegPosition.G2;
+        }
+
+        if ((isBlueAlliance && blueGearPeg3.containsPoint(touchPoint))
+                || (!isBlueAlliance && redGearPeg3.containsPoint(touchPoint))) {
+            return GearPegPosition.G3;
+        }
+
+        return GearPegPosition.None;
+    }
+
+    static String GetHopper(Pair<Float, Float> touchPoint) {
+        if (hopper1.containsPoint(touchPoint)) {
+            return "1";
+        }
+
+        if (hopper2.containsPoint(touchPoint)) {
+            return  "2";
+        }
+
+        if (hopper3.containsPoint(touchPoint)) {
+            return  "3";
+        }
+
+        if (hopper4.containsPoint(touchPoint)) {
+            return  "4";
+        }
+
+        if (hopper5.containsPoint(touchPoint)) {
+            return  "5";
+        }
+
+        return "None";
     }
 
     /**
      * Gets the position in feet from the boiler of a given point.
-     * @param x X coordinate of point.
-     * @param y Y coordinate of point.
+     * @param touchPoint Pair containing the X and Y coordinates of the touched point
+     *                   normalised against the size of the image they're in.
      * @param isBlueAlliance True if the bot is from the blue alliance, false if red.
      * @return A string containing the feet of the format 'X: *x in feet* Y: *y in feet*'
      */
-    static String GetShootingPosition(int x, int y, boolean isBlueAlliance) {
+    static String GetShootingPosition(Pair<Float, Float> touchPoint, boolean isBlueAlliance) {
 
-        int xmin, xmax, ymin, ymax;
-        Double dblxFromBoiler, dblyFromBoiler;
-        String strxFeet, stryFeet;
+        // First we check if the point is inside its shooting zone
+        if ((isBlueAlliance && !blueShootingZone.containsPoint(touchPoint))
+                || (!isBlueAlliance && !redShootingZone.containsPoint(touchPoint))) {
+            return OUT_OF_BOUNDS;
+        }
 
-        if (isBlueAlliance) {
-            xmin = 48;
-            xmax = 356;
-            ymin = 88;
-            ymax = 650;
+        Pair<Float, Float> positionAgainstFieldDimensions = isBlueAlliance ?
+                blueShootingZone.getPointNormalisedToZone(touchPoint) :
+                redShootingZone.getPointNormalisedToZone(touchPoint);
 
-            //Check if selection is out of bounds.  Doesn't take into account key and airship areas yet :(
-            if (((x < xmin) || (x > xmax)) || ((y < ymin) || (y > ymax))) {
-                return OUT_OF_BOUNDS;
-            } else {
-                //Convert x coordinate to feet from boiler.
-                //15.44' / (356-48) = .05013
-                //Convert y coordinate to feet from boiler.
-                //27' / (650-88) = .04804
+        // TODO: Get real numbers
+        float launchpadWidthFeet = (float) 0;
+        float launchpadWidthHeight = (float) 0;
 
-                dblxFromBoiler = (356 - x) * .05013;
-                dblyFromBoiler = (650 - y) * .04804;
+        float shootingPositionXfeet = launchpadWidthFeet * positionAgainstFieldDimensions.first;
+        float shootingPositionYfeet = launchpadWidthHeight * positionAgainstFieldDimensions.second;
 
-                strxFeet = String.valueOf(dblxFromBoiler);
-                stryFeet = String.valueOf(dblyFromBoiler);
+        return "X: " + shootingPositionXfeet + " Y: " + shootingPositionYfeet;
+    }
 
-                return  "X: " + strxFeet + " Y: " + stryFeet;
-            }
-        } else {
-            //Must be red alliance.
-            xmin = 90;
-            xmax = 400;
-            ymin = 90;
-            ymax = 650;
-            //Check if selection is out of bounds.  Doesn't take into account key and airship areas yet.
-            if (((x < xmin) || (x > xmax)) || ((y < ymin) || (y > ymax))) {
-                return OUT_OF_BOUNDS;
-            } else {
-                //Convert x coordinate to feet from boiler.
-                //15.44' / (400-90) = .04981
-                //Convert y coordinate to feet from boiler.
-                //27' / (650-90) = .04821
+    /**
+     * Class that defines a square area in normalised touchpad coordinates
+     */
+    private static class TouchZone {
+        private double xTop;
+        private double yTop;
+        private double xBottom;
+        private double yBottom;
 
-                dblxFromBoiler = 15.44 -((400 - x) * .04981);
-                dblyFromBoiler = (650 - y) * .04821;
+        /**
+         * Constructor for a touch zone. Takes the top left and bottom right points as its creating
+         * arguments - COORDINATES MUST BE NORMALISED AGAINST THE SIZE OF THE IMAGE THE POINT IS IN.
+         * @param xTop x of top left
+         * @param yTop y of top left
+         * @param xBottom x of bottom right
+         * @param yBottom y of bottom right
+         */
+         TouchZone (double xTop, double yTop, double xBottom, double yBottom) {
+            this.xTop = xTop;
+            this.yTop = yTop;
+            this.xBottom = xBottom;
+            this.yBottom = yBottom;
+        }
 
-                strxFeet = String.valueOf(dblxFromBoiler);
-                stryFeet = String.valueOf(dblyFromBoiler);
+        /**
+         * Returns true if a given point is in the touch zone, false otherwise.
+         * @param touchPoint Pair containing the X and Y coordinates of the touched point
+         *                   normalised against the size of the image they're in.
+         * @return True if the point is in the touch zone, false otherwise.
+         */
+        boolean containsPoint(Pair<Float, Float> touchPoint) {
+            return (touchPoint.first > xTop)
+                    && (touchPoint.first < xBottom)
+                    && (touchPoint.second > yTop)
+                    && (touchPoint.second < yBottom);
+        }
 
-                return  "X: " + strxFeet + " Y: " + stryFeet;
-            }
+        /**
+         * Takes a point that's been normalized against the image and returns it normalized against
+         * the bounds of the TouchZone. Note that the touchzone coordinates need to be normalized
+         * against the same image as those of the given point.
+         *
+         * The main place we're going to use this is when changing a shooting position point so it's
+         * normalized against the shooting zone instead of the image edges. We'd want to do this so
+         * it's really easy to calculate the shooting position in feet from the boiler if we know
+         * the field dimensions.
+         * @param touchPoint Pair containing the X and Y coordinates of the touched point
+         *                   normalised against the size of the image they're in.
+         * @return Same point normalised against the touchzone bounds instead of the image bounds.
+         */
+        Pair<Float, Float> getPointNormalisedToZone(Pair<Float, Float> touchPoint) {
+            // TODO: The math that works this out :P
+            return new Pair<>((float)0,(float)0);
         }
     }
 }

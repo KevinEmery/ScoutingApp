@@ -171,17 +171,19 @@ public class GearAttemptFragment extends Fragment implements
 
         boolean isBlueAlliance = (driveStation.toLowerCase().contains("blue"));
 
-        gearPegPosition = GearPegPosition.None;
+        gearPegPosition = LocationMappingHelpers.GetGearPegPosition(normalisedTouchPoint,
+                isBlueAlliance);
 
-        String message = "X: " + normalisedTouchPoint.first + "Y: " + normalisedTouchPoint.second;
+        String message;
 
-        //if (gearPegPosition == GearPegPosition.None) {
-        //    message = "Please select a valid gear peg position";
-        //} else {
-        //    message = "Gear peg " + gearPegPosition.toString() + " selected.";
-        //    String locationText = getString(R.string.label_location) + gearPegPosition.toString();
-        //    locationMessage.setText(locationText);
-        //}
+        if (gearPegPosition == GearPegPosition.None) {
+            message = "Please select a valid gear peg position";
+        } else {
+            message = "Gear peg " + gearPegPosition.toString() + " selected.";
+            String locationText = getString(R.string.label_location) + gearPegPosition.toString();
+            locationMessage.setText(locationText);
+        }
+
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
