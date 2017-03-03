@@ -1,6 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:fillViewport="true">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -76,10 +80,9 @@
         <ToggleButton
             android:id="@+id/toggle_button_auto_crossed_baseline"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:textOn="Crossed Baseline [X]"
-            android:textOff="Crossed Baseline"
-            android:layout_weight="1"/>
+            android:textOff="Crossed Baseline" />
 
          <Button
             android:id="@+id/button_auto_save"
