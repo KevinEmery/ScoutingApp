@@ -29,4 +29,8 @@
     <declare-styleable name="CircleImageView">
         <attr name="name" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="ExampleCustomView">
+        <attr name="defaultValue" format="integer" />
+    </declare-styleable>
 </resources>
